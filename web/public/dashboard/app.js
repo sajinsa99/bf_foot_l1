@@ -110,9 +110,90 @@ function makeChart(ctx, labels, datasets) {
   });
 }
 
+// ── Tab 2: final ranking per season for a single club ──────────────────────
+function buildCrossSeasonData(db, clubName) {
+  // For each season (oldest→newest), find the last available general snapshot and read the club's position
+  const seasons = Object.keys(db).sort();
+  const labels = [];
+  const positions = [];
+
+  for (const season of seasons) {
+    const snaps = (db[season] || [])
+      .filter(s => (!s.standings_type || s.standings_type === 'general') && s.clubs && s.clubs.length)
+      .sort((a, b) => (a.round || 0) - (b.round || 0));
+    if (!snaps.length) continue;
+    const lastSnap = snaps[snaps.length - 1];
+    const club = lastSnap.clubs.find(c => isValidClub(c) && c.name === clubName);
+    labels.push(season);
+    positions.push(club ? club.position : null);
+  }
+  return { labels, positions };
+}
+
+function makeClubChart(ctx, labels, positions, clubName) {
+  const maxPos = Math.max(...positions.filter(p => p !== null), 18);
+  return new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        label: clubName,
+        data: positions,
+        borderColor: '#4363d8',
+        backgroundColor: 'rgba(67,99,216,0.1)',
+        fill: true,
+        tension: 0.25,
+        pointRadius: 5,
+        pointHoverRadius: 7,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          reverse: true,
+          min: 1,
+          max: maxPos,
+          ticks: { stepSize: 1 },
+          title: { display: true, text: 'Classement final (1 = meilleur)' }
+        },
+        x: {
+          title: { display: true, text: 'Saison' },
+          ticks: { maxRotation: 45, font: { size: 10 } }
+        }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => c.parsed.y !== null ? `${clubName} : ${c.parsed.y}e` : 'Pas de données'
+          }
+        }
+      },
+      interaction: { mode: 'nearest', axis: 'x', intersect: false }
+    }
+  });
+}
+
+// ── Main ───────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   try {
     const db = await loadData();
+
+    // ── Tab switching ──
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => b.classList.remove('active'));
+        tabPanels.forEach(p => { p.hidden = true; });
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.tab).hidden = false;
+      });
+    });
+
+    // ── Tab 1 ──
     const seasonSelect = document.getElementById('seasonSelect');
     const standingsTypeSelect = document.getElementById('standingsTypeSelect');
     const clubFilter = document.getElementById('clubFilter');
@@ -214,6 +295,41 @@ document.addEventListener('DOMContentLoaded', async () => {
     seasonSelect.addEventListener('change', () => renderForSeason(seasonSelect.value, null, standingsTypeSelect.value));
     standingsTypeSelect.addEventListener('change', () => renderForSeason(seasonSelect.value, null, standingsTypeSelect.value));
     renderForSeason(seasons[0], null, 'general');
+
+    // ── Tab 2 ──
+    const clubSelect = document.getElementById('clubSelect');
+    const ctx2 = document.getElementById('chart2').getContext('2d');
+    let chart2 = null;
+
+    // Collect all unique valid club names across all seasons, sorted
+    const allClubs = Array.from(new Set(
+      Object.values(db).flatMap(snaps =>
+        snaps.flatMap(s => (s.clubs || []).filter(isValidClub).map(c => c.name))
+      )
+    )).sort((a, b) => a.localeCompare(b, 'fr'));
+
+    allClubs.forEach(name => {
+      const opt = document.createElement('option');
+      opt.value = name;
+      opt.textContent = name;
+      if (name === 'Paris SG') opt.selected = true;
+      clubSelect.appendChild(opt);
+    });
+
+    function renderClubChart() {
+      const clubName = clubSelect.value;
+      const { labels, positions } = buildCrossSeasonData(db, clubName);
+      if (chart2) chart2.destroy();
+      if (labels.length === 0) {
+        ctx2.canvas.parentElement.innerHTML = '<p>Pas de données disponibles pour ce club.</p>';
+        return;
+      }
+      chart2 = makeClubChart(ctx2, labels, positions, clubName);
+    }
+
+    clubSelect.addEventListener('change', renderClubChart);
+    renderClubChart();
+
   } catch (err) {
     document.body.innerHTML = '<pre style="color:red">' + (err.stack || err) + '</pre>';
   }

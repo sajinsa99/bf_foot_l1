@@ -13,30 +13,50 @@
     <h1>bf_foot_l1 — Ligue 1 standings</h1>
     <p>Current standings from FootMercato.net and position evolution charts from Transfermarkt.fr form tables.
       <a href="/bf_foot_l1/manage-data">Manage data →</a></p>
-    <div id="controls">
-      <label for="seasonSelect">Season:</label>
-      <select id="seasonSelect"></select>
 
-      <label for="standingsTypeSelect">Standings:</label>
-      <select id="standingsTypeSelect">
-        <option value="general">General</option>
-        <option value="home">Home</option>
-        <option value="away">Away</option>
-      </select>
-
-      <label for="clubFilter">Search / Select clubs:</label>
-      <input id="clubFilter" placeholder="Type to filter clubs" />
-      <div id="clubs"></div>
+    <div id="tabs">
+      <button type="button" class="tab-btn active" data-tab="tab1">Classement par saison</button>
+      <button type="button" class="tab-btn" data-tab="tab2">Évolution par club</button>
     </div>
 
-    <div id="chartContainer">
-      <canvas id="chart"></canvas>
+    <!-- Tab 1: existing dashboard -->
+    <div id="tab1" class="tab-panel">
+      <div id="controls">
+        <label for="seasonSelect">Season:</label>
+        <select id="seasonSelect"></select>
+
+        <label for="standingsTypeSelect">Standings:</label>
+        <select id="standingsTypeSelect">
+          <option value="general">General</option>
+          <option value="home">Home</option>
+          <option value="away">Away</option>
+        </select>
+
+        <label for="clubFilter">Search / Select clubs:</label>
+        <input id="clubFilter" type="text" placeholder="Type to filter clubs">
+        <div id="clubs"></div>
+      </div>
+
+      <div id="chartContainer">
+        <canvas id="chart"></canvas>
+      </div>
+
+      <section id="latest">
+        <h2>Latest snapshot</h2>
+        <div id="tableContainer"></div>
+      </section>
     </div>
 
-    <section id="latest">
-      <h2>Latest snapshot</h2>
-      <div id="tableContainer"></div>
-    </section>
+    <!-- Tab 2: per-club cross-season ranking -->
+    <div id="tab2" class="tab-panel" hidden>
+      <div id="controls2">
+        <label for="clubSelect">Club :</label>
+        <select id="clubSelect"></select>
+      </div>
+      <div id="chartContainer2">
+        <canvas id="chart2"></canvas>
+      </div>
+    </div>
   </main>
 
   <script src="app.js"></script>
