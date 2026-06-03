@@ -1,0 +1,15 @@
+[Unit]
+Description=bf_foot_l1 web — Ligue 1 dashboard & scraper
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/bf_foot_l1
+ExecStart=/usr/bin/node server.js
+Restart=on-failure
+RestartSec=5
+EnvironmentFile=-/opt/bf_foot_l1/.env
+
+[Install]
+WantedBy=multi-user.target

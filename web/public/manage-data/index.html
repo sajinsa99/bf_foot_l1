@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>bf_foot_l1 — Manage data</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <h1>bf_foot_l1 — Manage data</h1>
+    <p><a href="../dashboard">← Dashboard</a></p>
+
+    <section>
+      <h2>Current standings (FootMercato)</h2>
+      <p>Fetches general, home and away standings for the current season.</p>
+      <button id="btnFootmercato">Fetch current standings</button>
+    </section>
+
+    <section>
+      <h2>Round-by-round evolution (Transfermarkt)</h2>
+      <form id="formTransfermarkt">
+        <label>Season <input name="season" placeholder="e.g. 2025" size="8" /></label>
+        <label>From round <input name="min" type="number" min="1" size="4" /></label>
+        <label>To round <input name="max" type="number" min="1" size="4" /></label>
+        <button type="submit">Fetch rounds</button>
+      </form>
+    </section>
+
+    <section id="logSection" hidden>
+      <h2>Output</h2>
+      <pre id="log"></pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
