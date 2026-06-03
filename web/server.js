@@ -103,14 +103,18 @@ router.post('/api/scrape', (req, res) => {
     }
   };
 
+  let childDone = false;
+
   child.stdout.on('data', d => send(d.toString()));
   child.stderr.on('data', d => send(d.toString()));
-  child.on('close', code => {
-    res.write(`data: [done] exit code ${code}\n\n`);
+  child.on('close', (code, signal) => {
+    childDone = true;
+    const msg = signal ? `[terminé] signal ${signal}` : `[terminé] code de sortie ${code}`;
+    res.write(`data: ${msg}\n\n`);
     res.end();
   });
 
-  req.on('close', () => child.kill());
+  req.on('close', () => { if (!childDone) child.kill(); });
 });
 
 app.use(BASE_PATH, router);
