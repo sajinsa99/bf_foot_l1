@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=www-data
-WorkingDirectory=/opt/bf_foot_l1
+WorkingDirectory=/opt/bf_foot_l1/web
 ExecStart=/usr/bin/node server.js
 Restart=on-failure
 RestartSec=5
