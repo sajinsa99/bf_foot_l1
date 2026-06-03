@@ -21,29 +21,27 @@ else
   echo "    node $(node --version) already installed, skipping."
 fi
 
-# Preserve scraper data across installs — never overwrite it
-echo "==> Preserving scraper data..."
-if [[ -d "$INSTALL_DIR/scraper/data" ]]; then
-  # Keep a timestamped backup, but the live data stays in place
-  BAK="/opt/bf_foot_l1_data.bak.$(date +%Y%m%d_%H%M%S)"
-  cp -r "$INSTALL_DIR/scraper/data" "$BAK"
-  echo "    Snapshot saved to $BAK"
-fi
-
 echo "==> Copying project to $INSTALL_DIR..."
 mkdir -p "$INSTALL_DIR"
-rsync -a \
-  --exclude='.git' \
-  --exclude='node_modules' \
-  --exclude='scraper/data' \
-  "$REPO_DIR/" "$INSTALL_DIR/"
 
-# Restore data that rsync was told to skip
+# On first install (no live data yet) copy everything including scraper/data.
+# On re-installs, preserve live data: back it up then exclude it from rsync.
 if [[ -d "$INSTALL_DIR/scraper/data" ]]; then
+  BAK="/opt/bf_foot_l1_data.bak.$(date +%Y%m%d_%H%M%S)"
+  cp -r "$INSTALL_DIR/scraper/data" "$BAK"
+  echo "    Existing data backed up to $BAK"
+  rsync -a \
+    --exclude='.git' \
+    --exclude='node_modules' \
+    --exclude='scraper/data' \
+    "$REPO_DIR/" "$INSTALL_DIR/"
   echo "    scraper/data preserved in place."
 else
-  mkdir -p "$INSTALL_DIR/scraper/data"
-  echo "    scraper/data directory created (empty)."
+  rsync -a \
+    --exclude='.git' \
+    --exclude='node_modules' \
+    "$REPO_DIR/" "$INSTALL_DIR/"
+  echo "    First install — scraper/data copied from repo."
 fi
 
 echo "==> Installing web dependencies..."

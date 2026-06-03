@@ -1,5 +1,5 @@
 async function loadData() {
-  const resp = await fetch('../api/seasons.json');
+  const resp = await fetch('/bf_foot_l1/api/seasons.json');
   if (!resp.ok) throw new Error('Failed to fetch data: ' + resp.status);
   const data = await resp.json();
   return data;
