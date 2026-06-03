@@ -24,24 +24,39 @@ fi
 echo "==> Copying project to $INSTALL_DIR..."
 mkdir -p "$INSTALL_DIR"
 
-# On first install (no live data yet) copy everything including scraper/data.
-# On re-installs, preserve live data: back it up then exclude it from rsync.
-if [[ -d "$INSTALL_DIR/scraper/data" ]]; then
+# Always exclude scraper/data from rsync so live data is never overwritten.
+# After rsync, restore data from the latest backup if the directory is empty.
+DATA_DIR="$INSTALL_DIR/scraper/data"
+
+# Backup existing data (timestamped) before rsync
+if [[ -d "$DATA_DIR" ]] && [[ -n "$(ls -A "$DATA_DIR" 2>/dev/null)" ]]; then
   BAK="/opt/bf_foot_l1_data.bak.$(date +%Y%m%d_%H%M%S)"
-  cp -r "$INSTALL_DIR/scraper/data" "$BAK"
+  cp -r "$DATA_DIR" "$BAK"
   echo "    Existing data backed up to $BAK"
-  rsync -a \
-    --exclude='.git' \
-    --exclude='node_modules' \
-    --exclude='scraper/data' \
-    "$REPO_DIR/" "$INSTALL_DIR/"
-  echo "    scraper/data preserved in place."
+fi
+
+rsync -a \
+  --exclude='.git' \
+  --exclude='node_modules' \
+  --exclude='scraper/data' \
+  "$REPO_DIR/" "$INSTALL_DIR/"
+
+mkdir -p "$DATA_DIR"
+
+# If data directory is empty, restore from the most recent backup or seed from repo
+if [[ -z "$(ls -A "$DATA_DIR" 2>/dev/null)" ]]; then
+  LATEST_BAK="$(ls -1dt /opt/bf_foot_l1_data.bak.* 2>/dev/null | head -1)"
+  if [[ -n "$LATEST_BAK" ]]; then
+    cp -r "$LATEST_BAK/." "$DATA_DIR/"
+    echo "    scraper/data restored from $LATEST_BAK"
+  elif [[ -d "$REPO_DIR/scraper/data" ]] && [[ -n "$(ls -A "$REPO_DIR/scraper/data" 2>/dev/null)" ]]; then
+    cp -r "$REPO_DIR/scraper/data/." "$DATA_DIR/"
+    echo "    scraper/data seeded from repo."
+  else
+    echo "    scraper/data is empty — run manage-data to populate it."
+  fi
 else
-  rsync -a \
-    --exclude='.git' \
-    --exclude='node_modules' \
-    "$REPO_DIR/" "$INSTALL_DIR/"
-  echo "    First install — scraper/data copied from repo."
+  echo "    scraper/data preserved in place."
 fi
 
 echo "==> Installing web dependencies..."
