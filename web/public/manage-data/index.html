@@ -1,34 +1,66 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>bf_foot_l1 — Manage data</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>bf_foot_l1 — Gestion des données</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <main>
-    <h1>bf_foot_l1 — Manage data</h1>
-    <p><a href="../dashboard">← Dashboard</a></p>
+    <h1>bf_foot_l1 — Gestion des données</h1>
+    <p><a href="../dashboard">← Tableau de bord</a></p>
 
+    <!-- ── Section 1 : Classement actuel ── -->
     <section>
-      <h2>Current standings (FootMercato)</h2>
-      <p>Fetches general, home and away standings for the current season.</p>
-      <button id="btnFootmercato">Fetch current standings</button>
+      <h2>Classement actuel (FootMercato)</h2>
+      <p>Récupère le classement général, domicile et extérieur pour la saison en cours.</p>
+      <button id="btnFootmercato" type="button">Récupérer le classement</button>
     </section>
 
+    <!-- ── Section 2 : Évolution journée par journée ── -->
     <section>
-      <h2>Round-by-round evolution (Transfermarkt)</h2>
-      <form id="formTransfermarkt">
-        <label>Season <input name="season" placeholder="e.g. 2025" size="8" /></label>
-        <label>From round <input name="min" type="number" min="1" size="4" /></label>
-        <label>To round <input name="max" type="number" min="1" size="4" /></label>
-        <button type="submit">Fetch rounds</button>
-      </form>
+      <h2>Évolution journée par journée (Transfermarkt)</h2>
+
+      <div class="field-row">
+        <label>Saison
+          <input id="inpSeason" type="text" placeholder="ex. 2025">
+        </label>
+        <button id="btnDetectSeason" type="button" class="btn-secondary">Détecter la dernière saison</button>
+      </div>
+
+      <div class="field-row mode-row">
+        <span class="field-label">Mode :</span>
+        <label class="radio-label"><input type="radio" name="mode" value="all" checked> Toutes les journées (auto)</label>
+        <label class="radio-label"><input type="radio" name="mode" value="last"> Dernière journée seulement</label>
+        <label class="radio-label"><input type="radio" name="mode" value="range"> Plage de journées</label>
+      </div>
+
+      <div id="rangeFields" class="field-row" hidden>
+        <label>De la journée <input id="inpMin" type="number" min="1" max="38"></label>
+        <label>À la journée <input id="inpMax" type="number" min="1" max="38"></label>
+        <button id="btnDetectMax" type="button" class="btn-secondary">Détecter le max</button>
+      </div>
+
+      <div class="field-row">
+        <button id="btnFetch" type="button">Récupérer les journées</button>
+      </div>
     </section>
 
+    <!-- ── Section 3 : État de la base de données ── -->
+    <section>
+      <h2>État de la base de données</h2>
+      <div class="field-row">
+        <button id="btnStatus" type="button">Actualiser le statut</button>
+      </div>
+      <div id="statusArea" hidden>
+        <div id="statusList"></div>
+      </div>
+    </section>
+
+    <!-- ── Section 4 : Journal ── -->
     <section id="logSection" hidden>
-      <h2>Output</h2>
+      <h2>Journal</h2>
       <pre id="log"></pre>
     </section>
   </main>

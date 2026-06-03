@@ -29,6 +29,53 @@ router.get('/api/seasons.json', (req, res) => {
   res.sendFile(path.join(SCRAPER_DIR, 'data', 'seasons.json'));
 });
 
+// Get latest season from Transfermarkt
+router.get('/api/latest-season', (req, res) => {
+  const child = spawn('node', ['-e', `
+    const tm = require('./lib/parsers/transfermarkt.js');
+    tm.getLatestSeason().then(s => { console.log(s || ''); process.exit(0); }).catch(() => { console.log(''); process.exit(1); });
+  `], { cwd: SCRAPER_DIR, env: process.env });
+  let out = '';
+  child.stdout.on('data', d => { out += d.toString(); });
+  child.on('close', () => res.json({ season: out.trim() }));
+});
+
+// Get max round for a season from Transfermarkt
+router.get('/api/max-round', (req, res) => {
+  const year = String(req.query.year || '').replace(/[^0-9]/g, '');
+  if (!year) return res.status(400).json({ error: 'year required' });
+  const child = spawn('node', ['-e', `
+    const tm = require('./lib/parsers/transfermarkt.js');
+    tm.getMaxRound('${year}').then(n => { console.log(n || 0); process.exit(0); }).catch(() => { console.log(0); process.exit(1); });
+  `], { cwd: SCRAPER_DIR, env: process.env });
+  let out = '';
+  child.stdout.on('data', d => { out += d.toString(); });
+  child.on('close', () => res.json({ max: parseInt(out.trim()) || 0 }));
+});
+
+// Delete a season or specific journeys from seasons.json
+router.post('/api/delete', (req, res) => {
+  const { season, journeys } = req.body || {};
+  if (!season) return res.status(400).json({ error: 'season required' });
+  const fs = require('fs');
+  const dbFile = path.join(SCRAPER_DIR, 'data', 'seasons.json');
+  try {
+    const db = JSON.parse(fs.readFileSync(dbFile, 'utf8'));
+    if (!db[season]) return res.json({ ok: false, message: `Saison ${season} introuvable` });
+    if (journeys && journeys.length > 0) {
+      db[season] = db[season].filter(s => !journeys.includes(s.round));
+      fs.writeFileSync(dbFile, JSON.stringify(db, null, 2), 'utf8');
+      res.json({ ok: true, message: `Journées ${journeys.join(', ')} supprimées de la saison ${season}` });
+    } else {
+      delete db[season];
+      fs.writeFileSync(dbFile, JSON.stringify(db, null, 2), 'utf8');
+      res.json({ ok: true, message: `Saison ${season} supprimée` });
+    }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Run a scrape job — spawn scrape.js with provided args and stream output via SSE
 router.post('/api/scrape', (req, res) => {
   const { source, season, min, max } = req.body || {};

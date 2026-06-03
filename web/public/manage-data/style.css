@@ -4,9 +4,24 @@ h1{font-size:18px;margin:4px 0}
 h2{font-size:14px;margin:12px 0 4px}
 p{font-size:12px;margin:2px 0}
 section{margin-top:16px;padding:10px;border:1px solid #ddd;border-radius:4px}
-form{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px}
+.field-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:12px;margin-top:8px}
+.field-row:first-child{margin-top:0}
+.mode-row{gap:12px}
+.field-label{font-size:12px;color:#555}
+.radio-label{display:flex;align-items:center;gap:4px;font-size:12px;cursor:pointer}
 label{display:flex;align-items:center;gap:4px;font-size:12px}
-input{padding:3px;font-size:12px;border:1px solid #ccc;border-radius:3px}
+input[type="text"],input[type="number"]{padding:3px;font-size:12px;border:1px solid #ccc;border-radius:3px;width:80px}
+input[type="text"]{width:90px}
 button{padding:4px 10px;font-size:12px;cursor:pointer;border:1px solid #888;border-radius:3px;background:#f0f0f0}
 button:disabled{opacity:0.5;cursor:default}
+.btn-secondary{background:#fff;border-color:#aaa;color:#444}
+.btn-danger{background:#fff0f0;border-color:#c00;color:#c00;padding:2px 8px}
+.btn-danger:hover:not(:disabled){background:#ffe0e0}
 #log{background:#1e1e1e;color:#d4d4d4;font-size:11px;padding:8px;border-radius:4px;max-height:400px;overflow-y:auto;white-space:pre-wrap;word-break:break-all;margin:0}
+#statusList{margin-top:8px;display:flex;flex-direction:column;gap:6px}
+.season-row{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#fafafa;border:1px solid #e0e0e0;border-radius:4px;padding:6px 10px;font-size:12px}
+.season-info{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.season-info strong{font-size:12px}
+.season-info span{color:#555}
+.warn{color:#a06000;font-size:11px}
+.err{color:#c00}
