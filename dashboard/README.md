@@ -1,7 +1,7 @@
 ```markdown
-# bf_foot_dashboard
+# dashboard
 
-Static dashboard that visualizes Ligue 1 standings data from `bf_foot_scraper`.
+Static dashboard that visualizes Ligue 1 standings data from `scraper`.
 
 **Features:**
 - Current standings table from FootMercato.net (wins, draws, losses, goals, etc.)
@@ -10,17 +10,17 @@ Static dashboard that visualizes Ligue 1 standings data from `bf_foot_scraper`.
 
 Quick start (local)
 
-1. Make sure the scraper has run and `bf_foot_scraper/data/seasons.json` exists.
-2. Serve the `bf_foot` parent folder:
+1. Make sure the scraper has run and `scraper/data/seasons.json` exists.
+2. Serve the `bf_foot_l1` parent folder:
 
 ```bash
-cd /path/to/bf_foot
-./bf_foot_dashboard/server.sh start
-# open http://localhost:8080/bf_foot_dashboard in your browser
+cd /path/to/bf_foot_l1
+./dashboard/server.sh start
+# open http://localhost:8080/dashboard in your browser
 ```
 
 How it works
-- `index.html` loads `assets/js/app.js`, which fetches `../bf_foot_scraper/data/seasons.json`
+- `index.html` loads `assets/js/app.js`, which fetches `../scraper/data/seasons.json`
 - Automatically detects data type: current standings vs. evolution data
 - Shows appropriate UI (table only for current standings, chart + table for evolution)
 
@@ -34,7 +34,7 @@ Deployment notes
 
 Deployment notes
 - If you want to host the dashboard on GitHub Pages, either:
-	- Copy `data/seasons.json` into the dashboard repo (e.g. `bf_foot_dashboard/data/seasons.json`) and keep the relative fetch path, or
+	- Copy `data/seasons.json` into the dashboard repo (e.g. `dashboard/data/seasons.json`) and keep the relative fetch path, or
 	- Update the fetch URL in `assets/js/app.js` to point to a raw GitHub URL for the `seasons.json` file.
 
 Files of interest
@@ -52,12 +52,12 @@ Local server helper
 
 For convenience a small script `server.sh` is provided in this folder to start,
 stop and check the status of a simple local HTTP server that serves the
-parent `bf_foot` directory (so the dashboard can fetch `../bf_foot_scraper/data/seasons.json`).
+parent `bf_foot_l1` directory (so the dashboard can fetch `../scraper/data/seasons.json`).
 
 Make it executable and use it as follows:
 
 ```bash
-cd bf_foot_dashboard
+cd dashboard
 chmod +x server.sh
 ./server.sh start    # start server on port 8080 (default)
 ./server.sh status   # show status
@@ -73,4 +73,3 @@ PORT=8000 ./server.sh start
 
 The script is intentionally simple and shellcheck-friendly; it stores the
 server PID in `.server.pid` next to the script.
-

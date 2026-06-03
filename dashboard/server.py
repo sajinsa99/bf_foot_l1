@@ -30,7 +30,7 @@ def run():
     os.chdir(ROOT_DIR)
     with socketserver.TCPServer(("", PORT), NoCacheHTTPRequestHandler) as httpd:
         print(f"Serving {ROOT_DIR} on port {PORT}")
-        print(f"URL: http://localhost:{PORT}/bf_foot_dashboard")
+        print(f"URL: http://localhost:{PORT}/dashboard")
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
