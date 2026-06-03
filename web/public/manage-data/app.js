@@ -173,6 +173,15 @@ async function loadStatus() {
     statusList.querySelectorAll('[data-delete-season]').forEach(btn => {
       btn.addEventListener('click', () => deleteSeason(btn.dataset.deleteSeason));
     });
+    // Attach refetch listeners
+    statusList.querySelectorAll('[data-refetch-season]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('inpSeason').value = btn.dataset.refetchSeason;
+        document.querySelector('input[name="mode"][value="all"]').checked = true;
+        rangeFields.hidden = true;
+        document.getElementById('btnFetch').click();
+      });
+    });
   } catch (e) {
     statusList.innerHTML = `<p class="err">Erreur : ${e.message}</p>`;
   }
@@ -201,7 +210,10 @@ function buildSeasonRow(season, data) {
       <span>${count} journée${count !== 1 ? 's' : ''} (J${min}–J${max})</span>
       ${missingHtml}
     </div>
-    <button type="button" class="btn-danger" data-delete-season="${season}">Supprimer</button>
+    <div class="season-actions">
+      <button type="button" class="btn-secondary" data-refetch-season="${season}">Tout récupérer</button>
+      <button type="button" class="btn-danger" data-delete-season="${season}">Supprimer</button>
+    </div>
   </div>`;
 }
 
