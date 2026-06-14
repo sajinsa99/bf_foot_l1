@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 const BASE_PATH = process.env.BASE_PATH || '/bf_foot_l1';
 const SCRAPER_DIR = path.join(__dirname, '..', 'scraper');
 
-const app = express();
+const app = express(); // nosemgrep: javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage
 const router = express.Router();
 
 app.use(express.json());

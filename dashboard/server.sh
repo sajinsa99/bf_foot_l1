@@ -131,7 +131,7 @@ stop_server() {
     kill "$pid" 2>/dev/null || true
 
     # wait a short time for process to exit
-    for i in 1 2 3 4 5; do
+    for _ in 1 2 3 4 5; do
       if kill -0 "$pid" 2>/dev/null; then
         sleep 0.2
       else
@@ -159,6 +159,7 @@ stop_server() {
       pids=$(lsof -t -i :"$PORT" -sTCP:LISTEN)
       if [ -n "$pids" ]; then
         echo "Killing PIDs: $pids"
+        # shellcheck disable=SC2086
         kill $pids 2>/dev/null || true
         sleep 0.2
         # If still running, force kill
