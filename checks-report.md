@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-06-14 11:35:12
+# Checks Report — bf_foot_l1 — 2026-06-14 11:47:13
 
 ## Summary
 
@@ -6,18 +6,18 @@
 |---|---|
 | shellcheck  web/install.sh | ✅ PASS |
 | shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh | ✅ PASS |
-| shellcheck  dashboard/server.sh | ❌ FAIL |
+| shellcheck  dashboard/server.sh | ✅ PASS |
 | jsonlint  scraper/package.json | ✅ PASS |
 | jsonlint  web/package.json | ✅ PASS |
 | jsonlint  scraper/data/seasons.json | ✅ PASS |
 | markdownlint-cli2  Markdown files | ❌ FAIL |
 | eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
 | yamllint  (no *.yaml / *.yml files found) | ⏭ SKIP |
-| semgrep  dashboard/server.py + web JS sources | ❌ FAIL |
+| semgrep  dashboard/server.py + web JS sources | ✅ PASS |
 | trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
 | gitleaks  secrets in repo | ✅ PASS |
 | detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
-| **Total** | PASS: 6 · FAIL: 4 · SKIP: 3 |
+| **Total** | PASS: 8 · FAIL: 2 · SKIP: 3 |
 
 ---
 
@@ -41,26 +41,9 @@ _no output_
 
 ### `shellcheck  dashboard/server.sh`
 
-**Status:** ❌ FAIL (exit 1)
+**Status:** ✅ PASS
 
-```
-
-In dashboard/server.sh line 134:
-    for i in 1 2 3 4 5; do
-    ^-^ SC2034 (warning): i appears unused. Verify use (or export if used externally).
-
-
-In dashboard/server.sh line 162:
-        kill $pids 2>/dev/null || true
-             ^---^ SC2086 (info): Double quote to prevent globbing and word splitting.
-
-Did you mean: 
-        kill "$pids" 2>/dev/null || true
-
-For more information:
-  https://www.shellcheck.net/wiki/SC2034 -- i appears unused. Verify use (or ...
-  https://www.shellcheck.net/wiki/SC2086 -- Double quote to prevent globbing ...
-```
+_no output_
 
 ---
 
@@ -82,7 +65,7 @@ For more information:
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^1.5.0",
+    "axios": "^1.16.0",
     "cheerio": "^1.0.0-rc.12",
     "date-fns": "^2.30.0",
     "minimist": "^1.2.8"
@@ -146559,25 +146542,61 @@ For more information:
 
 ```
 markdownlint-cli2 v0.17.2 (markdownlint v0.37.4)
-Finding: ./README.md ./scraper/README.md ./dashboard/README.md ./checks-report.md
-Linting: 4 file(s)
-file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark-extension-gfm-table/lib/edit-map.js:112
-      events.push(...slice);
-             ^
-
-RangeError: Maximum call stack size exceeded
-    at EditMap.consume (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark-extension-gfm-table/lib/edit-map.js:112:14)
-    at resolveTable (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark-extension-gfm-table/lib/syntax.js:672:7)
-    at resolveAll (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark-util-resolve-all/index.js:26:16)
-    at Object.write (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/create-tokenizer.js:145:22)
-    at closeFlow (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/initialize/document.js:345:15)
-    at flowStart (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/initialize/document.js:189:22)
-    at thereIsNoNewContainer (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/initialize/document.js:168:12)
-    at go (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/create-tokenizer.js:235:13)
-    at main (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/create-tokenizer.js:219:9)
-    at Object.write (file:///usr/lib/node_modules/markdownlint-cli2/node_modules/micromark/lib/create-tokenizer.js:136:5)
-
-Node.js v22.22.3
+Finding: ./README.md ./scraper/README.md ./dashboard/README.md
+Linting: 3 file(s)
+Summary: 52 error(s)
+dashboard/README.md:1 MD041/first-line-heading/first-line-h1 First line in a file should be a top-level heading [Context: "```markdown"]
+dashboard/README.md:8:81 MD013/line-length Line length [Expected: 80; Actual: 97]
+dashboard/README.md:23 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `index.html` loads `assets/j..."]
+dashboard/README.md:28 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **FootMercato.net**: Current..."]
+dashboard/README.md:32 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- For GitHub Pages: copy `data..."]
+dashboard/README.md:36 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- If you want to host the dash..."]
+dashboard/README.md:37:1 MD007/ul-indent Unordered list indentation [Expected: 2; Actual: 1]
+dashboard/README.md:37:1 MD010/no-hard-tabs Hard tabs [Column: 1]
+dashboard/README.md:37:81 MD013/line-length Line length [Expected: 80; Actual: 125]
+dashboard/README.md:38:1 MD007/ul-indent Unordered list indentation [Expected: 2; Actual: 1]
+dashboard/README.md:38:1 MD010/no-hard-tabs Hard tabs [Column: 1]
+dashboard/README.md:38:81 MD013/line-length Line length [Expected: 80; Actual: 103]
+dashboard/README.md:41 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `index.html` — main UI"]
+dashboard/README.md:46:81 MD013/line-length Line length [Expected: 80; Actual: 101]
+dashboard/README.md:46 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- To change where the dashboar..."]
+dashboard/README.md:47:81 MD013/line-length Line length [Expected: 80; Actual: 119]
+README.md:1:12 MD047/single-trailing-newline Files should end with a single newline character
+scraper/README.md:3:77 MD009/no-trailing-spaces Trailing spaces [Expected: 0 or 2; Actual: 1]
+scraper/README.md:15:1 MD029/ol-prefix Ordered list item prefix [Expected: 1; Actual: 2; Style: 1/1/1]
+scraper/README.md:73 MD031/blanks-around-fences Fenced code blocks should be surrounded by blank lines [Context: "```bash"]
+scraper/README.md:78 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `fetch` — Fetch specific rou..."]
+scraper/README.md:85:81 MD013/line-length Line length [Expected: 80; Actual: 116]
+scraper/README.md:85 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- For `fetch`, `fetch-all`, `f..."]
+scraper/README.md:129:81 MD013/line-length Line length [Expected: 80; Actual: 106]
+scraper/README.md:129 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `-s=SEASON` — Season (YYYY, ..."]
+scraper/README.md:140 MD031/blanks-around-fences Fenced code blocks should be surrounded by blank lines [Context: "```bash"]
+scraper/README.md:145:81 MD013/line-length Line length [Expected: 80; Actual: 87]
+scraper/README.md:145 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **Fetch mode**: Fetch all ro..."]
+scraper/README.md:148:81 MD013/line-length Line length [Expected: 80; Actual: 208]
+scraper/README.md:173 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "1. Validates that BOTH `-os` a..."]
+scraper/README.md:180:1 MD029/ol-prefix Ordered list item prefix [Expected: 8; Actual: 6; Style: 1/2/3]
+scraper/README.md:183 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "1. Reads all available seasons..."]
+scraper/README.md:190:81 MD013/line-length Line length [Expected: 80; Actual: 94]
+scraper/README.md:190 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `-os=SEASON` — Oldest season..."]
+scraper/README.md:191:81 MD013/line-length Line length [Expected: 80; Actual: 94]
+scraper/README.md:197 MD022/blanks-around-headings Headings should be surrounded by blank lines [Expected: 1; Actual: 0; Below] [Context: "### Core Features"]
+scraper/README.md:198:81 MD013/line-length Line length [Expected: 80; Actual: 106]
+scraper/README.md:198 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **Auto-detect latest season*..."]
+scraper/README.md:199:81 MD013/line-length Line length [Expected: 80; Actual: 98]
+scraper/README.md:200:81 MD013/line-length Line length [Expected: 80; Actual: 93]
+scraper/README.md:204:81 MD013/line-length Line length [Expected: 80; Actual: 100]
+scraper/README.md:205:81 MD013/line-length Line length [Expected: 80; Actual: 94]
+scraper/README.md:208 MD022/blanks-around-headings Headings should be surrounded by blank lines [Expected: 1; Actual: 0; Below] [Context: "### Recommended Usage Patterns"]
+scraper/README.md:209:81 MD013/line-length Line length [Expected: 80; Actual: 92]
+scraper/README.md:209 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **Latest season**: `./get_on..."]
+scraper/README.md:210:81 MD013/line-length Line length [Expected: 80; Actual: 91]
+scraper/README.md:211:81 MD013/line-length Line length [Expected: 80; Actual: 103]
+scraper/README.md:212:81 MD013/line-length Line length [Expected: 80; Actual: 96]
+scraper/README.md:219:81 MD013/line-length Line length [Expected: 80; Actual: 161]
+scraper/README.md:220:81 MD013/line-length Line length [Expected: 80; Actual: 132]
+scraper/README.md:225 MD031/blanks-around-fences Fenced code blocks should be surrounded by blank lines [Context: "```"]
+scraper/README.md:225 MD040/fenced-code-language Fenced code blocks should have a language specified [Context: "```"]
 ```
 
 ---
@@ -146602,7 +146621,7 @@ Node.js v22.22.3
 
 ### `semgrep  dashboard/server.py + web JS sources`
 
-**Status:** ❌ FAIL (exit 1)
+**Status:** ✅ PASS
 
 ```
                
@@ -146624,27 +146643,18 @@ Node.js v22.22.3
 │ Scan Summary │
 └──────────────┘
 ✅ Scan completed successfully.
- • Findings: 1 (1 blocking)
+ • Findings: 0 (0 blocking)
  • Rules run: 442
  • Targets scanned: 4
  • Parsed lines: ~100.0%
  • No ignore information available
-Ran 442 rules on 4 files: 1 finding.
-                  
-                  
-┌────────────────┐
-│ 1 Code Finding │
-└────────────────┘
-                 
-    web/server.js
-     ❱ javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage
-          ❰❰ Blocking ❱❱
-          A CSRF middleware was not detected in your express application. Ensure you are either using one such
-          as `csurf` or `csrf` (see rule references) and/or you are properly doing CSRF validation in your    
-          routes with a token or cookies.                                                                     
-          Details: https://sg.run/BxzR                                                                        
-                                                                                                              
-           11┆ const app = express();
+Ran 442 rules on 4 files: 0 findings.
+(need more rules? `semgrep login` for additional free Semgrep Registry rules)
+
+
+A new version of Semgrep is available. See https://semgrep.dev/docs/upgrading
+If Semgrep missed a finding, please send us feedback to let us know!
+See https://semgrep.dev/docs/reporting-false-negatives/
 ```
 
 ---
@@ -146656,14 +146666,14 @@ Ran 442 rules on 4 files: 1 finding.
 **Status:** ❌ FAIL (exit 1)
 
 ```
-2026-06-14T09:35:04Z	INFO	[vulndb] Need to update DB
-2026-06-14T09:35:04Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-06-14T09:35:04Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-31.04 MiB / 96.06 MiB [------------------->_________________________________________] 32.31% ? p/s ?71.35 MiB / 96.06 MiB [--------------------------------------------->_______________] 74.28% ? p/s ?96.06 MiB / 96.06 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.34 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.34 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.34 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.35 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.35 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.35 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.81 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.81 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.81 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.69 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.69 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.69 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.97 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.97 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.97 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.62 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.62 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [-------------------------------------------------] 100.00% 24.20 MiB p/s 4.2s2026-06-14T09:35:08Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-06-14T09:35:08Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-06-14T09:35:08Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-06-14T09:35:08Z	INFO	Number of language-specific files	num=1
-2026-06-14T09:35:08Z	INFO	[npm] Detecting vulnerabilities...
+2026-06-14T09:47:05Z	INFO	[vulndb] Need to update DB
+2026-06-14T09:47:05Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-06-14T09:47:05Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+38.06 MiB / 96.06 MiB [------------------------>____________________________________] 39.62% ? p/s ?74.95 MiB / 96.06 MiB [----------------------------------------------->_____________] 78.03% ? p/s ?96.06 MiB / 96.06 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 96.52 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 96.52 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 96.52 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 90.29 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 90.29 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 90.29 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 84.47 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 84.47 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 84.47 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 79.02 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 79.02 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 79.02 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 73.92 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 73.92 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 73.92 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [-------------------------------------------------] 100.00% 27.63 MiB p/s 3.7s2026-06-14T09:47:09Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-06-14T09:47:09Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-06-14T09:47:09Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-06-14T09:47:09Z	INFO	Number of language-specific files	num=1
+2026-06-14T09:47:09Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -146766,9 +146776,9 @@ To suppress version checks, run Trivy scans with the --skip-version-check flag
     ○ ░
     ░    gitleaks
 
-[90m9:35AM[0m [32mINF[0m [1m14 commits scanned.[0m
-[90m9:35AM[0m [32mINF[0m [1mscanned ~7392413 bytes (7.39 MB) in 2.52s[0m
-[90m9:35AM[0m [32mINF[0m [1mno leaks found[0m
+[90m9:47AM[0m [32mINF[0m [1m16 commits scanned.[0m
+[90m9:47AM[0m [32mINF[0m [1mscanned ~7397515 bytes (7.40 MB) in 2.66s[0m
+[90m9:47AM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
