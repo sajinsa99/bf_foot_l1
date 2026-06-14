@@ -234,7 +234,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 
 Add to `.gitignore` if you don't want to version control historical data:
 
-```
+```text
 data/seasons.json
 ```
 
