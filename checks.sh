@@ -133,7 +133,7 @@ section "Markdown"
 mapfile -t md_files < <(find . -path './.git' -prune -o -name 'checks-report.md' -prune -o -name '*.md' -print)
 if [[ ${#md_files[@]} -gt 0 ]]; then
   step "markdownlint-cli2  Markdown files" \
-    "${DOCKER_RUN[@]}" markdownlint-cli2 "${md_files[@]}"
+    "${DOCKER_RUN[@]}" markdownlint-cli2 --fix "${md_files[@]}"
 else
   skip "markdownlint-cli2  (no *.md files found)"
 fi
@@ -141,7 +141,7 @@ fi
 section "JavaScript"
 if [[ -f eslint.config.js || -f web/eslint.config.js || -f .eslintrc.json ]]; then
   step "eslint  web/server.js  web/public/manage-data/app.js  web/public/dashboard/app.js" \
-    "${DOCKER_RUN[@]}" bash -c 'cd web && eslint server.js public/manage-data/app.js public/dashboard/app.js'
+    "${DOCKER_RUN[@]}" bash -c 'cd web && eslint --fix server.js public/manage-data/app.js public/dashboard/app.js'
 else
   skip "eslint  (no eslint.config.js found — create one to enable)"
 fi
