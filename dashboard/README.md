@@ -20,29 +20,35 @@ cd /path/to/bf_foot_l1
 ```
 
 How it works
+
 - `index.html` loads `assets/js/app.js`, which fetches `../scraper/data/seasons.json`
 - Automatically detects data type: current standings vs. evolution data
 - Shows appropriate UI (table only for current standings, chart + table for evolution)
 
 Data sources
+
 - **FootMercato.net**: Current Ligue 1 standings with full statistics
 - **Transfermarkt.fr**: Form tables per matchday (position evolution over time)
 
 Deployment notes
+
 - For GitHub Pages: copy `data/seasons.json` or update fetch URL in `assets/js/app.js`
 - The dashboard filters out corrupted data automatically
 
 Deployment notes
+
 - If you want to host the dashboard on GitHub Pages, either:
-	- Copy `data/seasons.json` into the dashboard repo (e.g. `dashboard/data/seasons.json`) and keep the relative fetch path, or
-	- Update the fetch URL in `assets/js/app.js` to point to a raw GitHub URL for the `seasons.json` file.
+  - Copy `data/seasons.json` into the dashboard repo (e.g. `dashboard/data/seasons.json`) and keep the relative fetch path, or
+  - Update the fetch URL in `assets/js/app.js` to point to a raw GitHub URL for the `seasons.json` file.
 
 Files of interest
+
 - `index.html` — main UI
 - `assets/js/app.js` — dashboard logic + Chart.js integration
 - `assets/css/style.css` — minimal styling
 
 Customization
+
 - To change where the dashboard reads the JSON, edit the fetch path at the top of `assets/js/app.js`.
 - You can improve the chart (tooltips, lines, export) by editing `assets/js/app.js` to add Chart.js plugins or options.
 

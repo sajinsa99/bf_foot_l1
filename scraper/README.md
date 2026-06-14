@@ -1,6 +1,6 @@
 # bf_foot_scraper
 
-Node.js scraper that fetches Ligue 1 standings from Transfermarkt and stores 
+Node.js scraper that fetches Ligue 1 standings from Transfermarkt and stores
 timestamped snapshots in a flat JSON DB at `data/seasons.json`.
 
 ## Quick start
@@ -70,11 +70,13 @@ npm install
 Fetch, delete, or check status of data for one season at a time.
 
 **Usage:**
+
 ```bash
 ./get_one_season.sh [-s=SEASON] [-j=JOURNEY] -a=ACTION [-min=MIN] [-max=MAX]
 ```
 
 **Actions:**
+
 - `fetch` — Fetch specific rounds or range
 - `fetch-all` — Fetch all available rounds (auto-detects max)
 - `fetch-last` — Fetch only the latest available round (auto-detects max)
@@ -82,6 +84,7 @@ Fetch, delete, or check status of data for one season at a time.
 - `status` — Check available seasons/rounds
 
 **Season parameter behavior:**
+
 - For `fetch`, `fetch-all`, `fetch-last`, `delete`: `-s=latest` auto-detects from **Transfermarkt** (current source)
 - For `status`: `-s=latest` gets latest season from **local JSON database**
 
@@ -126,6 +129,7 @@ Fetch, delete, or check status of data for one season at a time.
 ```
 
 **Flags:**
+
 - `-s=SEASON` — Season (YYYY, YYYY/YYYY format, or 'latest'; e.g., `-s=2025`, `-s=2025/2026`, `-s=latest`)
 - `-j=JOURNEY` — Specific round(s): single (`-j=5`) or multiple (`-j=13,15,17`)
 - `-min=MIN` — Minimum round for range (default: 1)
@@ -137,11 +141,13 @@ Fetch, delete, or check status of data for one season at a time.
 Fetch all rounds for multiple seasons in one command, or display status of all seasons.
 
 **Usage:**
+
 ```bash
 ./get_all_seasons.sh [-os=OLDEST_SEASON -ns=NEWEST_SEASON] [-status] [-h|--help]
 ```
 
 **Actions:**
+
 - **Fetch mode**: Fetch all rounds for multiple seasons (requires BOTH `-os` and `-ns`)
 - **Status mode** (`-status`): Display all available seasons and their rounds
 
@@ -170,6 +176,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 ```
 
 **Fetch Mode Behavior:**
+
 1. Validates that BOTH `-os` and `-ns` are specified (error if only one provided)
 2. Shows warning message and asks for confirmation (type `yes` to proceed)
 3. Clears `data/seasons.json` completely
@@ -180,6 +187,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 6. Displays final summary of all available seasons/rounds
 
 **Status Mode Behavior:**
+
 1. Reads all available seasons from `data/seasons.json`
 2. Sorts seasons from newest to oldest
 3. For each season, displays available rounds (min to max)
@@ -187,6 +195,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 5. Useful for monitoring data completeness
 
 **Flags:**
+
 - `-os=SEASON` — Oldest season to fetch (required for fetch mode, use `latest` or YYYY format)
 - `-ns=SEASON` — Newest season to fetch (required for fetch mode, use `latest` or YYYY format)
 - `-status` — Show all available seasons and rounds (status mode)
@@ -195,6 +204,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 ## Features & Best Practices
 
 ### Core Features
+
 - **Auto-detect latest season**: Use `-s=latest` or `-ns=latest` to fetch the current season automatically
 - **Smart round detection**: Auto-detects max available rounds per season without hardcoded limits
 - **Data preservation**: Fetching individual rounds doesn't delete others (unless full fetch)
@@ -206,6 +216,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 - **Retry mechanism**: Use `-retry-missing` to re-fetch any missing rounds in a season
 
 ### Recommended Usage Patterns
+
 - **Latest season**: `./get_one_season.sh -s=latest -a=fetch-all` to fetch the newest season
 - **Latest round weekly**: `./get_one_season.sh -s=latest -a=fetch-last` for weekly updates
 - **One-time setup**: `./get_all_seasons.sh -os=2020 -ns=latest` to fetch all historical + current data
@@ -222,6 +233,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 ## Git integration
 
 Add to `.gitignore` if you don't want to version control historical data:
+
 ```
 data/seasons.json
 ```

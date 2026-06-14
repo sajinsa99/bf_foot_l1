@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-06-14 11:47:13
+# Checks Report — bf_foot_l1 — 2026-06-14 11:56:33
 
 ## Summary
 
@@ -146544,59 +146544,33 @@ _no output_
 markdownlint-cli2 v0.17.2 (markdownlint v0.37.4)
 Finding: ./README.md ./scraper/README.md ./dashboard/README.md
 Linting: 3 file(s)
-Summary: 52 error(s)
+Summary: 26 error(s)
 dashboard/README.md:1 MD041/first-line-heading/first-line-h1 First line in a file should be a top-level heading [Context: "```markdown"]
 dashboard/README.md:8:81 MD013/line-length Line length [Expected: 80; Actual: 97]
-dashboard/README.md:23 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `index.html` loads `assets/j..."]
-dashboard/README.md:28 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **FootMercato.net**: Current..."]
-dashboard/README.md:32 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- For GitHub Pages: copy `data..."]
-dashboard/README.md:36 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- If you want to host the dash..."]
-dashboard/README.md:37:1 MD007/ul-indent Unordered list indentation [Expected: 2; Actual: 1]
-dashboard/README.md:37:1 MD010/no-hard-tabs Hard tabs [Column: 1]
-dashboard/README.md:37:81 MD013/line-length Line length [Expected: 80; Actual: 125]
-dashboard/README.md:38:1 MD007/ul-indent Unordered list indentation [Expected: 2; Actual: 1]
-dashboard/README.md:38:1 MD010/no-hard-tabs Hard tabs [Column: 1]
-dashboard/README.md:38:81 MD013/line-length Line length [Expected: 80; Actual: 103]
-dashboard/README.md:41 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `index.html` — main UI"]
-dashboard/README.md:46:81 MD013/line-length Line length [Expected: 80; Actual: 101]
-dashboard/README.md:46 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- To change where the dashboar..."]
-dashboard/README.md:47:81 MD013/line-length Line length [Expected: 80; Actual: 119]
-README.md:1:12 MD047/single-trailing-newline Files should end with a single newline character
-scraper/README.md:3:77 MD009/no-trailing-spaces Trailing spaces [Expected: 0 or 2; Actual: 1]
+dashboard/README.md:41:81 MD013/line-length Line length [Expected: 80; Actual: 126]
+dashboard/README.md:42:81 MD013/line-length Line length [Expected: 80; Actual: 104]
+dashboard/README.md:52:81 MD013/line-length Line length [Expected: 80; Actual: 101]
+dashboard/README.md:53:81 MD013/line-length Line length [Expected: 80; Actual: 119]
 scraper/README.md:15:1 MD029/ol-prefix Ordered list item prefix [Expected: 1; Actual: 2; Style: 1/1/1]
-scraper/README.md:73 MD031/blanks-around-fences Fenced code blocks should be surrounded by blank lines [Context: "```bash"]
-scraper/README.md:78 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `fetch` — Fetch specific rou..."]
-scraper/README.md:85:81 MD013/line-length Line length [Expected: 80; Actual: 116]
-scraper/README.md:85 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- For `fetch`, `fetch-all`, `f..."]
-scraper/README.md:129:81 MD013/line-length Line length [Expected: 80; Actual: 106]
-scraper/README.md:129 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `-s=SEASON` — Season (YYYY, ..."]
-scraper/README.md:140 MD031/blanks-around-fences Fenced code blocks should be surrounded by blank lines [Context: "```bash"]
-scraper/README.md:145:81 MD013/line-length Line length [Expected: 80; Actual: 87]
-scraper/README.md:145 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **Fetch mode**: Fetch all ro..."]
-scraper/README.md:148:81 MD013/line-length Line length [Expected: 80; Actual: 208]
-scraper/README.md:173 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "1. Validates that BOTH `-os` a..."]
-scraper/README.md:180:1 MD029/ol-prefix Ordered list item prefix [Expected: 8; Actual: 6; Style: 1/2/3]
-scraper/README.md:183 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "1. Reads all available seasons..."]
-scraper/README.md:190:81 MD013/line-length Line length [Expected: 80; Actual: 94]
-scraper/README.md:190 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- `-os=SEASON` — Oldest season..."]
-scraper/README.md:191:81 MD013/line-length Line length [Expected: 80; Actual: 94]
-scraper/README.md:197 MD022/blanks-around-headings Headings should be surrounded by blank lines [Expected: 1; Actual: 0; Below] [Context: "### Core Features"]
-scraper/README.md:198:81 MD013/line-length Line length [Expected: 80; Actual: 106]
-scraper/README.md:198 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **Auto-detect latest season*..."]
-scraper/README.md:199:81 MD013/line-length Line length [Expected: 80; Actual: 98]
-scraper/README.md:200:81 MD013/line-length Line length [Expected: 80; Actual: 93]
-scraper/README.md:204:81 MD013/line-length Line length [Expected: 80; Actual: 100]
-scraper/README.md:205:81 MD013/line-length Line length [Expected: 80; Actual: 94]
-scraper/README.md:208 MD022/blanks-around-headings Headings should be surrounded by blank lines [Expected: 1; Actual: 0; Below] [Context: "### Recommended Usage Patterns"]
-scraper/README.md:209:81 MD013/line-length Line length [Expected: 80; Actual: 92]
-scraper/README.md:209 MD032/blanks-around-lists Lists should be surrounded by blank lines [Context: "- **Latest season**: `./get_on..."]
-scraper/README.md:210:81 MD013/line-length Line length [Expected: 80; Actual: 91]
-scraper/README.md:211:81 MD013/line-length Line length [Expected: 80; Actual: 103]
-scraper/README.md:212:81 MD013/line-length Line length [Expected: 80; Actual: 96]
-scraper/README.md:219:81 MD013/line-length Line length [Expected: 80; Actual: 161]
-scraper/README.md:220:81 MD013/line-length Line length [Expected: 80; Actual: 132]
-scraper/README.md:225 MD031/blanks-around-fences Fenced code blocks should be surrounded by blank lines [Context: "```"]
-scraper/README.md:225 MD040/fenced-code-language Fenced code blocks should have a language specified [Context: "```"]
+scraper/README.md:88:81 MD013/line-length Line length [Expected: 80; Actual: 116]
+scraper/README.md:133:81 MD013/line-length Line length [Expected: 80; Actual: 106]
+scraper/README.md:151:81 MD013/line-length Line length [Expected: 80; Actual: 87]
+scraper/README.md:154:81 MD013/line-length Line length [Expected: 80; Actual: 208]
+scraper/README.md:187:1 MD029/ol-prefix Ordered list item prefix [Expected: 8; Actual: 6; Style: 1/2/3]
+scraper/README.md:199:81 MD013/line-length Line length [Expected: 80; Actual: 94]
+scraper/README.md:200:81 MD013/line-length Line length [Expected: 80; Actual: 94]
+scraper/README.md:208:81 MD013/line-length Line length [Expected: 80; Actual: 106]
+scraper/README.md:209:81 MD013/line-length Line length [Expected: 80; Actual: 98]
+scraper/README.md:210:81 MD013/line-length Line length [Expected: 80; Actual: 93]
+scraper/README.md:214:81 MD013/line-length Line length [Expected: 80; Actual: 100]
+scraper/README.md:215:81 MD013/line-length Line length [Expected: 80; Actual: 94]
+scraper/README.md:220:81 MD013/line-length Line length [Expected: 80; Actual: 92]
+scraper/README.md:221:81 MD013/line-length Line length [Expected: 80; Actual: 91]
+scraper/README.md:222:81 MD013/line-length Line length [Expected: 80; Actual: 103]
+scraper/README.md:223:81 MD013/line-length Line length [Expected: 80; Actual: 96]
+scraper/README.md:230:81 MD013/line-length Line length [Expected: 80; Actual: 161]
+scraper/README.md:231:81 MD013/line-length Line length [Expected: 80; Actual: 132]
+scraper/README.md:237 MD040/fenced-code-language Fenced code blocks should have a language specified [Context: "```"]
 ```
 
 ---
@@ -146666,14 +146640,14 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 **Status:** ❌ FAIL (exit 1)
 
 ```
-2026-06-14T09:47:05Z	INFO	[vulndb] Need to update DB
-2026-06-14T09:47:05Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-06-14T09:47:05Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-38.06 MiB / 96.06 MiB [------------------------>____________________________________] 39.62% ? p/s ?74.95 MiB / 96.06 MiB [----------------------------------------------->_____________] 78.03% ? p/s ?96.06 MiB / 96.06 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 96.52 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 96.52 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 96.52 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 90.29 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 90.29 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 90.29 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 84.47 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 84.47 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 84.47 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 79.02 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 79.02 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 79.02 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 73.92 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 73.92 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 73.92 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [-------------------------------------------------] 100.00% 27.63 MiB p/s 3.7s2026-06-14T09:47:09Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-06-14T09:47:09Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-06-14T09:47:09Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-06-14T09:47:09Z	INFO	Number of language-specific files	num=1
-2026-06-14T09:47:09Z	INFO	[npm] Detecting vulnerabilities...
+2026-06-14T09:56:24Z	INFO	[vulndb] Need to update DB
+2026-06-14T09:56:24Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-06-14T09:56:24Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+31.08 MiB / 96.06 MiB [------------------->_________________________________________] 32.36% ? p/s ?65.84 MiB / 96.06 MiB [----------------------------------------->___________________] 68.54% ? p/s ?96.06 MiB / 96.06 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.15 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.15 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.15 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.17 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.17 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.17 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.65 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.65 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.65 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.54 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.54 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.54 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.83 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.83 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.83 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.48 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.48 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.48 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [-------------------------------------------------] 100.00% 23.95 MiB p/s 4.2s2026-06-14T09:56:28Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-06-14T09:56:28Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-06-14T09:56:28Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-06-14T09:56:28Z	INFO	Number of language-specific files	num=1
+2026-06-14T09:56:28Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -146776,9 +146750,9 @@ To suppress version checks, run Trivy scans with the --skip-version-check flag
     ○ ░
     ░    gitleaks
 
-[90m9:47AM[0m [32mINF[0m [1m16 commits scanned.[0m
-[90m9:47AM[0m [32mINF[0m [1mscanned ~7397515 bytes (7.40 MB) in 2.66s[0m
-[90m9:47AM[0m [32mINF[0m [1mno leaks found[0m
+[90m9:56AM[0m [32mINF[0m [1m18 commits scanned.[0m
+[90m9:56AM[0m [32mINF[0m [1mscanned ~7406745 bytes (7.41 MB) in 2.71s[0m
+[90m9:56AM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
