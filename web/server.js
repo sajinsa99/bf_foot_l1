@@ -12,7 +12,15 @@ const DB_FILE = path.join(SCRAPER_DIR, 'data', 'seasons.json');
 
 // Import parsers directly — avoids spawning child processes for simple lookups
 // and eliminates the code-injection shape of inline -e scripts.
-const transfermarkt = require('../scraper/lib/parsers/transfermarkt');
+// Wrapped in try/catch: if scraper deps are missing the server still starts
+// (the /api/latest-season and /api/max-round routes will return empty values).
+let transfermarkt;
+try {
+  transfermarkt = require('../scraper/lib/parsers/transfermarkt');
+} catch (e) {
+  console.error('Warning: could not load transfermarkt parser:', e.message);
+  transfermarkt = { getLatestSeason: async () => null, getMaxRound: async () => null };
+}
 
 const app = express(); // nosemgrep: javascript.express.security.audit.express-check-csurf-middleware-usage.express-check-csurf-middleware-usage
 const router = express.Router();
