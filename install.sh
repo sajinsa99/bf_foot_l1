@@ -5,11 +5,11 @@ INSTALL_DIR="/opt/bf_foot_l1"
 SERVICE_NAME="bf_foot_l1"
 NGINX_SNIPPET="/etc/nginx/snippets/bf_foot_l1_location.conf"
 BRUNO_CONF="/etc/nginx/sites-available/bruno"
-# install.sh lives in web/, repo root is one level up
-REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# install.sh lives at repo root
+REPO_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [[ $EUID -ne 0 ]]; then
-  echo "Run as root: sudo bash web/install.sh" >&2
+  echo "Run as root: sudo bash install.sh" >&2
   exit 1
 fi
 
