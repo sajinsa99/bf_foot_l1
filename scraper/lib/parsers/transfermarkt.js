@@ -1,22 +1,10 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { parseIntSafe, cleanTeamName } = require('../utils');
 
 // Parse Transfermarkt standings table for Ligue 1.
 // Example URL:
 // https://www.transfermarkt.fr/ligue-1/startseite/wettbewerb/FR1/saison_id/2024
-
-function parseIntSafe(s) {
-  const n = parseInt(String(s).replace(/[^0-9-]/g, ''), 10);
-  return Number.isNaN(n) ? null : n;
-}
-
-function cleanTeamName(text) {
-  if (!text) return '';
-  let t = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
-  // Remove leading digits or ranking markers
-  t = t.replace(/^\d+\.?\s*/, '').trim();
-  return t;
-}
 
 async function fetchStandings({ season = '2024', round = null, cacheRaw = false }) {
   const baseUrl = round 

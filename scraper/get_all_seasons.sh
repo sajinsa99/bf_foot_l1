@@ -94,80 +94,46 @@ if [ "$show_status" = true ]; then
     
     # If retry_missing flag is set, attempt to fetch missing journeys
     if [ "$retry_missing" = true ]; then
-      # Add small delay to ensure database is fully written
       sleep 0.5
-      
-      printf '  [DEBUG] Checking for missing journeys in %s\n' "$season"
-      
-      # Get max round from Transfermarkt for this season
+
       season_year=$(echo "$season" | cut -d/ -f1)
       max_on_site=$(node -e "
         const tm = require('./lib/parsers/transfermarkt.js');
         tm.getMaxRound('$season_year').then(max => {
-          if (max) {
-            console.log(max);
-          } else {
-            console.log('0');
-          }
-        }).catch(err => {
-          console.log('0');
-        });
+          console.log(max || 0);
+        }).catch(() => { console.log('0'); });
       ")
-      
-      printf '  [DEBUG] Max rounds on Transfermarkt: %s\n' "$max_on_site"
-      
-      # Get max round currently in database
-      max_in_db=$(node -e "
+
+      printf '  [INFO] Max rounds on Transfermarkt for %s: %s\n' "$season" "$max_on_site"
+
+      # Build the list of missing rounds: gaps within fetched range + rounds beyond max_in_db
+      missing_journeys=$(node -e "
         const fs = require('fs');
-        try {
-          const db = JSON.parse(fs.readFileSync('$db_file', 'utf8'));
-          const season = '$season';
-          if (db[season] && Array.isArray(db[season]) && db[season].length > 0) {
-            const rounds = db[season]
-              .map(s => s.round)
-              .filter(r => typeof r === 'number' && r > 0)
-              .sort((a, b) => a - b);
-            if (rounds.length > 0) {
-              console.log(Math.max(...rounds));
-            } else {
-              console.log('0');
-            }
-          } else {
-            console.log('0');
-          }
-        } catch (e) {
-          console.log('0');
+        const db = JSON.parse(fs.readFileSync('$db_file', 'utf8'));
+        const season = '$season';
+        const maxOnSite = parseInt('$max_on_site', 10) || 0;
+        if (!maxOnSite || !db[season] || !Array.isArray(db[season])) { process.exit(0); }
+        const have = new Set(
+          db[season].map(s => s.round).filter(r => typeof r === 'number' && r > 0)
+        );
+        const missing = [];
+        for (let i = 1; i <= maxOnSite; i++) {
+          if (!have.has(i)) missing.push(i);
         }
+        if (missing.length > 0) process.stdout.write(missing.join(','));
       ")
-      
-      printf '  [DEBUG] Max rounds in database: %s\n' "$max_in_db"
-      
-      # Determine missing journeys: from (max_in_db + 1) to max_on_site
-      if [ "$max_on_site" -gt "$max_in_db" ]; then
-        missing_journeys=""
-        for j in $(seq $((max_in_db + 1)) "$max_on_site"); do
-          if [ -z "$missing_journeys" ]; then
-            missing_journeys="$j"
-          else
-            missing_journeys="$missing_journeys,$j"
-          fi
-        done
-        
-        printf '  [DEBUG] Missing journeys: %s\n' "$missing_journeys"
-        
-        if [ -n "$missing_journeys" ]; then
-          printf '  ⚠ Missing journeys detected: %s (available on site up to %s)\n' "$missing_journeys" "$max_on_site"
-          printf '  Retrying missing journeys...\n'
-          if ./get_one_season.sh -s="$season" -j="$missing_journeys" -a=fetch; then
-            printf '  ✓ Successfully fetched missing journeys\n'
-            printf '  Updated status for season %s:\n' "$season"
-            ./get_one_season.sh -s="$season" -a=status
-          else
-            printf '  ✗ Retry failed for missing journeys: %s\n' "$missing_journeys" >&2
-          fi
+
+      if [ -n "$missing_journeys" ]; then
+        printf '  ⚠ Missing journeys: %s\n' "$missing_journeys"
+        printf '  Retrying missing journeys...\n'
+        if ./get_one_season.sh -s="$season" -j="$missing_journeys" -a=fetch; then
+          printf '  ✓ Successfully fetched missing journeys\n'
+          ./get_one_season.sh -s="$season" -a=status
+        else
+          printf '  ✗ Retry failed for missing journeys: %s\n' "$missing_journeys" >&2
         fi
       else
-        printf '  ✓ All available journeys already in database (max: %s)\n' "$max_on_site"
+        printf '  ✓ All available journeys present (max: %s)\n' "$max_on_site"
       fi
     fi
   done <<< "$seasons"
@@ -177,8 +143,9 @@ fi
 
 # Validate required parameters for fetch
 if [ -z "$oldest_season" ] && [ -z "$newest_season" ]; then
-  # Both missing - no error, this is fine (just use -status)
-  :
+  # Neither -status nor fetch args provided — show usage
+  printf '%s\n' "Error: specify -status or both -os=OLDEST_SEASON -ns=NEWEST_SEASON" >&2
+  usage
 elif [ -z "$oldest_season" ] && [ -n "$newest_season" ]; then
   printf '%s\n' "Error: -os=OLDEST_SEASON is required when -ns=NEWEST_SEASON is specified" >&2
   usage

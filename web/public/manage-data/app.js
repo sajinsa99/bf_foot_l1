@@ -124,12 +124,10 @@ document.getElementById('btnFetch').addEventListener('click', () => {
     body.min = min;
     body.max = max;
   } else if (mode === 'last') {
-    // fetch-last: will be handled server-side by omitting min/max and passing action hint
-    // For now we query max-round first then pass it as both min and max
     fetchLast(season);
     return;
   }
-  // mode === 'all': no min/max → scrape.js defaults to 1–autodetected-max
+  // mode === 'all': no min/max — server spawns scrape.js which auto-detects max via getMaxRound
   runScrape(body);
 });
 
@@ -137,9 +135,11 @@ async function fetchLast(season) {
   const year = season.split('/')[0];
   startLog();
   appendLog('Détection de la dernière journée disponible…');
+  let max;
   try {
     const res = await fetch(`/bf_foot_l1/api/max-round?year=${encodeURIComponent(year)}`);
-    const { max } = await res.json();
+    const data = await res.json();
+    max = data.max;
     if (!max) { appendLog('Impossible de détecter la dernière journée.'); setRunning(false); return; }
     appendLog(`Dernière journée détectée : ${max}`);
   } catch (e) {
@@ -147,15 +147,44 @@ async function fetchLast(season) {
     setRunning(false);
     return;
   }
-  // Re-read max from the fetch above — re-query to keep it simple
-  const res2 = await fetch(`/bf_foot_l1/api/max-round?year=${encodeURIComponent(year)}`);
-  const { max } = await res2.json();
+  // runScrape calls startLog which resets the log — we want to keep the detection message,
+  // so we continue streaming directly here instead of delegating to runScrape.
+  try {
+    const res = await fetch('/bf_foot_l1/api/scrape', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ source: 'transfermarkt', season, min: String(max), max: String(max) }),
+    });
+    if (!res.ok) { appendLog(`Erreur HTTP ${res.status}`); setRunning(false); return; }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (line.startsWith('data: ')) appendLog(line.slice(6));
+      }
+    }
+  } catch (e) {
+    appendLog('Erreur : ' + e.message);
+  }
   setRunning(false);
-  await runScrape({ source: 'transfermarkt', season, min: String(max), max: String(max) });
 }
 
 // ── Statut de la base ──
 document.getElementById('btnStatus').addEventListener('click', loadStatus);
+
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
 
 async function loadStatus() {
   statusArea.hidden = false;
@@ -183,7 +212,7 @@ async function loadStatus() {
       });
     });
   } catch (e) {
-    statusList.innerHTML = `<p class="err">Erreur : ${e.message}</p>`;
+    statusList.innerHTML = `<p class="err">Erreur : ${esc(e.message)}</p>`;
   }
 }
 
@@ -194,25 +223,27 @@ function buildSeasonRow(season, data) {
   const count = rounds.length;
 
   // Detect gaps
-  let missing = [];
+  const missing = [];
   if (rounds.length > 0) {
     for (let i = rounds[0]; i <= rounds[rounds.length - 1]; i++) {
       if (!rounds.includes(i)) missing.push(i);
     }
   }
   const missingHtml = missing.length
-    ? `<span class="warn">⚠ Manquantes : ${missing.join(', ')}</span>`
+    ? `<span class="warn">⚠ Manquantes : ${esc(missing.join(', '))}</span>`
     : '';
 
+  // season values come from the JSON keys we wrote ourselves — but escape defensively
+  const eSeason = esc(season);
   return `<div class="season-row">
     <div class="season-info">
-      <strong>Saison ${season}</strong>
-      <span>${count} journée${count !== 1 ? 's' : ''} (J${min}–J${max})</span>
+      <strong>Saison ${eSeason}</strong>
+      <span>${count} journée${count !== 1 ? 's' : ''} (J${esc(String(min))}–J${esc(String(max))})</span>
       ${missingHtml}
     </div>
     <div class="season-actions">
-      <button type="button" class="btn-secondary" data-refetch-season="${season}">Tout récupérer</button>
-      <button type="button" class="btn-danger" data-delete-season="${season}">Supprimer</button>
+      <button type="button" class="btn-secondary" data-refetch-season="${eSeason}">Tout récupérer</button>
+      <button type="button" class="btn-danger" data-delete-season="${eSeason}">Supprimer</button>
     </div>
   </div>`;
 }

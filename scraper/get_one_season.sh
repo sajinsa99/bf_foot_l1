@@ -369,7 +369,7 @@ elif [ "$action" = "delete" ]; then
       printf '%s\n' "Invalid journey value: $journey. Use format: 5 or 13,15,17" >&2
       exit 2
     fi
-    
+
     # If comma-separated, delete all of them
     if [[ "$journey" == *","* ]]; then
       IFS=',' read -ra journeys <<< "$journey"
@@ -401,6 +401,7 @@ elif [ "$action" = "delete" ]; then
         }
       "
     fi
+  else
     # Delete entire season
     printf 'Deleting entire season %s...\n' "$season"
     node -e "

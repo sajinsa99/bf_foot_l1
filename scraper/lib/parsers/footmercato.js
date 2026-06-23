@@ -1,25 +1,8 @@
 const axios = require('axios');
 const cheerio = require('cheerio');
+const { parseIntSafe, cleanTeamName } = require('../utils');
 
 const URL = 'https://www.footmercato.net/france/ligue-1/classement';
-
-function parseIntSafe(s) {
-  const n = parseInt(String(s).replace(/[^0-9-]/g, ''), 10);
-  return Number.isNaN(n) ? null : n;
-}
-
-function cleanTeamName(text) {
-  if (!text) return '';
-  let t = text.replace(/\n/g, ' ').replace(/\s+/g, ' ').trim();
-  t = t.replace(/Logo\s*/i, '').trim();
-  const parts = t.split(' ');
-  if (parts.length >= 2) {
-    const last = parts[parts.length - 1];
-    const secondLast = parts[parts.length - 2];
-    if (last === secondLast) parts.pop();
-  }
-  return parts.join(' ');
-}
 
 async function fetchStandings(type = 'general') {
   const typeParam = type === 'home' ? '?type=home' : type === 'away' ? '?type=away' : '';

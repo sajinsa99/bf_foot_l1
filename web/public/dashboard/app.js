@@ -33,6 +33,8 @@ function createCheckbox(id, label) {
   return { wrapper, cb };
 }
 
+function t(v) { return document.createTextNode(v == null || v === '' ? '' : String(v)); }
+
 function buildTable(clubs) {
   const table = document.createElement('table');
   const thead = document.createElement('thead');
@@ -41,7 +43,11 @@ function buildTable(clubs) {
   const tbody = document.createElement('tbody');
   clubs.forEach(c => {
     const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${c.position||''}</td><td>${c.name}</td><td>${c.points||''}</td><td>${c.played||''}</td><td>${c.goal_difference||''}</td><td>${c.wins||''}</td><td>${c.draws||''}</td><td>${c.losses||''}</td><td>${c.goals_for||''}</td><td>${c.goals_against||''}</td>`;
+    [c.position, c.name, c.points, c.played, c.goal_difference, c.wins, c.draws, c.losses, c.goals_for, c.goals_against].forEach(v => {
+      const td = document.createElement('td');
+      td.appendChild(t(v));
+      tr.appendChild(td);
+    });
     tbody.appendChild(tr);
   });
   table.appendChild(tbody);
@@ -298,8 +304,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ── Tab 2 ──
     const clubSelect = document.getElementById('clubSelect');
-    const ctx2 = document.getElementById('chart2').getContext('2d');
+    const chart2Container = document.getElementById('chartContainer2');
+    const chart2Canvas = document.getElementById('chart2');
+    const ctx2 = chart2Canvas.getContext('2d');
     let chart2 = null;
+    const chart2NoData = document.createElement('p');
+    chart2Container.insertBefore(chart2NoData, chart2Canvas);
 
     // Collect all unique valid club names across all seasons, sorted
     const allClubs = Array.from(new Set(
@@ -319,11 +329,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     function renderClubChart() {
       const clubName = clubSelect.value;
       const { labels, positions } = buildCrossSeasonData(db, clubName);
-      if (chart2) chart2.destroy();
+      if (chart2) { chart2.destroy(); chart2 = null; }
       if (labels.length === 0) {
-        ctx2.canvas.parentElement.innerHTML = '<p>Pas de données disponibles pour ce club.</p>';
+        chart2Canvas.style.display = 'none';
+        chart2NoData.textContent = 'Pas de données disponibles pour ce club.';
         return;
       }
+      chart2NoData.textContent = '';
+      chart2Canvas.style.display = '';
       chart2 = makeClubChart(ctx2, labels, positions, clubName);
     }
 
@@ -331,6 +344,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderClubChart();
 
   } catch (err) {
-    document.body.innerHTML = '<pre style="color:red">' + (err.stack || err) + '</pre>';
+    const pre = document.createElement('pre');
+    pre.style.color = 'red';
+    pre.textContent = err.stack || String(err);
+    document.body.replaceChildren(pre);
   }
 });
