@@ -1,4 +1,3 @@
-```markdown
 # dashboard
 
 Static dashboard that visualizes Ligue 1 standings data from `scraper`.

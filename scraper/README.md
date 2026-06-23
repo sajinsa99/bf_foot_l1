@@ -12,7 +12,7 @@ cd bf_foot_scraper
 npm install
 ```
 
-2. Fetch data using the wrapper scripts (see below).
+1. Fetch data using the wrapper scripts (see below).
 
 ## What it does
 
@@ -184,7 +184,7 @@ Fetch all rounds for multiple seasons in one command, or display status of all s
 5. For each season, runs `./get_one_season.sh -s=$year -a=fetch-all`
 6. Includes 1-second delay between seasons (prevents timeouts)
 7. Shows status after each season completes
-6. Displays final summary of all available seasons/rounds
+8. Displays final summary of all available seasons/rounds
 
 **Status Mode Behavior:**
 
