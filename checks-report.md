@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-06-14 11:56:33
+# Checks Report — bf_foot_l1 — 2026-06-23 14:02:10
 
 ## Summary
 
@@ -12,12 +12,12 @@
 | jsonlint  scraper/data/seasons.json | ✅ PASS |
 | markdownlint-cli2  Markdown files | ❌ FAIL |
 | eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
-| yamllint  (no *.yaml / *.yml files found) | ⏭ SKIP |
+| yamllint  YAML files | ✅ PASS |
 | semgrep  dashboard/server.py + web JS sources | ✅ PASS |
 | trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
 | gitleaks  secrets in repo | ✅ PASS |
 | detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
-| **Total** | PASS: 8 · FAIL: 2 · SKIP: 3 |
+| **Total** | PASS: 9 · FAIL: 2 · SKIP: 2 |
 
 ---
 
@@ -146544,33 +146544,10 @@ _no output_
 markdownlint-cli2 v0.17.2 (markdownlint v0.37.4)
 Finding: ./README.md ./scraper/README.md ./dashboard/README.md
 Linting: 3 file(s)
-Summary: 26 error(s)
+Summary: 3 error(s)
 dashboard/README.md:1 MD041/first-line-heading/first-line-h1 First line in a file should be a top-level heading [Context: "```markdown"]
-dashboard/README.md:8:81 MD013/line-length Line length [Expected: 80; Actual: 97]
-dashboard/README.md:41:81 MD013/line-length Line length [Expected: 80; Actual: 126]
-dashboard/README.md:42:81 MD013/line-length Line length [Expected: 80; Actual: 104]
-dashboard/README.md:52:81 MD013/line-length Line length [Expected: 80; Actual: 101]
-dashboard/README.md:53:81 MD013/line-length Line length [Expected: 80; Actual: 119]
 scraper/README.md:15:1 MD029/ol-prefix Ordered list item prefix [Expected: 1; Actual: 2; Style: 1/1/1]
-scraper/README.md:88:81 MD013/line-length Line length [Expected: 80; Actual: 116]
-scraper/README.md:133:81 MD013/line-length Line length [Expected: 80; Actual: 106]
-scraper/README.md:151:81 MD013/line-length Line length [Expected: 80; Actual: 87]
-scraper/README.md:154:81 MD013/line-length Line length [Expected: 80; Actual: 208]
 scraper/README.md:187:1 MD029/ol-prefix Ordered list item prefix [Expected: 8; Actual: 6; Style: 1/2/3]
-scraper/README.md:199:81 MD013/line-length Line length [Expected: 80; Actual: 94]
-scraper/README.md:200:81 MD013/line-length Line length [Expected: 80; Actual: 94]
-scraper/README.md:208:81 MD013/line-length Line length [Expected: 80; Actual: 106]
-scraper/README.md:209:81 MD013/line-length Line length [Expected: 80; Actual: 98]
-scraper/README.md:210:81 MD013/line-length Line length [Expected: 80; Actual: 93]
-scraper/README.md:214:81 MD013/line-length Line length [Expected: 80; Actual: 100]
-scraper/README.md:215:81 MD013/line-length Line length [Expected: 80; Actual: 94]
-scraper/README.md:220:81 MD013/line-length Line length [Expected: 80; Actual: 92]
-scraper/README.md:221:81 MD013/line-length Line length [Expected: 80; Actual: 91]
-scraper/README.md:222:81 MD013/line-length Line length [Expected: 80; Actual: 103]
-scraper/README.md:223:81 MD013/line-length Line length [Expected: 80; Actual: 96]
-scraper/README.md:230:81 MD013/line-length Line length [Expected: 80; Actual: 161]
-scraper/README.md:231:81 MD013/line-length Line length [Expected: 80; Actual: 132]
-scraper/README.md:237 MD040/fenced-code-language Fenced code blocks should have a language specified [Context: "```"]
 ```
 
 ---
@@ -146585,9 +146562,11 @@ scraper/README.md:237 MD040/fenced-code-language Fenced code blocks should have 
 
 ## YAML
 
-### `yamllint  (no *.yaml / *.yml files found)`
+### `yamllint  YAML files`
 
-**Status:** ⏭ SKIP
+**Status:** ✅ PASS
+
+_no output_
 
 ---
 
@@ -146640,21 +146619,21 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 **Status:** ❌ FAIL (exit 1)
 
 ```
-2026-06-14T09:56:24Z	INFO	[vulndb] Need to update DB
-2026-06-14T09:56:24Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-06-14T09:56:24Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-31.08 MiB / 96.06 MiB [------------------->_________________________________________] 32.36% ? p/s ?65.84 MiB / 96.06 MiB [----------------------------------------->___________________] 68.54% ? p/s ?96.06 MiB / 96.06 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.15 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.15 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 108.15 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.17 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.17 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [--------------------------------------------->] 100.00% 101.17 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.65 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.65 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 94.65 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.54 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.54 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 88.54 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.83 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.83 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 82.83 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.48 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.48 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [---------------------------------------------->] 100.00% 77.48 MiB p/s ETA 0s96.06 MiB / 96.06 MiB [-------------------------------------------------] 100.00% 23.95 MiB p/s 4.2s2026-06-14T09:56:28Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-06-14T09:56:28Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-06-14T09:56:28Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-06-14T09:56:28Z	INFO	Number of language-specific files	num=1
-2026-06-14T09:56:28Z	INFO	[npm] Detecting vulnerabilities...
+2026-06-23T12:02:01Z	INFO	[vulndb] Need to update DB
+2026-06-23T12:02:01Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-06-23T12:02:01Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+27.57 MiB / 96.98 MiB [----------------->___________________________________________] 28.43% ? p/s ?65.72 MiB / 96.98 MiB [----------------------------------------->___________________] 67.77% ? p/s ?96.98 MiB / 96.98 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 115.55 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 115.55 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 115.55 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 108.09 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 108.09 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 108.09 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 101.12 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 101.12 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 101.12 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 94.60 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 94.60 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 94.60 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 88.49 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 88.49 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 88.49 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 82.78 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [-------------------------------------------------] 100.00% 26.57 MiB p/s 3.9s2026-06-23T12:02:05Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-06-23T12:02:05Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-06-23T12:02:05Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-06-23T12:02:05Z	INFO	Number of language-specific files	num=1
+2026-06-23T12:02:05Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
 ┌───────────────────────────┬──────┬─────────────────┐
 │          Target           │ Type │ Vulnerabilities │
 ├───────────────────────────┼──────┼─────────────────┤
-│ scraper/package-lock.json │ npm  │       15        │
+│ scraper/package-lock.json │ npm  │        4        │
 └───────────────────────────┴──────┴─────────────────┘
 Legend:
 - '-': Not scanned
@@ -146663,75 +146642,27 @@ Legend:
 
 scraper/package-lock.json (npm)
 ===============================
-Total: 15 (HIGH: 15, CRITICAL: 0)
+Total: 4 (HIGH: 4, CRITICAL: 0)
 
-┌─────────┬────────────────┬──────────┬────────┬───────────────────┬────────────────┬──────────────────────────────────────────────────────────────┐
-│ Library │ Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version  │                            Title                             │
-├─────────┼────────────────┼──────────┼────────┼───────────────────┼────────────────┼──────────────────────────────────────────────────────────────┤
-│ axios   │ CVE-2026-25639 │ HIGH     │ fixed  │ 1.13.2            │ 1.13.5, 0.30.3 │ axios: Axios affected by Denial of Service via __proto__ Key │
-│         │                │          │        │                   │                │ in mergeConfig...                                            │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-25639                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-42033 │          │        │                   │ 1.15.1, 0.31.1 │ axios: Axios: HTTP Transport Hijacking via Prototype         │
-│         │                │          │        │                   │                │ Pollution                                                    │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-42033                   │
-│         ├────────────────┤          │        │                   │                ├──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-42035 │          │        │                   │                │ axios: Axios: Arbitrary HTTP header injection via prototype  │
-│         │                │          │        │                   │                │ pollution                                                    │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-42035                   │
-│         ├────────────────┤          │        │                   │                ├──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-42043 │          │        │                   │                │ axios: Axios: NO_PROXY bypass via crafted URL                │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-42043                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-42264 │          │        │                   │ 1.15.2         │ Axios is a promise based HTTP client for the browser and     │
-│         │                │          │        │                   │                │ Node.js....                                                  │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-42264                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44486 │          │        │                   │ 1.16.0, 0.32.0 │ axios: Axios: Information disclosure of proxy credentials    │
-│         │                │          │        │                   │                │ via HTTP redirects                                           │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44486                   │
-│         ├────────────────┤          │        │                   │                ├──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44487 │          │        │                   │                │ axios: Axios: Information disclosure of proxy credentials    │
-│         │                │          │        │                   │                │ via redirect flows                                           │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44487                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44488 │          │        │                   │ 1.16.0         │ axios: Axios: Denial of Service due to unenforced request    │
-│         │                │          │        │                   │                │ and response size...                                         │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44488                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44492 │          │        │                   │ 1.16.0, 0.32.0 │ axios: Axios: Proxy bypass via IPv4-mapped IPv6 address      │
-│         │                │          │        │                   │                │ non-normalization                                            │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44492                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44494 │          │        │                   │ 1.16.0         │ axios: Axios: Man-in-the-Middle (MITM) attack via Prototype  │
-│         │                │          │        │                   │                │ Pollution                                                    │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44494                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44495 │          │        │                   │ 1.15.2, 0.31.1 │ axios: Axios: Information disclosure due to prototype        │
-│         │                │          │        │                   │                │ pollution vulnerability                                      │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44495                   │
-│         ├────────────────┤          │        │                   ├────────────────┼──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-44496 │          │        │                   │ 1.16.0, 0.32.0 │ axios: Axios: Client-side Denial of Service via unescaped    │
-│         │                │          │        │                   │                │ regex metacharacters in XSRF...                              │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-44496                   │
-├─────────┼────────────────┤          │        ├───────────────────┼────────────────┼──────────────────────────────────────────────────────────────┤
-│ undici  │ CVE-2026-1526  │          │        │ 7.16.0            │ 6.24.0, 7.24.0 │ undici: undici: Denial of Service via unbounded memory       │
-│         │                │          │        │                   │                │ consumption during WebSocket permessage-deflate...           │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-1526                    │
-│         ├────────────────┤          │        │                   │                ├──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-1528  │          │        │                   │                │ undici: undici: Denial of Service via crafted WebSocket      │
-│         │                │          │        │                   │                │ frame with large length...                                   │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-1528                    │
-│         ├────────────────┤          │        │                   │                ├──────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-2229  │          │        │                   │                │ undici: Undici: Denial of Service via invalid WebSocket      │
-│         │                │          │        │                   │                │ permessage-deflate extension parameter                       │
-│         │                │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-2229                    │
-└─────────┴────────────────┴──────────┴────────┴───────────────────┴────────────────┴──────────────────────────────────────────────────────────────┘
-
-📣 [34mNotices:[0m
-  - Version 0.71.0 of Trivy is now available, current version is 0.69.3
-
-To suppress version checks, run Trivy scans with the --skip-version-check flag
+┌───────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────────────┬───────────────────────────────────────────────────────────┐
+│  Library  │ Vulnerability  │ Severity │ Status │ Installed Version │     Fixed Version     │                           Title                           │
+├───────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────────────┼───────────────────────────────────────────────────────────┤
+│ form-data │ CVE-2026-12143 │ HIGH     │ fixed  │ 4.0.5             │ 2.5.6, 3.0.5, 4.0.6   │ form-data is a library for creating readable              │
+│           │                │          │        │                   │                       │ multipart/form-data strea ...                             │
+│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-12143                │
+├───────────┼────────────────┤          │        ├───────────────────┼───────────────────────┼───────────────────────────────────────────────────────────┤
+│ undici    │ CVE-2026-12151 │          │        │ 7.27.2            │ 6.27.0, 7.28.0, 8.5.0 │ undici: undici: Denial of Service due to unbounded memory │
+│           │                │          │        │                   │                       │ growth via WebSocket...                                   │
+│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-12151                │
+│           ├────────────────┤          │        │                   ├───────────────────────┼───────────────────────────────────────────────────────────┤
+│           │ CVE-2026-6734  │          │        │                   │ 7.28.0, 8.2.0         │ undici: undici: Information disclosure and data integrity │
+│           │                │          │        │                   │                       │ issues due to incorrect Socks5ProxyAgent...               │
+│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-6734                 │
+│           ├────────────────┤          │        │                   ├───────────────────────┼───────────────────────────────────────────────────────────┤
+│           │ CVE-2026-9697  │          │        │                   │ 7.28.0, 8.5.0         │ undici: undici: Man-in-the-Middle attack via ignored TLS  │
+│           │                │          │        │                   │                       │ options with SOCKS5 proxy                                 │
+│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-9697                 │
+└───────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────────────┴───────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -146750,9 +146681,9 @@ To suppress version checks, run Trivy scans with the --skip-version-check flag
     ○ ░
     ░    gitleaks
 
-[90m9:56AM[0m [32mINF[0m [1m18 commits scanned.[0m
-[90m9:56AM[0m [32mINF[0m [1mscanned ~7406745 bytes (7.41 MB) in 2.71s[0m
-[90m9:56AM[0m [32mINF[0m [1mno leaks found[0m
+[90m12:02PM[0m [32mINF[0m [1m23 commits scanned.[0m
+[90m12:02PM[0m [32mINF[0m [1mscanned ~7425780 bytes (7.43 MB) in 2.56s[0m
+[90m12:02PM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
