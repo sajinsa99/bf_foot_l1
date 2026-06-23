@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-06-23 14:02:10
+# Checks Report — bf_foot_l1 — 2026-06-23 14:08:11
 
 ## Summary
 
@@ -10,14 +10,14 @@
 | jsonlint  scraper/package.json | ✅ PASS |
 | jsonlint  web/package.json | ✅ PASS |
 | jsonlint  scraper/data/seasons.json | ✅ PASS |
-| markdownlint-cli2  Markdown files | ❌ FAIL |
+| markdownlint-cli2  Markdown files | ✅ PASS |
 | eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
 | yamllint  YAML files | ✅ PASS |
 | semgrep  dashboard/server.py + web JS sources | ✅ PASS |
-| trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
+| trivy  HIGH/CRITICAL CVEs | ✅ PASS |
 | gitleaks  secrets in repo | ✅ PASS |
 | detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
-| **Total** | PASS: 9 · FAIL: 2 · SKIP: 2 |
+| **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
 
 ---
 
@@ -146538,16 +146538,13 @@ _no output_
 
 ### `markdownlint-cli2  Markdown files`
 
-**Status:** ❌ FAIL (exit 1)
+**Status:** ✅ PASS
 
 ```
 markdownlint-cli2 v0.17.2 (markdownlint v0.37.4)
 Finding: ./README.md ./scraper/README.md ./dashboard/README.md
 Linting: 3 file(s)
-Summary: 3 error(s)
-dashboard/README.md:1 MD041/first-line-heading/first-line-h1 First line in a file should be a top-level heading [Context: "```markdown"]
-scraper/README.md:15:1 MD029/ol-prefix Ordered list item prefix [Expected: 1; Actual: 2; Style: 1/1/1]
-scraper/README.md:187:1 MD029/ol-prefix Ordered list item prefix [Expected: 8; Actual: 6; Style: 1/2/3]
+Summary: 0 error(s)
 ```
 
 ---
@@ -146616,53 +146613,28 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 
 ### `trivy  HIGH/CRITICAL CVEs`
 
-**Status:** ❌ FAIL (exit 1)
+**Status:** ✅ PASS
 
 ```
-2026-06-23T12:02:01Z	INFO	[vulndb] Need to update DB
-2026-06-23T12:02:01Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-06-23T12:02:01Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-27.57 MiB / 96.98 MiB [----------------->___________________________________________] 28.43% ? p/s ?65.72 MiB / 96.98 MiB [----------------------------------------->___________________] 67.77% ? p/s ?96.98 MiB / 96.98 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 115.55 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 115.55 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 115.55 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 108.09 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 108.09 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 108.09 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 101.12 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 101.12 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 101.12 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 94.60 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 94.60 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 94.60 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 88.49 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 88.49 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 88.49 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 82.78 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [-------------------------------------------------] 100.00% 26.57 MiB p/s 3.9s2026-06-23T12:02:05Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-06-23T12:02:05Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-06-23T12:02:05Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-06-23T12:02:05Z	INFO	Number of language-specific files	num=1
-2026-06-23T12:02:05Z	INFO	[npm] Detecting vulnerabilities...
+2026-06-23T12:08:03Z	INFO	[vulndb] Need to update DB
+2026-06-23T12:08:03Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-06-23T12:08:03Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+30.21 MiB / 96.98 MiB [------------------->_________________________________________] 31.15% ? p/s ?72.49 MiB / 96.98 MiB [--------------------------------------------->_______________] 74.75% ? p/s ?96.98 MiB / 96.98 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 111.10 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 111.10 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 111.10 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 103.93 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 103.93 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 103.93 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 97.22 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 97.22 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 97.22 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 90.95 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 90.95 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 90.95 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 85.08 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 85.08 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 85.08 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [-------------------------------------------------] 100.00% 27.42 MiB p/s 3.7s2026-06-23T12:08:07Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-06-23T12:08:07Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-06-23T12:08:07Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-06-23T12:08:07Z	INFO	Number of language-specific files	num=1
+2026-06-23T12:08:07Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
 ┌───────────────────────────┬──────┬─────────────────┐
 │          Target           │ Type │ Vulnerabilities │
 ├───────────────────────────┼──────┼─────────────────┤
-│ scraper/package-lock.json │ npm  │        4        │
+│ scraper/package-lock.json │ npm  │        0        │
 └───────────────────────────┴──────┴─────────────────┘
 Legend:
 - '-': Not scanned
 - '0': Clean (no security findings detected)
-
-
-scraper/package-lock.json (npm)
-===============================
-Total: 4 (HIGH: 4, CRITICAL: 0)
-
-┌───────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────────────┬───────────────────────────────────────────────────────────┐
-│  Library  │ Vulnerability  │ Severity │ Status │ Installed Version │     Fixed Version     │                           Title                           │
-├───────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────────────┼───────────────────────────────────────────────────────────┤
-│ form-data │ CVE-2026-12143 │ HIGH     │ fixed  │ 4.0.5             │ 2.5.6, 3.0.5, 4.0.6   │ form-data is a library for creating readable              │
-│           │                │          │        │                   │                       │ multipart/form-data strea ...                             │
-│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-12143                │
-├───────────┼────────────────┤          │        ├───────────────────┼───────────────────────┼───────────────────────────────────────────────────────────┤
-│ undici    │ CVE-2026-12151 │          │        │ 7.27.2            │ 6.27.0, 7.28.0, 8.5.0 │ undici: undici: Denial of Service due to unbounded memory │
-│           │                │          │        │                   │                       │ growth via WebSocket...                                   │
-│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-12151                │
-│           ├────────────────┤          │        │                   ├───────────────────────┼───────────────────────────────────────────────────────────┤
-│           │ CVE-2026-6734  │          │        │                   │ 7.28.0, 8.2.0         │ undici: undici: Information disclosure and data integrity │
-│           │                │          │        │                   │                       │ issues due to incorrect Socks5ProxyAgent...               │
-│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-6734                 │
-│           ├────────────────┤          │        │                   ├───────────────────────┼───────────────────────────────────────────────────────────┤
-│           │ CVE-2026-9697  │          │        │                   │ 7.28.0, 8.5.0         │ undici: undici: Man-in-the-Middle attack via ignored TLS  │
-│           │                │          │        │                   │                       │ options with SOCKS5 proxy                                 │
-│           │                │          │        │                   │                       │ https://avd.aquasec.com/nvd/cve-2026-9697                 │
-└───────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────────────┴───────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -146681,9 +146653,9 @@ Total: 4 (HIGH: 4, CRITICAL: 0)
     ○ ░
     ░    gitleaks
 
-[90m12:02PM[0m [32mINF[0m [1m23 commits scanned.[0m
-[90m12:02PM[0m [32mINF[0m [1mscanned ~7425780 bytes (7.43 MB) in 2.56s[0m
-[90m12:02PM[0m [32mINF[0m [1mno leaks found[0m
+[90m12:08PM[0m [32mINF[0m [1m25 commits scanned.[0m
+[90m12:08PM[0m [32mINF[0m [1mscanned ~7434565 bytes (7.43 MB) in 2.55s[0m
+[90m12:08PM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---

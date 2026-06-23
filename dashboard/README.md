@@ -3,6 +3,7 @@
 Static dashboard that visualizes Ligue 1 standings data from `scraper`.
 
 **Features:**
+
 - Current standings table from FootMercato.net (wins, draws, losses, goals, etc.)
 - Position evolution charts from Transfermarkt.fr form tables (when multiple snapshots available)
 - Season selector and club filtering
