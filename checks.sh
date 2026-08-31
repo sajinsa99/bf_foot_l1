@@ -107,6 +107,22 @@ write_report() {
     printf '| **Total** | PASS: %d · FAIL: %d · SKIP: %d |\n' "$PASS" "$FAIL" "$SKIP"
     printf '\n---\n\n'
     printf '%s' "$MD_BODY"
+    printf '## Overall Status\n\n'
+    printf '| Check | Status |\n'
+    printf '|---|---|\n'
+    for entry in "${MD_RESULTS[@]+"${MD_RESULTS[@]}"}"; do
+      lbl="${entry%|*}"
+      st="${entry##*|}"
+      case "$st" in
+        PASS) icon="✅ PASS" ;;
+        FAIL) icon="❌ FAIL" ;;
+        SKIP) icon="⏭ SKIP" ;;
+        *)    icon="$st"    ;;
+      esac
+      printf '| %s | %s |\n' "$lbl" "$icon"
+    done
+    printf '| **Total** | PASS: %d · FAIL: %d · SKIP: %d |\n' "$PASS" "$FAIL" "$SKIP"
+    printf '\n'
   } > "$REPORT"
   printf "\n%s Report written → %s%s\n" "$C_BLUE" "$REPORT" "$C_RESET"
 }
