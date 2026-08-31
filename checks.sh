@@ -114,8 +114,8 @@ write_report() {
 # ─────────────────────────────────────────────────────────────────────────────
 
 section "Shell"
-step "shellcheck  web/install.sh" \
-  "${DOCKER_RUN[@]}" shellcheck web/install.sh
+step "shellcheck  install.sh" \
+  "${DOCKER_RUN[@]}" shellcheck install.sh
 step "shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh" \
   "${DOCKER_RUN[@]}" shellcheck scraper/get_all_seasons.sh scraper/get_one_season.sh
 step "shellcheck  dashboard/server.sh" \
