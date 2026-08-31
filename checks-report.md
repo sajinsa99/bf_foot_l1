@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-08-31 18:30:30
+# Checks Report — bf_foot_l1 — 2026-08-31 18:35:00
 
 ## Summary
 
@@ -146627,14 +146627,14 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 **Status:** ❌ FAIL (exit 1)
 
 ```
-2026-08-31T16:30:20Z	INFO	[vulndb] Need to update DB
-2026-08-31T16:30:20Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-08-31T16:30:20Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-28.14 MiB / 110.04 MiB [--------------->____________________________________________] 25.57% ? p/s ?56.70 MiB / 110.04 MiB [------------------------------>_____________________________] 51.53% ? p/s ?83.02 MiB / 110.04 MiB [--------------------------------------------->______________] 75.44% ? p/s ?110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 136.50 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 136.50 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 136.50 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 127.70 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 127.70 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 127.70 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 119.46 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 119.46 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 119.46 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 111.75 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 111.75 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 111.75 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 104.54 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 104.54 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 104.54 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 97.80 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 97.80 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 97.80 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 91.49 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 91.49 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-----------------------------------------------] 100.00% 24.65 MiB p/s 4.7s2026-08-31T16:30:25Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-08-31T16:30:25Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-08-31T16:30:25Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-08-31T16:30:25Z	INFO	Number of language-specific files	num=1
-2026-08-31T16:30:25Z	INFO	[npm] Detecting vulnerabilities...
+2026-08-31T16:34:49Z	INFO	[vulndb] Need to update DB
+2026-08-31T16:34:49Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-31T16:34:49Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+11.17 MiB / 110.04 MiB [------>_____________________________________________________] 10.15% ? p/s ?24.08 MiB / 110.04 MiB [------------->______________________________________________] 21.88% ? p/s ?37.80 MiB / 110.04 MiB [-------------------->_______________________________________] 34.35% ? p/s ?44.11 MiB / 110.04 MiB [------------------>____________________________] 40.09% 54.90 MiB p/s ETA 1s51.93 MiB / 110.04 MiB [---------------------->________________________] 47.19% 54.90 MiB p/s ETA 1s58.74 MiB / 110.04 MiB [------------------------->_____________________] 53.38% 54.90 MiB p/s ETA 0s66.58 MiB / 110.04 MiB [---------------------------->__________________] 60.51% 53.78 MiB p/s ETA 0s74.92 MiB / 110.04 MiB [-------------------------------->______________] 68.09% 53.78 MiB p/s ETA 0s88.00 MiB / 110.04 MiB [------------------------------------->_________] 79.97% 53.78 MiB p/s ETA 0s96.17 MiB / 110.04 MiB [----------------------------------------->_____] 87.40% 53.49 MiB p/s ETA 0s106.05 MiB / 110.04 MiB [-------------------------------------------->_] 96.37% 53.49 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 53.49 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 51.53 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 51.53 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 51.53 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 48.21 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 48.21 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 48.21 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 45.10 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 45.10 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 45.10 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 42.19 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 42.19 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 42.19 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 39.46 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 39.46 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 39.46 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 36.92 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 36.92 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 36.92 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-----------------------------------------------] 100.00% 18.34 MiB p/s 6.2s2026-08-31T16:34:55Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-31T16:34:55Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-31T16:34:55Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-08-31T16:34:55Z	INFO	Number of language-specific files	num=1
+2026-08-31T16:34:55Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -146681,9 +146681,9 @@ Total: 2 (HIGH: 2, CRITICAL: 0)
     ○ ░
     ░    gitleaks
 
-[90m4:30PM[0m [32mINF[0m [1m31 commits scanned.[0m
-[90m4:30PM[0m [32mINF[0m [1mscanned ~7446593 bytes (7.45 MB) in 2.78s[0m
-[90m4:30PM[0m [32mINF[0m [1mno leaks found[0m
+[90m4:35PM[0m [32mINF[0m [1m33 commits scanned.[0m
+[90m4:35PM[0m [32mINF[0m [1mscanned ~7450648 bytes (7.45 MB) in 2.96s[0m
+[90m4:35PM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
@@ -146693,4 +146693,23 @@ Total: 2 (HIGH: 2, CRITICAL: 0)
 **Status:** ⏭ SKIP
 
 ---
+
+## Overall Status
+
+| Check | Status |
+|---|---|
+| shellcheck  install.sh | ✅ PASS |
+| shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh | ✅ PASS |
+| shellcheck  dashboard/server.sh | ✅ PASS |
+| jsonlint  scraper/package.json | ✅ PASS |
+| jsonlint  web/package.json | ✅ PASS |
+| jsonlint  scraper/data/seasons.json | ✅ PASS |
+| markdownlint-cli2  Markdown files | ✅ PASS |
+| eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
+| yamllint  YAML files | ✅ PASS |
+| semgrep  dashboard/server.py + web JS sources | ✅ PASS |
+| trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
+| gitleaks  secrets in repo | ✅ PASS |
+| detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
+| **Total** | PASS: 10 · FAIL: 1 · SKIP: 2 |
 
