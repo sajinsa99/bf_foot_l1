@@ -1,10 +1,10 @@
-# Checks Report — bf_foot_l1 — 2026-06-23 14:08:11
+# Checks Report — bf_foot_l1 — 2026-08-31 18:24:58
 
 ## Summary
 
 | Check | Status |
 |---|---|
-| shellcheck  web/install.sh | ✅ PASS |
+| shellcheck  web/install.sh | ❌ FAIL |
 | shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh | ✅ PASS |
 | shellcheck  dashboard/server.sh | ✅ PASS |
 | jsonlint  scraper/package.json | ✅ PASS |
@@ -14,10 +14,10 @@
 | eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
 | yamllint  YAML files | ✅ PASS |
 | semgrep  dashboard/server.py + web JS sources | ✅ PASS |
-| trivy  HIGH/CRITICAL CVEs | ✅ PASS |
+| trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
 | gitleaks  secrets in repo | ✅ PASS |
 | detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
-| **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
+| **Total** | PASS: 9 · FAIL: 2 · SKIP: 2 |
 
 ---
 
@@ -25,9 +25,11 @@
 
 ### `shellcheck  web/install.sh`
 
-**Status:** ✅ PASS
+**Status:** ❌ FAIL (exit 2)
 
-_no output_
+```
+web/install.sh: web/install.sh: openBinaryFile: does not exist (No such file or directory)
+```
 
 ---
 
@@ -64,6 +66,10 @@ _no output_
   },
   "author": "",
   "license": "MIT",
+  "engines": {
+    "node": "20.20.2",
+    "npm": "10.8.2"
+  },
   "dependencies": {
     "axios": "^1.16.0",
     "cheerio": "^1.0.0-rc.12",
@@ -86,6 +92,10 @@ _no output_
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
+  },
+  "engines": {
+    "node": "20.20.2",
+    "npm": "10.8.2"
   },
   "dependencies": {
     "express": "^4.18.0"
@@ -146579,11 +146589,11 @@ _no output_
 ┌─────────────┐
 │ Scan Status │
 └─────────────┘
-  Scanning 4 files tracked by git with 1059 Code rules:
+  Scanning 4 files tracked by git with 1074 Code rules:
                                                                                                                         
   Language      Rules   Files          Origin      Rules                                                                
  ─────────────────────────────        ───────────────────                                                               
-  <multilang>      47       4          Community    1059                                                                
+  <multilang>      47       4          Community    1074                                                                
   js              153       3                                                                                           
   python          243       1                                                                                           
                                                                                                                         
@@ -146613,28 +146623,45 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 
 ### `trivy  HIGH/CRITICAL CVEs`
 
-**Status:** ✅ PASS
+**Status:** ❌ FAIL (exit 1)
 
 ```
-2026-06-23T12:08:03Z	INFO	[vulndb] Need to update DB
-2026-06-23T12:08:03Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-06-23T12:08:03Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-30.21 MiB / 96.98 MiB [------------------->_________________________________________] 31.15% ? p/s ?72.49 MiB / 96.98 MiB [--------------------------------------------->_______________] 74.75% ? p/s ?96.98 MiB / 96.98 MiB [----------------------------------------------------------->] 100.00% ? p/s ?96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 111.10 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 111.10 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 111.10 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 103.93 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 103.93 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [--------------------------------------------->] 100.00% 103.93 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 97.22 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 97.22 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 97.22 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 90.95 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 90.95 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 90.95 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 85.08 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 85.08 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [---------------------------------------------->] 100.00% 85.08 MiB p/s ETA 0s96.98 MiB / 96.98 MiB [-------------------------------------------------] 100.00% 27.42 MiB p/s 3.7s2026-06-23T12:08:07Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-06-23T12:08:07Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-06-23T12:08:07Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-06-23T12:08:07Z	INFO	Number of language-specific files	num=1
-2026-06-23T12:08:07Z	INFO	[npm] Detecting vulnerabilities...
+2026-08-31T16:24:47Z	INFO	[vulndb] Need to update DB
+2026-08-31T16:24:47Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-31T16:24:47Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+35.75 MiB / 110.04 MiB [------------------->________________________________________] 32.49% ? p/s ?74.81 MiB / 110.04 MiB [---------------------------------------->___________________] 67.98% ? p/s ?110.04 MiB / 110.04 MiB [--------------------------------------------------------->] 100.00% ? p/s ?110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 123.79 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 123.79 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 123.79 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 115.81 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 115.81 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 115.81 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 108.34 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 108.34 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 108.34 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 101.35 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 101.35 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 101.35 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 94.81 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 94.81 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 94.81 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 88.69 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 88.69 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 88.69 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 82.97 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 82.97 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 82.97 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-----------------------------------------------] 100.00% 23.90 MiB p/s 4.8s2026-08-31T16:24:53Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-31T16:24:53Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-31T16:24:53Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-08-31T16:24:53Z	INFO	Number of language-specific files	num=1
+2026-08-31T16:24:53Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
 ┌───────────────────────────┬──────┬─────────────────┐
 │          Target           │ Type │ Vulnerabilities │
 ├───────────────────────────┼──────┼─────────────────┤
-│ scraper/package-lock.json │ npm  │        0        │
+│ scraper/package-lock.json │ npm  │        2        │
 └───────────────────────────┴──────┴─────────────────┘
 Legend:
 - '-': Not scanned
 - '0': Clean (no security findings detected)
+
+
+scraper/package-lock.json (npm)
+===============================
+Total: 2 (HIGH: 2, CRITICAL: 0)
+
+┌─────────┬─────────────────────┬──────────┬────────┬───────────────────┬────────────────┬──────────────────────────────────────────────────────────────┐
+│ Library │    Vulnerability    │ Severity │ Status │ Installed Version │ Fixed Version  │                            Title                             │
+├─────────┼─────────────────────┼──────────┼────────┼───────────────────┼────────────────┼──────────────────────────────────────────────────────────────┤
+│ axios   │ GHSA-gcfj-64vw-6mp9 │ HIGH     │ fixed  │ 1.17.0            │ 0.33.0, 1.18.0 │ Axios Node HTTP adapter can use an inherited proxy after     │
+│         │                     │          │        │                   │                │ interceptor config...                                        │
+│         │                     │          │        │                   │                │ https://github.com/advisories/GHSA-gcfj-64vw-6mp9            │
+├─────────┼─────────────────────┤          │        ├───────────────────┼────────────────┼──────────────────────────────────────────────────────────────┤
+│ undici  │ CVE-2026-13697      │          │        │ 7.28.0            │ 7.29.0, 8.9.0  │ undici: undici: Information disclosure and Denial of Service │
+│         │                     │          │        │                   │                │ via malformed Cache-Control directives...                    │
+│         │                     │          │        │                   │                │ https://avd.aquasec.com/nvd/cve-2026-13697                   │
+└─────────┴─────────────────────┴──────────┴────────┴───────────────────┴────────────────┴──────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -146653,9 +146680,9 @@ Legend:
     ○ ░
     ░    gitleaks
 
-[90m12:08PM[0m [32mINF[0m [1m25 commits scanned.[0m
-[90m12:08PM[0m [32mINF[0m [1mscanned ~7434565 bytes (7.43 MB) in 2.55s[0m
-[90m12:08PM[0m [32mINF[0m [1mno leaks found[0m
+[90m4:24PM[0m [32mINF[0m [1m29 commits scanned.[0m
+[90m4:24PM[0m [32mINF[0m [1mscanned ~7439282 bytes (7.44 MB) in 2.85s[0m
+[90m4:24PM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
