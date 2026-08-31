@@ -117,8 +117,7 @@ function makeChart(ctx, labels, datasets) {
 }
 
 // ── Tab 2: final ranking per season for a single club ──────────────────────
-function buildCrossSeasonData(db, clubName) {
-  // For each season (oldest→newest), find the last available general snapshot and read the club's position
+function buildCrossSeasonData(db, clubName, round) {
   const seasons = Object.keys(db).sort();
   const labels = [];
   const positions = [];
@@ -128,8 +127,10 @@ function buildCrossSeasonData(db, clubName) {
       .filter(s => (!s.standings_type || s.standings_type === 'general') && s.clubs && s.clubs.length)
       .sort((a, b) => (a.round || 0) - (b.round || 0));
     if (!snaps.length) continue;
-    const lastSnap = snaps[snaps.length - 1];
-    const club = lastSnap.clubs.find(c => isValidClub(c) && c.name === clubName);
+    const targetSnap = round != null
+      ? (snaps.find(s => s.round === round) || null)
+      : snaps[snaps.length - 1];
+    const club = targetSnap ? targetSnap.clubs.find(c => isValidClub(c) && c.name === clubName) : null;
     labels.push(season);
     positions.push(club ? club.position : null);
   }
@@ -304,6 +305,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ── Tab 2 ──
     const clubSelect = document.getElementById('clubSelect');
+    const roundSelect = document.getElementById('roundSelect');
     const chart2Container = document.getElementById('chartContainer2');
     const chart2Canvas = document.getElementById('chart2');
     const ctx2 = chart2Canvas.getContext('2d');
@@ -326,9 +328,29 @@ document.addEventListener('DOMContentLoaded', async () => {
       clubSelect.appendChild(opt);
     });
 
+    // Collect all unique round numbers from general snapshots, sorted ascending
+    const allRounds = Array.from(new Set(
+      Object.values(db).flatMap(snaps =>
+        snaps
+          .filter(s => !s.standings_type || s.standings_type === 'general')
+          .map(s => s.round)
+          .filter(r => typeof r === 'number' && r > 0)
+      )
+    )).sort((a, b) => a - b);
+
+    const maxRound = allRounds.length > 0 ? allRounds[allRounds.length - 1] : null;
+    allRounds.forEach(r => {
+      const opt = document.createElement('option');
+      opt.value = r;
+      opt.textContent = `Journée ${r}`;
+      if (r === maxRound) opt.selected = true;
+      roundSelect.appendChild(opt);
+    });
+
     function renderClubChart() {
       const clubName = clubSelect.value;
-      const { labels, positions } = buildCrossSeasonData(db, clubName);
+      const round = roundSelect.value ? parseInt(roundSelect.value, 10) : null;
+      const { labels, positions } = buildCrossSeasonData(db, clubName, round);
       if (chart2) { chart2.destroy(); chart2 = null; }
       if (labels.length === 0) {
         chart2Canvas.style.display = 'none';
@@ -341,6 +363,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     clubSelect.addEventListener('change', renderClubChart);
+    roundSelect.addEventListener('change', renderClubChart);
     renderClubChart();
 
   } catch (err) {
