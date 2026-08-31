@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-08-31 18:43:28
+# Checks Report — bf_foot_l1 — 2026-08-31 18:44:20
 
 ## Summary
 
@@ -146627,14 +146627,14 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 **Status:** ✅ PASS
 
 ```
-2026-08-31T16:43:18Z	INFO	[vulndb] Need to update DB
-2026-08-31T16:43:18Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-08-31T16:43:18Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-23.64 MiB / 110.04 MiB [------------>_______________________________________________] 21.48% ? p/s ?55.30 MiB / 110.04 MiB [------------------------------>_____________________________] 50.25% ? p/s ?95.02 MiB / 110.04 MiB [--------------------------------------------------->________] 86.35% ? p/s ?110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 144.00 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 144.00 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 144.00 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 134.71 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 134.71 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 134.71 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 126.02 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 126.02 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 126.02 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 117.89 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 117.89 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 117.89 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 110.28 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 110.28 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 110.28 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 103.17 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 103.17 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 103.17 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 96.51 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-----------------------------------------------] 100.00% 25.66 MiB p/s 4.5s2026-08-31T16:43:23Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-08-31T16:43:23Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-08-31T16:43:23Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
-2026-08-31T16:43:23Z	INFO	Number of language-specific files	num=1
-2026-08-31T16:43:23Z	INFO	[npm] Detecting vulnerabilities...
+2026-08-31T16:44:11Z	INFO	[vulndb] Need to update DB
+2026-08-31T16:44:11Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-08-31T16:44:11Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+35.82 MiB / 110.04 MiB [------------------->________________________________________] 32.55% ? p/s ?78.73 MiB / 110.04 MiB [------------------------------------------>_________________] 71.55% ? p/s ?110.04 MiB / 110.04 MiB [--------------------------------------------------------->] 100.00% ? p/s ?110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 123.69 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 123.69 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 123.69 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 115.71 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 115.71 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 115.71 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 108.25 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 108.25 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 108.25 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 101.26 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 101.26 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [------------------------------------------->] 100.00% 101.26 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 94.73 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 94.73 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 94.73 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 88.62 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 88.62 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 88.62 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-------------------------------------------->] 100.00% 82.90 MiB p/s ETA 0s110.04 MiB / 110.04 MiB [-----------------------------------------------] 100.00% 26.04 MiB p/s 4.4s2026-08-31T16:44:16Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-08-31T16:44:16Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-08-31T16:44:16Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="scraper/node_modules"
+2026-08-31T16:44:16Z	INFO	Number of language-specific files	num=1
+2026-08-31T16:44:16Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -146646,6 +146646,12 @@ Report Summary
 Legend:
 - '-': Not scanned
 - '0': Clean (no security findings detected)
+
+
+📣 [34mNotices:[0m
+  - Version 0.74.0 of Trivy is now available, current version is 0.69.3
+
+To suppress version checks, run Trivy scans with the --skip-version-check flag
 ```
 
 ---
@@ -146664,9 +146670,9 @@ Legend:
     ○ ░
     ░    gitleaks
 
-[90m4:43PM[0m [32mINF[0m [1m35 commits scanned.[0m
-[90m4:43PM[0m [32mINF[0m [1mscanned ~7455994 bytes (7.46 MB) in 2.9s[0m
-[90m4:43PM[0m [32mINF[0m [1mno leaks found[0m
+[90m4:44PM[0m [32mINF[0m [1m36 commits scanned.[0m
+[90m4:44PM[0m [32mINF[0m [1mscanned ~7459471 bytes (7.46 MB) in 2.92s[0m
+[90m4:44PM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
