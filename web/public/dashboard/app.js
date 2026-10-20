@@ -183,6 +183,166 @@ function makeClubChart(ctx, labels, positions, clubName) {
   });
 }
 
+// ── Shared helpers for tabs 3-5 ─────────────────────────────────────────────
+const PALETTE = ['#e6194b','#3cb44b','#ffe119','#4363d8','#f58231','#911eb4','#46f0f0','#f032e6','#bcf60c','#fabebe'];
+
+function seasonGeneralSnaps(db, season) {
+  return (db[season] || [])
+    .filter(s => (!s.standings_type || s.standings_type === 'general') && s.clubs && s.clubs.length)
+    .map(s => ({ ...s, clubs: s.clubs.filter(isValidClub) }))
+    .filter(s => s.clubs.length)
+    .sort((a, b) => (a.round || 0) - (b.round || 0));
+}
+
+// Last available snapshot at or before `round`; most recent if round is null.
+function snapAtRound(snaps, round) {
+  if (!snaps.length) return null;
+  if (round == null) return snaps[snaps.length - 1];
+  return snaps.filter(s => (s.round || 0) <= round).sort((a, b) => (b.round || 0) - (a.round || 0))[0] || null;
+}
+
+// ── Tab 3: cumulative points per journée ─────────────────────────────────────
+function preparePointsDatasets(snaps, selectedClubs) {
+  const clubMap = {};
+  selectedClubs.forEach(name => { clubMap[name] = Array(snaps.length).fill(null); });
+  snaps.forEach((snap, i) => {
+    snap.clubs.forEach(c => {
+      if (clubMap[c.name]) clubMap[c.name][i] = c.points;
+    });
+  });
+  return Object.keys(clubMap).map((name, idx) => ({
+    label: name,
+    data: clubMap[name],
+    borderColor: PALETTE[idx % PALETTE.length],
+    backgroundColor: PALETTE[idx % PALETTE.length],
+    fill: false,
+    tension: 0.2,
+  }));
+}
+
+function makePointsChart(ctx, labels, datasets) {
+  return new Chart(ctx, {
+    type: 'line',
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'Points cumulés' }, ticks: { stepSize: 5 } },
+        x: { title: { display: true, text: 'Journée' }, ticks: { maxRotation: 0, font: { size: 10 }, maxTicksLimit: 19 } }
+      },
+      plugins: {
+        legend: { position: 'bottom' },
+        tooltip: { callbacks: { label: c => `${c.dataset.label} : ${c.parsed.y} pts` } }
+      },
+      interaction: { mode: 'index', axis: 'x', intersect: false }
+    }
+  });
+}
+
+// ── Tab 4: attack vs defense scatter for one snapshot ────────────────────────
+function makeScatterChart(ctx, points) {
+  const maxG = Math.max(10, ...points.map(p => Math.max(p.x, p.y)));
+  return new Chart(ctx, {
+    type: 'scatter',
+    data: {
+      datasets: [{
+        label: 'Clubs',
+        data: points,
+        backgroundColor: '#4363d8',
+        pointRadius: 6,
+        pointHoverRadius: 8,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { min: 0, max: maxG, title: { display: true, text: 'Buts marqués' }, ticks: { stepSize: 5 } },
+        y: { min: 0, max: maxG, reverse: true, title: { display: true, text: 'Buts encaissés (bas = meilleure défense)' }, ticks: { stepSize: 5 } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: c => {
+              const p = c.raw;
+              return `${p.name} — ${p.position}e : ${p.x} marqués / ${p.y} encaissés`;
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// ── Tab 5: palmarès heatmap (season × final rank) ────────────────────────────
+function rankColor(rank, maxRank) {
+  // 1 (best) → green, maxRank (worst) → red
+  const t = maxRank > 1 ? (rank - 1) / (maxRank - 1) : 0;
+  const hue = 120 * (1 - t); // 120 = green, 0 = red
+  return `hsl(${hue}, 65%, 72%)`;
+}
+
+function buildPalmaresTable(db) {
+  const seasons = Object.keys(db).sort();
+  // final rank per club per season (last available snapshot)
+  const finalByClub = {}; // name -> { season -> {rank, points} }
+  let maxRank = 18;
+  seasons.forEach(season => {
+    const snaps = seasonGeneralSnaps(db, season);
+    const last = snaps[snaps.length - 1];
+    if (!last) return;
+    last.clubs.forEach(c => {
+      if (!finalByClub[c.name]) finalByClub[c.name] = {};
+      finalByClub[c.name][season] = { rank: c.position, points: c.points };
+      if (c.position > maxRank) maxRank = c.position;
+    });
+  });
+
+  const clubs = Object.keys(finalByClub).sort((a, b) => a.localeCompare(b, 'fr'));
+
+  const table = document.createElement('table');
+  const thead = document.createElement('thead');
+  const htr = document.createElement('tr');
+  const corner = document.createElement('th');
+  corner.textContent = 'Club';
+  corner.className = 'club-col';
+  htr.appendChild(corner);
+  seasons.forEach(s => {
+    const th = document.createElement('th');
+    th.textContent = s.replace('/', '/​'); // allow wrap
+    htr.appendChild(th);
+  });
+  thead.appendChild(htr);
+  table.appendChild(thead);
+
+  const tbody = document.createElement('tbody');
+  clubs.forEach(name => {
+    const tr = document.createElement('tr');
+    const nameTd = document.createElement('td');
+    nameTd.textContent = name;
+    nameTd.className = 'club-col';
+    tr.appendChild(nameTd);
+    seasons.forEach(season => {
+      const td = document.createElement('td');
+      const entry = finalByClub[name][season];
+      if (entry) {
+        td.textContent = entry.rank;
+        td.className = 'rank-cell';
+        td.style.background = rankColor(entry.rank, maxRank);
+        td.title = `${name} — ${season} : ${entry.rank}e, ${entry.points} pts`;
+      } else {
+        td.textContent = '';
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+  table.appendChild(tbody);
+  return table;
+}
+
 // ── Main ───────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', async () => {
   try {
@@ -365,6 +525,107 @@ document.addEventListener('DOMContentLoaded', async () => {
     clubSelect.addEventListener('change', renderClubChart);
     roundSelect.addEventListener('change', renderClubChart);
     renderClubChart();
+
+    // ── Tab 3: Course au titre (points race) ──
+    const prSeasonSelect = document.getElementById('prSeasonSelect');
+    const prClubFilter = document.getElementById('prClubFilter');
+    const prClubs = document.getElementById('prClubs');
+    const ctx3 = document.getElementById('chart3').getContext('2d');
+    let chart3 = null;
+
+    seasons.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      prSeasonSelect.appendChild(opt);
+    });
+
+    function renderPointsRace() {
+      const season = prSeasonSelect.value;
+      const snaps = seasonGeneralSnaps(db, season);
+      const selected = Array.from(prClubs.querySelectorAll('input[type=checkbox]'))
+        .filter(i => i.checked).map(i => i.nextSibling.textContent);
+      if (chart3) chart3.destroy();
+      const labels = snaps.map(s => `J${s.round || ''}`);
+      chart3 = makePointsChart(ctx3, labels, preparePointsDatasets(snaps, selected));
+    }
+
+    function buildPrCheckboxes(preselect) {
+      const season = prSeasonSelect.value;
+      const snaps = seasonGeneralSnaps(db, season);
+      const names = Array.from(new Set(snaps.flatMap(s => s.clubs.map(c => c.name)))).sort();
+      prClubs.innerHTML = '';
+      names.forEach(name => {
+        const { wrapper, cb } = createCheckbox('pr_' + name.replace(/[^a-z0-9]/gi, '_'), name);
+        prClubs.appendChild(wrapper);
+        if (preselect.has(name)) cb.checked = true;
+        cb.addEventListener('change', renderPointsRace);
+      });
+    }
+
+    prSeasonSelect.addEventListener('change', () => {
+      const keep = new Set(Array.from(prClubs.querySelectorAll('input[type=checkbox]'))
+        .filter(i => i.checked).map(i => i.nextSibling.textContent));
+      buildPrCheckboxes(keep.size ? keep : new Set(['Paris SG', 'Marseille']));
+      renderPointsRace();
+    });
+    prClubFilter.oninput = () => {
+      const q = prClubFilter.value.toLowerCase();
+      Array.from(prClubs.children).forEach(div => {
+        div.style.display = div.querySelector('label').textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    };
+    prSeasonSelect.value = seasons[0];
+    buildPrCheckboxes(new Set(['Paris SG', 'Marseille']));
+    renderPointsRace();
+
+    // ── Tab 4: Attaque / Défense (scatter) ──
+    const scSeasonSelect = document.getElementById('scSeasonSelect');
+    const scRoundSelect = document.getElementById('scRoundSelect');
+    const ctx4 = document.getElementById('chart4').getContext('2d');
+    let chart4 = null;
+
+    seasons.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s;
+      opt.textContent = s;
+      scSeasonSelect.appendChild(opt);
+    });
+
+    function fillScRounds() {
+      const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
+      const rounds = snaps.map(s => s.round).filter(r => typeof r === 'number');
+      scRoundSelect.innerHTML = '';
+      rounds.forEach((r, i) => {
+        const opt = document.createElement('option');
+        opt.value = r;
+        opt.textContent = `Journée ${r}`;
+        if (i === rounds.length - 1) opt.selected = true;
+        scRoundSelect.appendChild(opt);
+      });
+    }
+
+    function renderScatter() {
+      const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
+      const round = scRoundSelect.value ? parseInt(scRoundSelect.value, 10) : null;
+      const snap = snapAtRound(snaps, round);
+      if (chart4) chart4.destroy();
+      if (!snap) return;
+      const points = snap.clubs
+        .filter(c => typeof c.goals_for === 'number' && typeof c.goals_against === 'number')
+        .map(c => ({ x: c.goals_for, y: c.goals_against, name: c.name, position: c.position }));
+      chart4 = makeScatterChart(ctx4, points);
+    }
+
+    scSeasonSelect.addEventListener('change', () => { fillScRounds(); renderScatter(); });
+    scRoundSelect.addEventListener('change', renderScatter);
+    scSeasonSelect.value = seasons[0];
+    fillScRounds();
+    renderScatter();
+
+    // ── Tab 5: Palmarès (heatmap) ──
+    const palmaresContainer = document.getElementById('palmaresContainer');
+    palmaresContainer.appendChild(buildPalmaresTable(db));
 
   } catch (err) {
     const pre = document.createElement('pre');

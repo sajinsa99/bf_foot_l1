@@ -17,6 +17,9 @@
     <div id="tabs">
       <button type="button" class="tab-btn active" data-tab="tab1">Classement par saison</button>
       <button type="button" class="tab-btn" data-tab="tab2">Évolution par club</button>
+      <button type="button" class="tab-btn" data-tab="tab3">Course au titre</button>
+      <button type="button" class="tab-btn" data-tab="tab4">Attaque / Défense</button>
+      <button type="button" class="tab-btn" data-tab="tab5">Palmarès</button>
     </div>
 
     <!-- Tab 1: existing dashboard -->
@@ -58,6 +61,39 @@
       <div id="chartContainer2">
         <canvas id="chart2"></canvas>
       </div>
+    </div>
+
+    <!-- Tab 3: points race within a season -->
+    <div id="tab3" class="tab-panel" hidden>
+      <div id="controls3">
+        <label for="prSeasonSelect">Saison :</label>
+        <select id="prSeasonSelect"></select>
+        <label for="prClubFilter">Clubs :</label>
+        <input id="prClubFilter" type="text" placeholder="Filtrer les clubs">
+        <div id="prClubs"></div>
+      </div>
+      <div id="chartContainer3">
+        <canvas id="chart3"></canvas>
+      </div>
+    </div>
+
+    <!-- Tab 4: attack vs defense scatter -->
+    <div id="tab4" class="tab-panel" hidden>
+      <div id="controls4">
+        <label for="scSeasonSelect">Saison :</label>
+        <select id="scSeasonSelect"></select>
+        <label for="scRoundSelect">Journée :</label>
+        <select id="scRoundSelect"></select>
+      </div>
+      <div id="chartContainer4">
+        <canvas id="chart4"></canvas>
+      </div>
+    </div>
+
+    <!-- Tab 5: palmarès heatmap -->
+    <div id="tab5" class="tab-panel" hidden>
+      <p>Classement final de chaque club par saison (vert = haut du tableau, rouge = bas). Survolez une case pour le détail.</p>
+      <div id="palmaresContainer"></div>
     </div>
   </main>
 
