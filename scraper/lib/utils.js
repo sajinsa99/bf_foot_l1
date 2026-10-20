@@ -5,6 +5,12 @@ function parseIntSafe(s) {
   return Number.isNaN(n) ? null : n;
 }
 
+// Canonical name for clubs that Transfermarkt renders inconsistently across seasons.
+const CLUB_NAME_ALIASES = {
+  'PSG': 'Paris SG',
+  'Paris Saint-Germain': 'Paris SG',
+};
+
 // Remove noise added by Transfermarkt (leading rank numbers) and FootMercato
 // (duplicated last word, "Logo" prefix).  Each parser previously had its own
 // copy with slightly different behaviour — this single version handles both.
@@ -22,7 +28,8 @@ function cleanTeamName(text) {
     const secondLast = parts[parts.length - 2];
     if (last === secondLast) parts.pop();
   }
-  return parts.join(' ');
+  const name = parts.join(' ');
+  return CLUB_NAME_ALIASES[name] || name;
 }
 
 module.exports = { parseIntSafe, cleanTeamName };
