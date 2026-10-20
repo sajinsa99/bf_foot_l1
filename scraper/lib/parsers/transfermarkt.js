@@ -10,39 +10,12 @@ async function fetchStandings({ season = '2024', round = null, cacheRaw = false 
   const baseUrl = round 
     ? `https://www.transfermarkt.fr/ligue-1/spieltagtabelle/wettbewerb/FR1/saison_id/${encodeURIComponent(String(season))}/spieltag/${round}`
     : `https://www.transfermarkt.fr/ligue-1/startseite/wettbewerb/FR1/saison_id/${encodeURIComponent(String(season))}`;
-  const res = await axios.get(baseUrl, { timeout: 15000, headers: { 'User-Agent': 'bf_foot_scraper/0.1' } });
+  const res = await axios.get(baseUrl, { timeout: 15000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' } });
   const $ = cheerio.load(res.data);
 
   const clubs = [];
 
-  // Find the standings table - look for a table where rows contain position numbers
-  const allTables = $('table');
-  let standingsTable = null;
-
-  allTables.each((i, table) => {
-    const rows = $(table).find('tr');
-    // Flexible range: 17–23 rows covers 16–22 teams + header
-    if (rows.length >= 17 && rows.length <= 23) {
-      const firstDataRow = rows.eq(1);
-      const cells = firstDataRow.find('td');
-      if (cells.length >= 10) {
-        const cellTexts = cells.map((j, cell) => $(cell).text().trim()).get();
-        // Check if first cell is a position number and 3rd cell is a team name
-        if (/^\d+$/.test(cellTexts[0]) && cellTexts[2].length > 2) {
-          standingsTable = $(table);
-          return false; // Break out of each loop
-        }
-      }
-    }
-  });
-
-  if (!standingsTable) {
-    // Emit diagnostics so callers can see why parsing failed
-    const tableSizes = [];
-    allTables.each((i, table) => tableSizes.push($(table).find('tr').length));
-    console.warn(`[transfermarkt] No standings table found at ${baseUrl}`);
-    console.warn(`[transfermarkt] Tables on page (row counts): [${tableSizes.join(', ')}]`);
-  }
+  const standingsTable = $('table.items').first() || null;
 
   if (standingsTable) {
     const rows = standingsTable.find('tr');
@@ -105,9 +78,9 @@ async function fetchStandings({ season = '2024', round = null, cacheRaw = false 
 async function getMaxRound(season = '2025') {
   const baseUrl = `https://www.transfermarkt.fr/ligue-1/spieltagtabelle/wettbewerb/FR1/saison_id/${encodeURIComponent(String(season))}`;
   try {
-    const res = await axios.get(baseUrl, { timeout: 15000, headers: { 'User-Agent': 'bf_foot_scraper/0.1' } });
+    const res = await axios.get(baseUrl, { timeout: 15000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' } });
     const $ = cheerio.load(res.data);
-    
+
     const rounds = [];
     $('a[href*="spieltag"]').each((i, elem) => {
       const href = $(elem).attr('href');
@@ -128,7 +101,7 @@ async function getMaxRound(season = '2025') {
 async function getLatestSeason() {
   const baseUrl = 'https://www.transfermarkt.fr/ligue-1/startseite/wettbewerb/FR1';
   try {
-    const res = await axios.get(baseUrl, { timeout: 15000, headers: { 'User-Agent': 'bf_foot_scraper/0.1' } });
+    const res = await axios.get(baseUrl, { timeout: 15000, headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36' } });
     const $ = cheerio.load(res.data);
     
     const seasons = [];
