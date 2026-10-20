@@ -15,13 +15,14 @@ async function fetchStandings({ season = '2024', round = null, cacheRaw = false 
 
   const clubs = [];
 
-  // Find the standings table - look for table with 19 rows (18 teams + 1 header)
+  // Find the standings table - look for a table where rows contain position numbers
   const allTables = $('table');
   let standingsTable = null;
 
   allTables.each((i, table) => {
     const rows = $(table).find('tr');
-    if (rows.length === 19) { // Standings table has exactly 19 rows (18 teams + header)
+    // Flexible range: 17–23 rows covers 16–22 teams + header
+    if (rows.length >= 17 && rows.length <= 23) {
       const firstDataRow = rows.eq(1);
       const cells = firstDataRow.find('td');
       if (cells.length >= 10) {
@@ -34,6 +35,14 @@ async function fetchStandings({ season = '2024', round = null, cacheRaw = false 
       }
     }
   });
+
+  if (!standingsTable) {
+    // Emit diagnostics so callers can see why parsing failed
+    const tableSizes = [];
+    allTables.each((i, table) => tableSizes.push($(table).find('tr').length));
+    console.warn(`[transfermarkt] No standings table found at ${baseUrl}`);
+    console.warn(`[transfermarkt] Tables on page (row counts): [${tableSizes.join(', ')}]`);
+  }
 
   if (standingsTable) {
     const rows = standingsTable.find('tr');
