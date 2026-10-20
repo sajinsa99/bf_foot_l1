@@ -241,19 +241,26 @@ function makePointsChart(ctx, labels, datasets) {
 }
 
 // ── Tab 4: attack vs defense scatter for one snapshot ────────────────────────
+function distinctColors(n) {
+  const out = [];
+  for (let i = 0; i < n; i++) out.push(`hsl(${Math.round(i * 360 / Math.max(1, n))}, 70%, 50%)`);
+  return out;
+}
+
 function makeScatterChart(ctx, points) {
   const maxG = Math.max(10, ...points.map(p => Math.max(p.x, p.y)));
+  const colors = distinctColors(points.length);
+  const datasets = points.map((p, i) => ({
+    label: p.name,
+    data: [p],
+    backgroundColor: colors[i],
+    borderColor: colors[i],
+    pointRadius: 6,
+    pointHoverRadius: 8,
+  }));
   return new Chart(ctx, {
     type: 'scatter',
-    data: {
-      datasets: [{
-        label: 'Clubs',
-        data: points,
-        backgroundColor: '#4363d8',
-        pointRadius: 6,
-        pointHoverRadius: 8,
-      }]
-    },
+    data: { datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -262,7 +269,7 @@ function makeScatterChart(ctx, points) {
         y: { min: 0, max: maxG, reverse: true, title: { display: true, text: 'Buts encaissés (bas = meilleure défense)' }, ticks: { stepSize: 5 } }
       },
       plugins: {
-        legend: { display: false },
+        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } },
         tooltip: {
           callbacks: {
             label: c => {
