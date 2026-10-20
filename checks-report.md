@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-10-20 16:36:31
+# Checks Report — bf_foot_l1 — 2026-10-20 16:41:33
 
 ## Summary
 
@@ -14,10 +14,10 @@
 | eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
 | yamllint  YAML files | ✅ PASS |
 | semgrep  dashboard/server.py + web JS sources | ✅ PASS |
-| trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
+| trivy  HIGH/CRITICAL CVEs | ✅ PASS |
 | gitleaks  secrets in repo | ✅ PASS |
 | detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
-| **Total** | PASS: 10 · FAIL: 1 · SKIP: 2 |
+| **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
 
 ---
 
@@ -148236,72 +148236,28 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 
 ### `trivy  HIGH/CRITICAL CVEs`
 
-**Status:** ❌ FAIL (exit 1)
+**Status:** ✅ PASS
 
 ```
-2026-10-20T14:36:22Z	INFO	[vulndb] Need to update DB
-2026-10-20T14:36:22Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-10-20T14:36:22Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-24.00 MiB / 129.33 MiB [----------->________________________________________________] 18.56% ? p/s ?60.02 MiB / 129.33 MiB [--------------------------->________________________________] 46.40% ? p/s ?102.24 MiB / 129.33 MiB [---------------------------------------------->____________] 79.05% ? p/s ?129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 175.64 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 175.64 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 175.64 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 164.31 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 164.31 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 164.31 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 153.71 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 153.71 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 153.71 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 143.79 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 143.79 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 143.79 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 134.51 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 134.51 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 134.51 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 125.83 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 125.83 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 125.83 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 117.72 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 117.72 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 117.72 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 110.12 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [-----------------------------------------------] 100.00% 25.91 MiB p/s 5.2s2026-10-20T14:36:28Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-10-20T14:36:28Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-10-20T14:36:28Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
-2026-10-20T14:36:28Z	INFO	Number of language-specific files	num=1
-2026-10-20T14:36:28Z	INFO	[npm] Detecting vulnerabilities...
+2026-10-20T14:41:24Z	INFO	[vulndb] Need to update DB
+2026-10-20T14:41:24Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-10-20T14:41:24Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+30.21 MiB / 129.33 MiB [-------------->_____________________________________________] 23.36% ? p/s ?72.30 MiB / 129.33 MiB [--------------------------------->__________________________] 55.90% ? p/s ?114.33 MiB / 129.33 MiB [---------------------------------------------------->______] 88.40% ? p/s ?129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 165.20 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 165.20 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 165.20 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 154.54 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 154.54 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 154.54 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 144.57 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 144.57 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 144.57 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 135.24 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 135.24 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 135.24 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 126.52 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 126.52 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 126.52 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 118.36 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 118.36 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 118.36 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 110.72 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 110.72 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 110.72 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [------------------------------------------->] 100.00% 103.58 MiB p/s ETA 0s129.33 MiB / 129.33 MiB [-----------------------------------------------] 100.00% 26.08 MiB p/s 5.2s2026-10-20T14:41:29Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-10-20T14:41:29Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-10-20T14:41:29Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
+2026-10-20T14:41:29Z	INFO	Number of language-specific files	num=1
+2026-10-20T14:41:29Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
 ┌───────────────────────────┬──────┬─────────────────┐
 │          Target           │ Type │ Vulnerabilities │
 ├───────────────────────────┼──────┼─────────────────┤
-│ scraper/package-lock.json │ npm  │        9        │
+│ scraper/package-lock.json │ npm  │        0        │
 └───────────────────────────┴──────┴─────────────────┘
 Legend:
 - '-': Not scanned
 - '0': Clean (no security findings detected)
-
-
-scraper/package-lock.json (npm)
-===============================
-Total: 9 (HIGH: 9, CRITICAL: 0)
-
-┌─────────┬─────────────────┬──────────┬────────┬───────────────────┬────────────────────────┬─────────────────────────────────────────────────────────────┐
-│ Library │  Vulnerability  │ Severity │ Status │ Installed Version │     Fixed Version      │                            Title                            │
-├─────────┼─────────────────┼──────────┼────────┼───────────────────┼────────────────────────┼─────────────────────────────────────────────────────────────┤
-│ axios   │ CVE-2026-101898 │ HIGH     │ fixed  │ 1.18.0            │ 1.20.0                 │ axios: axios: Security control bypass via unapplied HTTP/2  │
-│         │                 │          │        │                   │                        │ proxy and DNS settings...                                   │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101898                 │
-│         ├─────────────────┤          │        │                   │                        ├─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-101901 │          │        │                   │                        │ axios: Axios: Denial of Service via unhandled error in      │
-│         │                 │          │        │                   │                        │ HTTP/2 session initialization...                            │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101901                 │
-│         ├─────────────────┤          │        │                   │                        ├─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-101903 │          │        │                   │                        │ axios: Axios: Denial of Service via malformed data URLs     │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101903                 │
-│         ├─────────────────┤          │        │                   │                        ├─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-101905 │          │        │                   │                        │ axios: axios: Request socket hijacking via inherited        │
-│         │                 │          │        │                   │                        │ createConnection property                                   │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101905                 │
-│         ├─────────────────┤          │        │                   │                        ├─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-101906 │          │        │                   │                        │ axios: axios: Denial of Service via crafted redirect        │
-│         │                 │          │        │                   │                        │ hostname                                                    │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101906                 │
-│         ├─────────────────┤          │        │                   │                        ├─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-101907 │          │        │                   │                        │ axios: Axios: Server-Side Request Forgery via bypassed      │
-│         │                 │          │        │                   │                        │ redirect restrictions in fetch adapter...                   │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101907                 │
-│         ├─────────────────┤          │        │                   ├────────────────────────┼─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-101909 │          │        │                   │ 0.34.0, 1.20.0         │ axios: axios: Denial of Service via prototype pollution     │
-│         │                 │          │        │                   │                        │ gadget in form serialization...                             │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-101909                 │
-├─────────┼─────────────────┤          │        ├───────────────────┼────────────────────────┼─────────────────────────────────────────────────────────────┤
-│ undici  │ CVE-2026-19534  │          │        │ 7.29.0            │ 6.28.1, 7.29.1, 8.10.2 │ undici: undici: Denial of Service via unrequested WebSocket │
-│         │                 │          │        │                   │                        │ subprotocol                                                 │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-19534                  │
-│         ├─────────────────┤          │        │                   ├────────────────────────┼─────────────────────────────────────────────────────────────┤
-│         │ CVE-2026-84961  │          │        │                   │ 7.29.1, 8.10.2         │ undici: undici: TLS certificate validation bypass in        │
-│         │                 │          │        │                   │                        │ BalancedPool via dropped connect options...                 │
-│         │                 │          │        │                   │                        │ https://avd.aquasec.com/nvd/cve-2026-84961                  │
-└─────────┴─────────────────┴──────────┴────────┴───────────────────┴────────────────────────┴─────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -148320,9 +148276,9 @@ Total: 9 (HIGH: 9, CRITICAL: 0)
     ○ ░
     ░    gitleaks
 
-[90m2:36PM[0m [32mINF[0m [1m46 commits scanned.[0m
-[90m2:36PM[0m [32mINF[0m [1mscanned ~7849081 bytes (7.85 MB) in 1.59s[0m
-[90m2:36PM[0m [32mINF[0m [1mno leaks found[0m
+[90m2:41PM[0m [32mINF[0m [1m48 commits scanned.[0m
+[90m2:41PM[0m [32mINF[0m [1mscanned ~7853144 bytes (7.85 MB) in 1.6s[0m
+[90m2:41PM[0m [32mINF[0m [1mno leaks found[0m
 ```
 
 ---
@@ -148347,8 +148303,8 @@ Total: 9 (HIGH: 9, CRITICAL: 0)
 | eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
 | yamllint  YAML files | ✅ PASS |
 | semgrep  dashboard/server.py + web JS sources | ✅ PASS |
-| trivy  HIGH/CRITICAL CVEs | ❌ FAIL |
+| trivy  HIGH/CRITICAL CVEs | ✅ PASS |
 | gitleaks  secrets in repo | ✅ PASS |
 | detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
-| **Total** | PASS: 10 · FAIL: 1 · SKIP: 2 |
+| **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
 
