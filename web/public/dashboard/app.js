@@ -128,7 +128,7 @@ function buildCrossSeasonData(db, clubName, round) {
       .sort((a, b) => (a.round || 0) - (b.round || 0));
     if (!snaps.length) continue;
     const targetSnap = round != null
-      ? (snaps.find(s => s.round === round) || null)
+      ? (snaps.filter(s => s.round <= round).sort((a, b) => b.round - a.round)[0] || null)
       : snaps[snaps.length - 1];
     const club = targetSnap ? targetSnap.clubs.find(c => isValidClub(c) && c.name === clubName) : null;
     labels.push(season);
