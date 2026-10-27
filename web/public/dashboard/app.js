@@ -347,46 +347,105 @@ function buildPalmaresTable(db) {
     });
   });
 
-  const clubs = Object.keys(finalByClub).sort((a, b) => a.localeCompare(b, 'fr'));
+  const clubs = Object.keys(finalByClub);
 
   const table = document.createElement('table');
   const thead = document.createElement('thead');
   const htr = document.createElement('tr');
+
+  // sortCol: 'Club' or a season string; dir: 1 asc, -1 desc
+  let sortCol = 'Club';
+  let sortDir = 1;
+
   const corner = document.createElement('th');
-  corner.textContent = 'Club';
   corner.className = 'club-col';
+  corner.dataset.label = 'Club';
+  corner.dataset.col = 'Club';
   htr.appendChild(corner);
   seasons.forEach(s => {
     const th = document.createElement('th');
-    th.textContent = s.replace('/', '/​'); // allow wrap
+    th.dataset.label = s.replace('/', '/​'); // allow wrap
+    th.dataset.col = s;
     htr.appendChild(th);
   });
   thead.appendChild(htr);
   table.appendChild(thead);
 
   const tbody = document.createElement('tbody');
-  clubs.forEach(name => {
-    const tr = document.createElement('tr');
-    const nameTd = document.createElement('td');
-    nameTd.textContent = name;
-    nameTd.className = 'club-col';
-    tr.appendChild(nameTd);
-    seasons.forEach(season => {
-      const td = document.createElement('td');
-      const entry = finalByClub[name][season];
-      if (entry) {
-        td.textContent = entry.rank;
-        td.className = 'rank-cell';
-        td.style.background = rankColor(entry.rank, maxRank);
-        td.title = `${name} — ${season} : ${entry.rank}e, ${entry.points} pts`;
-      } else {
-        td.textContent = '';
-      }
-      tr.appendChild(td);
-    });
-    tbody.appendChild(tr);
-  });
   table.appendChild(tbody);
+
+  function rankOf(name, season) {
+    const e = finalByClub[name][season];
+    return e ? e.rank : null;
+  }
+
+  function sortedClubs() {
+    const arr = clubs.slice();
+    if (sortCol === 'Club') {
+      arr.sort((a, b) => sortDir * a.localeCompare(b, 'fr'));
+    } else {
+      arr.sort((a, b) => {
+        const ra = rankOf(a, sortCol);
+        const rb = rankOf(b, sortCol);
+        // clubs absent that season always go last, regardless of direction
+        if (ra == null && rb == null) return a.localeCompare(b, 'fr');
+        if (ra == null) return 1;
+        if (rb == null) return -1;
+        return sortDir * (ra - rb);
+      });
+    }
+    return arr;
+  }
+
+  function renderHeaders() {
+    Array.from(htr.children).forEach(th => {
+      const arrow = th.dataset.col === sortCol ? (sortDir === 1 ? ' ▲' : ' ▼') : '';
+      th.textContent = th.dataset.label + arrow;
+    });
+  }
+
+  function renderBody() {
+    tbody.innerHTML = '';
+    sortedClubs().forEach(name => {
+      const tr = document.createElement('tr');
+      const nameTd = document.createElement('td');
+      nameTd.textContent = name;
+      nameTd.className = 'club-col';
+      tr.appendChild(nameTd);
+      seasons.forEach(season => {
+        const td = document.createElement('td');
+        const entry = finalByClub[name][season];
+        if (entry) {
+          td.textContent = entry.rank;
+          td.className = 'rank-cell';
+          td.style.background = rankColor(entry.rank, maxRank);
+          td.title = `${name} — ${season} : ${entry.rank}e, ${entry.points} pts`;
+        } else {
+          td.textContent = '';
+        }
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    });
+  }
+
+  htr.querySelectorAll('th').forEach(th => {
+    th.classList.add('sortable');
+    th.addEventListener('click', () => {
+      const col = th.dataset.col;
+      if (sortCol === col) {
+        sortDir = -sortDir;
+      } else {
+        sortCol = col;
+        sortDir = 1;
+      }
+      renderHeaders();
+      renderBody();
+    });
+  });
+
+  renderHeaders();
+  renderBody();
   return table;
 }
 
