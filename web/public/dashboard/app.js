@@ -186,12 +186,16 @@ function makeClubChart(ctx, labels, positions, clubName) {
 // ── Shared helpers for tabs 3-5 ─────────────────────────────────────────────
 const PALETTE = ['#e6194b','#3cb44b','#ffe119','#4363d8','#f58231','#911eb4','#46f0f0','#f032e6','#bcf60c','#fabebe'];
 
-function seasonGeneralSnaps(db, season) {
+function seasonSnapsByType(db, season, type = 'general') {
   return (db[season] || [])
-    .filter(s => (!s.standings_type || s.standings_type === 'general') && s.clubs && s.clubs.length)
+    .filter(s => (!s.standings_type || s.standings_type === type) && s.clubs && s.clubs.length)
     .map(s => ({ ...s, clubs: s.clubs.filter(isValidClub) }))
     .filter(s => s.clubs.length)
     .sort((a, b) => (a.round || 0) - (b.round || 0));
+}
+
+function seasonGeneralSnaps(db, season) {
+  return seasonSnapsByType(db, season, 'general');
 }
 
 // ── Tab 3: cumulative points per journée ─────────────────────────────────────
@@ -226,7 +230,19 @@ function makePointsChart(ctx, labels, datasets) {
       },
       plugins: {
         legend: { position: 'bottom' },
-        tooltip: { callbacks: { label: c => `${c.dataset.label} : ${c.parsed.y} pts` } }
+        tooltip: { callbacks: { label: c => {
+          const data = c.dataset.data;
+          const cur = c.parsed.y;
+          let delta = '';
+          for (let i = c.dataIndex - 1; i >= 0; i--) {
+            if (data[i] != null) {
+              const d = cur - data[i];
+              delta = ` (${d >= 0 ? '+' : ''}${d})`;
+              break;
+            }
+          }
+          return `${c.dataset.label} : ${cur} pts${delta}`;
+        } } }
       },
       interaction: { mode: 'index', axis: 'x', intersect: false }
     }
@@ -612,6 +628,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // ── Tab 4: Attaque / Défense (évolution par journée) ──
     const scSeasonSelect = document.getElementById('scSeasonSelect');
+    const scStandingsTypeSelect = document.getElementById('scStandingsTypeSelect');
     const scClubFilter = document.getElementById('scClubFilter');
     const scClubs = document.getElementById('scClubs');
     const scTableContainer = document.getElementById('scTableContainer');
@@ -626,7 +643,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     function renderGoals() {
-      const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
+      const snaps = seasonSnapsByType(db, scSeasonSelect.value, scStandingsTypeSelect.value);
       const selected = Array.from(scClubs.querySelectorAll('input[type=checkbox]'))
         .filter(i => i.checked).map(i => i.nextSibling.textContent);
       if (chart4) chart4.destroy();
@@ -642,7 +659,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function buildScCheckboxes(preselect) {
-      const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
+      const snaps = seasonSnapsByType(db, scSeasonSelect.value, scStandingsTypeSelect.value);
       const names = Array.from(new Set(snaps.flatMap(s => s.clubs.map(c => c.name)))).sort();
       scClubs.innerHTML = '';
       names.forEach(name => {
@@ -653,12 +670,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
 
-    scSeasonSelect.addEventListener('change', () => {
+    function rebuildScKeepingSelection() {
       const keep = new Set(Array.from(scClubs.querySelectorAll('input[type=checkbox]'))
         .filter(i => i.checked).map(i => i.nextSibling.textContent));
       buildScCheckboxes(keep.size ? keep : new Set(['Paris SG', 'Marseille']));
       renderGoals();
-    });
+    }
+
+    scSeasonSelect.addEventListener('change', rebuildScKeepingSelection);
+    scStandingsTypeSelect.addEventListener('change', rebuildScKeepingSelection);
     scClubFilter.oninput = () => {
       const q = scClubFilter.value.toLowerCase();
       Array.from(scClubs.children).forEach(div => {
