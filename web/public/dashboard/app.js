@@ -288,7 +288,19 @@ function makeGoalsChart(ctx, labels, datasets) {
       },
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 20, font: { size: 10 } } },
-        tooltip: { callbacks: { label: c => `${c.dataset.label} : ${c.parsed.y} buts` } }
+        tooltip: { callbacks: { label: c => {
+          const data = c.dataset.data;
+          const cur = c.parsed.y;
+          let delta = '';
+          for (let i = c.dataIndex - 1; i >= 0; i--) {
+            if (data[i] != null) {
+              const d = cur - data[i];
+              delta = ` (${d >= 0 ? '+' : ''}${d})`;
+              break;
+            }
+          }
+          return `${c.dataset.label} : ${cur} buts${delta}`;
+        } } }
       },
       interaction: { mode: 'index', axis: 'x', intersect: false }
     }
