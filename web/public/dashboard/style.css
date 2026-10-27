@@ -16,9 +16,9 @@ p{margin:2px 0;font-size:12px}
 #chart,#chart2{display:block;width:100%;height:100%}
 #controls2{display:flex;align-items:center;gap:8px;font-size:12px;margin-bottom:6px}
 #controls3,#controls4{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;margin-bottom:6px}
-#prClubFilter{padding:3px;width:120px;font-size:12px}
-#prClubs{display:flex;flex-wrap:wrap;gap:4px;max-width:100%;max-height:80px;overflow:auto;padding:4px;border:1px solid #eee;font-size:11px}
-#prClubs div{padding:2px 4px;background:#fff;border-radius:2px}
+#prClubFilter,#scClubFilter{padding:3px;width:120px;font-size:12px}
+#prClubs,#scClubs{display:flex;flex-wrap:wrap;gap:4px;max-width:100%;max-height:80px;overflow:auto;padding:4px;border:1px solid #eee;font-size:11px}
+#prClubs div,#scClubs div{padding:2px 4px;background:#fff;border-radius:2px}
 #chartContainer3,#chartContainer4{width:100%;height:350px;overflow:hidden;margin:8px 0}
 #chart3,#chart4{display:block;width:100%;height:100%}
 #palmaresContainer{max-height:70vh;overflow:auto;margin-top:6px}
@@ -33,7 +33,7 @@ section h2{margin:3px 0;font-size:14px}
 table{width:100%;border-collapse:collapse;margin:2px 0;font-size:11px}
 table th,table td{padding:2px;border:1px solid #ddd;text-align:left}
 table th{background:#f5f5f5}
-#tableContainer{max-height:400px;overflow-y:auto}
-#latest{display:block}
+#tableContainer,#scTableContainer{max-height:400px;overflow-y:auto}
+#latest,#scLatest{display:block}
 #clubFilter{display:block}
 #controls label[for="clubFilter"]{display:none}

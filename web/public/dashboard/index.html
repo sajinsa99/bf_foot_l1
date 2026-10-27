@@ -77,17 +77,22 @@
       </div>
     </div>
 
-    <!-- Tab 4: attack vs defense scatter -->
+    <!-- Tab 4: attack / defense evolution over rounds -->
     <div id="tab4" class="tab-panel" hidden>
       <div id="controls4">
         <label for="scSeasonSelect">Saison :</label>
         <select id="scSeasonSelect"></select>
-        <label for="scRoundSelect">Journée :</label>
-        <select id="scRoundSelect"></select>
+        <label for="scClubFilter">Clubs :</label>
+        <input id="scClubFilter" type="text" placeholder="Filtrer les clubs">
+        <div id="scClubs"></div>
       </div>
       <div id="chartContainer4">
         <canvas id="chart4"></canvas>
       </div>
+      <section id="scLatest">
+        <h2>Classement attaque / défense</h2>
+        <div id="scTableContainer"></div>
+      </section>
     </div>
 
     <!-- Tab 5: palmarès heatmap -->

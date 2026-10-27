@@ -194,13 +194,6 @@ function seasonGeneralSnaps(db, season) {
     .sort((a, b) => (a.round || 0) - (b.round || 0));
 }
 
-// Last available snapshot at or before `round`; most recent if round is null.
-function snapAtRound(snaps, round) {
-  if (!snaps.length) return null;
-  if (round == null) return snaps[snaps.length - 1];
-  return snaps.filter(s => (s.round || 0) <= round).sort((a, b) => (b.round || 0) - (a.round || 0))[0] || null;
-}
-
 // ── Tab 3: cumulative points per journée ─────────────────────────────────────
 function preparePointsDatasets(snaps, selectedClubs) {
   const clubMap = {};
@@ -240,45 +233,63 @@ function makePointsChart(ctx, labels, datasets) {
   });
 }
 
-// ── Tab 4: attack vs defense scatter for one snapshot ────────────────────────
-function distinctColors(n) {
-  const out = [];
-  for (let i = 0; i < n; i++) out.push(`hsl(${Math.round(i * 360 / Math.max(1, n))}, 70%, 50%)`);
-  return out;
+// ── Tab 4: attack / defense evolution over rounds ────────────────────────────
+// Two line series per club: goals_for (solid) and goals_against (dashed).
+function prepareGoalsDatasets(snaps, selectedClubs) {
+  const forMap = {};
+  const againstMap = {};
+  selectedClubs.forEach(name => {
+    forMap[name] = Array(snaps.length).fill(null);
+    againstMap[name] = Array(snaps.length).fill(null);
+  });
+  snaps.forEach((snap, i) => {
+    snap.clubs.forEach(c => {
+      if (forMap[c.name]) {
+        forMap[c.name][i] = c.goals_for;
+        againstMap[c.name][i] = c.goals_against;
+      }
+    });
+  });
+  const datasets = [];
+  selectedClubs.forEach((name, idx) => {
+    const color = PALETTE[idx % PALETTE.length];
+    datasets.push({
+      label: `${name} — marqués`,
+      data: forMap[name],
+      borderColor: color,
+      backgroundColor: color,
+      fill: false,
+      tension: 0.2,
+    });
+    datasets.push({
+      label: `${name} — encaissés`,
+      data: againstMap[name],
+      borderColor: color,
+      backgroundColor: color,
+      borderDash: [5, 5],
+      fill: false,
+      tension: 0.2,
+    });
+  });
+  return datasets;
 }
 
-function makeScatterChart(ctx, points) {
-  const maxG = Math.max(10, ...points.map(p => Math.max(p.x, p.y)));
-  const colors = distinctColors(points.length);
-  const datasets = points.map((p, i) => ({
-    label: p.name,
-    data: [p],
-    backgroundColor: colors[i],
-    borderColor: colors[i],
-    pointRadius: 6,
-    pointHoverRadius: 8,
-  }));
+function makeGoalsChart(ctx, labels, datasets) {
   return new Chart(ctx, {
-    type: 'scatter',
-    data: { datasets },
+    type: 'line',
+    data: { labels, datasets },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       scales: {
-        x: { min: 0, max: maxG, title: { display: true, text: 'Buts marqués' }, ticks: { stepSize: 5 } },
-        y: { min: 0, max: maxG, reverse: true, title: { display: true, text: 'Buts encaissés (bas = meilleure défense)' }, ticks: { stepSize: 5 } }
+        y: { beginAtZero: true, title: { display: true, text: 'Buts (cumulés)' }, ticks: { stepSize: 5 } },
+        x: { title: { display: true, text: 'Journée' }, ticks: { maxRotation: 0, font: { size: 10 }, maxTicksLimit: 19 } }
       },
       plugins: {
-        legend: { position: 'bottom', labels: { boxWidth: 10, font: { size: 9 } } },
-        tooltip: {
-          callbacks: {
-            label: c => {
-              const p = c.raw;
-              return `${p.name} — ${p.position}e : ${p.x} marqués / ${p.y} encaissés`;
-            }
-          }
-        }
-      }
+        legend: { position: 'bottom', labels: { boxWidth: 20, font: { size: 10 } } },
+        tooltip: { callbacks: { label: c => `${c.dataset.label} : ${c.parsed.y} buts` } }
+      },
+      interaction: { mode: 'index', axis: 'x', intersect: false }
     }
   });
 }
@@ -586,9 +597,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     buildPrCheckboxes(new Set(['Paris SG', 'Marseille']));
     renderPointsRace();
 
-    // ── Tab 4: Attaque / Défense (scatter) ──
+    // ── Tab 4: Attaque / Défense (évolution par journée) ──
     const scSeasonSelect = document.getElementById('scSeasonSelect');
-    const scRoundSelect = document.getElementById('scRoundSelect');
+    const scClubFilter = document.getElementById('scClubFilter');
+    const scClubs = document.getElementById('scClubs');
+    const scTableContainer = document.getElementById('scTableContainer');
     const ctx4 = document.getElementById('chart4').getContext('2d');
     let chart4 = null;
 
@@ -599,36 +612,49 @@ document.addEventListener('DOMContentLoaded', async () => {
       scSeasonSelect.appendChild(opt);
     });
 
-    function fillScRounds() {
+    function renderGoals() {
       const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
-      const rounds = snaps.map(s => s.round).filter(r => typeof r === 'number');
-      scRoundSelect.innerHTML = '';
-      rounds.forEach((r, i) => {
-        const opt = document.createElement('option');
-        opt.value = r;
-        opt.textContent = `Journée ${r}`;
-        if (i === rounds.length - 1) opt.selected = true;
-        scRoundSelect.appendChild(opt);
+      const selected = Array.from(scClubs.querySelectorAll('input[type=checkbox]'))
+        .filter(i => i.checked).map(i => i.nextSibling.textContent);
+      if (chart4) chart4.destroy();
+      const labels = snaps.map(s => `J${s.round || ''}`);
+      chart4 = makeGoalsChart(ctx4, labels, prepareGoalsDatasets(snaps, selected));
+      scTableContainer.innerHTML = '';
+      const latest = snaps[snaps.length - 1];
+      if (latest && latest.clubs.length) {
+        scTableContainer.appendChild(buildTable(latest.clubs));
+      } else {
+        scTableContainer.innerHTML = '<p>No table data available</p>';
+      }
+    }
+
+    function buildScCheckboxes(preselect) {
+      const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
+      const names = Array.from(new Set(snaps.flatMap(s => s.clubs.map(c => c.name)))).sort();
+      scClubs.innerHTML = '';
+      names.forEach(name => {
+        const { wrapper, cb } = createCheckbox('sc_' + name.replace(/[^a-z0-9]/gi, '_'), name);
+        scClubs.appendChild(wrapper);
+        if (preselect.has(name)) cb.checked = true;
+        cb.addEventListener('change', renderGoals);
       });
     }
 
-    function renderScatter() {
-      const snaps = seasonGeneralSnaps(db, scSeasonSelect.value);
-      const round = scRoundSelect.value ? parseInt(scRoundSelect.value, 10) : null;
-      const snap = snapAtRound(snaps, round);
-      if (chart4) chart4.destroy();
-      if (!snap) return;
-      const points = snap.clubs
-        .filter(c => typeof c.goals_for === 'number' && typeof c.goals_against === 'number')
-        .map(c => ({ x: c.goals_for, y: c.goals_against, name: c.name, position: c.position }));
-      chart4 = makeScatterChart(ctx4, points);
-    }
-
-    scSeasonSelect.addEventListener('change', () => { fillScRounds(); renderScatter(); });
-    scRoundSelect.addEventListener('change', renderScatter);
+    scSeasonSelect.addEventListener('change', () => {
+      const keep = new Set(Array.from(scClubs.querySelectorAll('input[type=checkbox]'))
+        .filter(i => i.checked).map(i => i.nextSibling.textContent));
+      buildScCheckboxes(keep.size ? keep : new Set(['Paris SG', 'Marseille']));
+      renderGoals();
+    });
+    scClubFilter.oninput = () => {
+      const q = scClubFilter.value.toLowerCase();
+      Array.from(scClubs.children).forEach(div => {
+        div.style.display = div.querySelector('label').textContent.toLowerCase().includes(q) ? '' : 'none';
+      });
+    };
     scSeasonSelect.value = seasons[0];
-    fillScRounds();
-    renderScatter();
+    buildScCheckboxes(new Set(['Paris SG', 'Marseille']));
+    renderGoals();
 
     // ── Tab 5: Palmarès (heatmap) ──
     const palmaresContainer = document.getElementById('palmaresContainer');
