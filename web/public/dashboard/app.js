@@ -234,7 +234,9 @@ function makePointsChart(ctx, labels, datasets) {
 }
 
 // ── Tab 4: attack / defense evolution over rounds ────────────────────────────
-// Two line series per club: goals_for (solid) and goals_against (dashed).
+// Two line series per club: goals_for (green) and goals_against (red).
+const GOALS_FOR_COLOR = '#3cb44b';
+const GOALS_AGAINST_COLOR = '#e6194b';
 function prepareGoalsDatasets(snaps, selectedClubs) {
   const forMap = {};
   const againstMap = {};
@@ -251,21 +253,20 @@ function prepareGoalsDatasets(snaps, selectedClubs) {
     });
   });
   const datasets = [];
-  selectedClubs.forEach((name, idx) => {
-    const color = PALETTE[idx % PALETTE.length];
+  selectedClubs.forEach(name => {
     datasets.push({
       label: `${name} — marqués`,
       data: forMap[name],
-      borderColor: color,
-      backgroundColor: color,
+      borderColor: GOALS_FOR_COLOR,
+      backgroundColor: GOALS_FOR_COLOR,
       fill: false,
       tension: 0.2,
     });
     datasets.push({
       label: `${name} — encaissés`,
       data: againstMap[name],
-      borderColor: color,
-      backgroundColor: color,
+      borderColor: GOALS_AGAINST_COLOR,
+      backgroundColor: GOALS_AGAINST_COLOR,
       borderDash: [5, 5],
       fill: false,
       tension: 0.2,
