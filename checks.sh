@@ -72,6 +72,47 @@ step() {
   m ""
 }
 
+# Like step() but omits tool output from the report on pass (avoids embedding large files).
+step_silent() {
+  local label="$1"; shift
+  printf "\n%s┌─ %s%s\n" "$C_BLUE" "$label" "$C_RESET"
+
+  local tmpfile exit_code output
+  tmpfile=$(mktemp)
+  "$@" 2>&1 | tee "$tmpfile"
+  exit_code=${PIPESTATUS[0]}
+  output=$(< "$tmpfile")
+  rm -f "$tmpfile"
+
+  m "### \`$label\`"
+  m ""
+
+  if [[ $exit_code -eq 0 ]]; then
+    printf "%s└─ PASS%s\n" "$C_GREEN" "$C_RESET"
+    PASS=$((PASS + 1))
+    m "**Status:** ✅ PASS"
+    MD_RESULTS+=("$label|PASS")
+    m ""
+    m "_output suppressed on pass (file too large to embed)_"
+  else
+    printf "%s└─ FAIL (exit %d)%s\n" "$C_RED" "$exit_code" "$C_RESET"
+    FAIL=$((FAIL + 1))
+    m "**Status:** ❌ FAIL (exit $exit_code)"
+    MD_RESULTS+=("$label|FAIL")
+    m ""
+    if [[ -n "$output" ]]; then
+      m '```'
+      m "$output"
+      m '```'
+    else
+      m '_no output_'
+    fi
+  fi
+  m ""
+  m "---"
+  m ""
+}
+
 skip() {
   local label="$1"
   printf "\n%s○ SKIP%s  %s\n" "$C_YELLOW" "$C_RESET" "$label"
@@ -142,7 +183,7 @@ step "jsonlint  scraper/package.json" \
   "${DOCKER_RUN[@]}" jsonlint scraper/package.json
 step "jsonlint  web/package.json" \
   "${DOCKER_RUN[@]}" jsonlint web/package.json
-step "jsonlint  scraper/data/seasons.json" \
+step_silent "jsonlint  scraper/data/seasons.json" \
   "${DOCKER_RUN[@]}" jsonlint scraper/data/seasons.json
 
 section "Markdown"
