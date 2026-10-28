@@ -28,6 +28,9 @@ m() { MD_BODY+="${1-}"$'\n'; }
 
 strip_ansi() { sed 's/\x1b\[[0-9;]*[mGKHFJ]//g'; }
 
+# Generate a stable HTML anchor slug from a label string.
+to_anchor() { printf '%s' "$1" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9_-]/-/g' | sed 's/-\+/-/g; s/^-//; s/-$//'; }
+
 section() {
   printf "\n%s══ %s %s\n" "$C_BLUE" "$1" "$C_RESET"
   m "## $1"
@@ -46,7 +49,7 @@ step() {
   output=$(strip_ansi < "$tmpfile")
   rm -f "$tmpfile"
 
-  m "### \`$label\`"
+  m "### <a id=\"$(to_anchor "$label")\"></a>\`$label\`"
   m ""
 
   if [[ $exit_code -eq 0 ]]; then
@@ -86,7 +89,7 @@ step_silent() {
   output=$(strip_ansi < "$tmpfile")
   rm -f "$tmpfile"
 
-  m "### \`$label\`"
+  m "### <a id=\"$(to_anchor "$label")\"></a>\`$label\`"
   m ""
 
   if [[ $exit_code -eq 0 ]]; then
@@ -119,7 +122,7 @@ skip() {
   local label="$1"
   printf "\n%s○ SKIP%s  %s\n" "$C_YELLOW" "$C_RESET" "$label"
   SKIP=$((SKIP + 1))
-  m "### \`$label\`"
+  m "### <a id=\"$(to_anchor "$label")\"></a>\`$label\`"
   m ""
   m "**Status:** ⏭ SKIP"
   m ""
@@ -145,7 +148,7 @@ write_report() {
         SKIP) icon="⏭ SKIP" ;;
         *)    icon="$st"    ;;
       esac
-      printf '| %s | %s |\n' "$lbl" "$icon"
+      printf '| [%s](#%s) | %s |\n' "$lbl" "$(to_anchor "$lbl")" "$icon"
     done
     printf '| **Total** | PASS: %d · FAIL: %d · SKIP: %d |\n' "$PASS" "$FAIL" "$SKIP"
     printf '\n---\n\n'
@@ -162,7 +165,7 @@ write_report() {
         SKIP) icon="⏭ SKIP" ;;
         *)    icon="$st"    ;;
       esac
-      printf '| %s | %s |\n' "$lbl" "$icon"
+      printf '| [%s](#%s) | %s |\n' "$lbl" "$(to_anchor "$lbl")" "$icon"
     done
     printf '| **Total** | PASS: %d · FAIL: %d · SKIP: %d |\n' "$PASS" "$FAIL" "$SKIP"
     printf '\n'
