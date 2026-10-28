@@ -8,7 +8,7 @@ set -uo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
-IMAGE="xmake-deploy-milestone.int.repositories.cloud.sap/com.sap.internal.prd.xmk.tools/xmk_linters:2.0.0"
+IMAGE="xmake-deploy-milestone.int.repositories.cloud.sap/com.sap.internal.prd.xmk.tools/xmk_linters:2.0.2"
 DOCKER_RUN=(docker run --rm --user root -v "$(pwd):/work" -w /work "$IMAGE")
 REPORT="checks-report.md"
 
