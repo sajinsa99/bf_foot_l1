@@ -1,29 +1,29 @@
-# Checks Report — bf_foot_l1 — 2026-10-28 10:25:33
+# Checks Report — bf_foot_l1 — 2026-10-28 10:31:37
 
 ## Summary
 
 | Check | Status |
 |---|---|
-| shellcheck  install.sh | ✅ PASS |
-| shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh | ✅ PASS |
-| shellcheck  dashboard/server.sh | ✅ PASS |
-| jsonlint  scraper/package.json | ✅ PASS |
-| jsonlint  web/package.json | ✅ PASS |
-| jsonlint  scraper/data/seasons.json | ✅ PASS |
-| markdownlint-cli2  Markdown files | ✅ PASS |
-| eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
-| yamllint  YAML files | ✅ PASS |
-| semgrep  dashboard/server.py + web JS sources | ✅ PASS |
-| trivy  HIGH/CRITICAL CVEs | ✅ PASS |
-| gitleaks  secrets in repo | ✅ PASS |
-| detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
+| [shellcheck  install.sh](#shellcheck-install-sh) | ✅ PASS |
+| [shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh](#shellcheck-scraper-get_all_seasons-sh-scraper-get_one_season-sh) | ✅ PASS |
+| [shellcheck  dashboard/server.sh](#shellcheck-dashboard-server-sh) | ✅ PASS |
+| [jsonlint  scraper/package.json](#jsonlint-scraper-package-json) | ✅ PASS |
+| [jsonlint  web/package.json](#jsonlint-web-package-json) | ✅ PASS |
+| [jsonlint  scraper/data/seasons.json](#jsonlint-scraper-data-seasons-json) | ✅ PASS |
+| [markdownlint-cli2  Markdown files](#markdownlint-cli2-markdown-files) | ✅ PASS |
+| [eslint  (no eslint.config.js found — create one to enable)](#eslint-no-eslint-config-js-found-create-one-to-enable) | ⏭ SKIP |
+| [yamllint  YAML files](#yamllint-yaml-files) | ✅ PASS |
+| [semgrep  dashboard/server.py + web JS sources](#semgrep-dashboard-server-py-web-js-sources) | ✅ PASS |
+| [trivy  HIGH/CRITICAL CVEs](#trivy-high-critical-cves) | ✅ PASS |
+| [gitleaks  secrets in repo](#gitleaks-secrets-in-repo) | ✅ PASS |
+| [detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline)](#detect-secrets-run-detect-secrets-scan-secrets-baseline-to-create-baseline) | ⏭ SKIP |
 | **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
 
 ---
 
 ## Shell
 
-### `shellcheck  install.sh`
+### <a id="shellcheck-install-sh"></a>`shellcheck  install.sh`
 
 **Status:** ✅ PASS
 
@@ -31,7 +31,7 @@ _no output_
 
 ---
 
-### `shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh`
+### <a id="shellcheck-scraper-get_all_seasons-sh-scraper-get_one_season-sh"></a>`shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh`
 
 **Status:** ✅ PASS
 
@@ -39,7 +39,7 @@ _no output_
 
 ---
 
-### `shellcheck  dashboard/server.sh`
+### <a id="shellcheck-dashboard-server-sh"></a>`shellcheck  dashboard/server.sh`
 
 **Status:** ✅ PASS
 
@@ -49,7 +49,7 @@ _no output_
 
 ## JSON
 
-### `jsonlint  scraper/package.json`
+### <a id="jsonlint-scraper-package-json"></a>`jsonlint  scraper/package.json`
 
 **Status:** ✅ PASS
 
@@ -83,7 +83,7 @@ _no output_
 
 ---
 
-### `jsonlint  web/package.json`
+### <a id="jsonlint-web-package-json"></a>`jsonlint  web/package.json`
 
 **Status:** ✅ PASS
 
@@ -107,7 +107,7 @@ _no output_
 
 ---
 
-### `jsonlint  scraper/data/seasons.json`
+### <a id="jsonlint-scraper-data-seasons-json"></a>`jsonlint  scraper/data/seasons.json`
 
 **Status:** ✅ PASS
 
@@ -117,7 +117,7 @@ _output suppressed on pass (file too large to embed)_
 
 ## Markdown
 
-### `markdownlint-cli2  Markdown files`
+### <a id="markdownlint-cli2-markdown-files"></a>`markdownlint-cli2  Markdown files`
 
 **Status:** ✅ PASS
 
@@ -132,7 +132,7 @@ Summary: 0 issues in 0 files
 
 ## JavaScript
 
-### `eslint  (no eslint.config.js found — create one to enable)`
+### <a id="eslint-no-eslint-config-js-found-create-one-to-enable"></a>`eslint  (no eslint.config.js found — create one to enable)`
 
 **Status:** ⏭ SKIP
 
@@ -140,7 +140,7 @@ Summary: 0 issues in 0 files
 
 ## YAML
 
-### `yamllint  YAML files`
+### <a id="yamllint-yaml-files"></a>`yamllint  YAML files`
 
 **Status:** ✅ PASS
 
@@ -150,7 +150,7 @@ _no output_
 
 ## Static Analysis
 
-### `semgrep  dashboard/server.py + web JS sources`
+### <a id="semgrep-dashboard-server-py-web-js-sources"></a>`semgrep  dashboard/server.py + web JS sources`
 
 **Status:** ✅ PASS
 
@@ -190,19 +190,19 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 
 ## Dependency CVEs
 
-### `trivy  HIGH/CRITICAL CVEs`
+### <a id="trivy-high-critical-cves"></a>`trivy  HIGH/CRITICAL CVEs`
 
 **Status:** ✅ PASS
 
 ```
-2026-10-28T09:25:23Z	INFO	[vulndb] Need to update DB
-2026-10-28T09:25:23Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-10-28T09:25:23Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-19.44 MiB / 130.06 MiB [-------->___________________________________________________] 14.95% ? p/s ?45.55 MiB / 130.06 MiB [--------------------->______________________________________] 35.02% ? p/s ?63.27 MiB / 130.06 MiB [----------------------------->______________________________] 48.64% ? p/s ?78.98 MiB / 130.06 MiB [---------------------------->__________________] 60.73% 99.26 MiB p/s ETA 0s101.75 MiB / 130.06 MiB [----------------------------------->__________] 78.23% 99.26 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 99.26 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 98.35 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 98.35 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 98.35 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 92.00 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 92.00 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 92.00 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 86.07 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 86.07 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 86.07 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 80.52 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 80.52 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 80.52 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 75.32 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 75.32 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 75.32 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 70.46 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 70.46 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 70.46 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 65.92 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 65.92 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-------------------------------------------->] 100.00% 65.92 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-----------------------------------------------] 100.00% 24.29 MiB p/s 5.6s2026-10-28T09:25:29Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-10-28T09:25:29Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-10-28T09:25:29Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
-2026-10-28T09:25:29Z	INFO	Number of language-specific files	num=1
-2026-10-28T09:25:29Z	INFO	[npm] Detecting vulnerabilities...
+2026-10-28T09:31:27Z	INFO	[vulndb] Need to update DB
+2026-10-28T09:31:27Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-10-28T09:31:27Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+20.42 MiB / 130.06 MiB [--------->__________________________________________________] 15.70% ? p/s ?48.81 MiB / 130.06 MiB [---------------------->_____________________________________] 37.53% ? p/s ?80.52 MiB / 130.06 MiB [------------------------------------->______________________] 61.91% ? p/s ?118.87 MiB / 130.06 MiB [----------------------------------------->___] 91.40% 163.95 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 163.95 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 163.95 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 154.58 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 154.58 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 154.58 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 144.61 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 144.61 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 144.61 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 135.28 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 135.28 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 135.28 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 126.55 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 126.55 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 126.55 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 118.39 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 118.39 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 118.39 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 110.75 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 110.75 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 110.75 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 103.60 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 103.60 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-----------------------------------------------] 100.00% 25.58 MiB p/s 5.3s2026-10-28T09:31:33Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-10-28T09:31:33Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-10-28T09:31:33Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
+2026-10-28T09:31:33Z	INFO	Number of language-specific files	num=1
+2026-10-28T09:31:33Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -220,7 +220,7 @@ Legend:
 
 ## Secrets
 
-### `gitleaks  secrets in repo`
+### <a id="gitleaks-secrets-in-repo"></a>`gitleaks  secrets in repo`
 
 **Status:** ✅ PASS
 
@@ -232,14 +232,14 @@ Legend:
     ○ ░
     ░    gitleaks
 
-9:25AM INF 66 commits scanned.
-9:25AM INF scanned ~7908453 bytes (7.91 MB) in 1.81s
-9:25AM INF no leaks found
+9:31AM INF 68 commits scanned.
+9:31AM INF scanned ~7912562 bytes (7.91 MB) in 1.81s
+9:31AM INF no leaks found
 ```
 
 ---
 
-### `detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline)`
+### <a id="detect-secrets-run-detect-secrets-scan-secrets-baseline-to-create-baseline"></a>`detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline)`
 
 **Status:** ⏭ SKIP
 
@@ -249,18 +249,18 @@ Legend:
 
 | Check | Status |
 |---|---|
-| shellcheck  install.sh | ✅ PASS |
-| shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh | ✅ PASS |
-| shellcheck  dashboard/server.sh | ✅ PASS |
-| jsonlint  scraper/package.json | ✅ PASS |
-| jsonlint  web/package.json | ✅ PASS |
-| jsonlint  scraper/data/seasons.json | ✅ PASS |
-| markdownlint-cli2  Markdown files | ✅ PASS |
-| eslint  (no eslint.config.js found — create one to enable) | ⏭ SKIP |
-| yamllint  YAML files | ✅ PASS |
-| semgrep  dashboard/server.py + web JS sources | ✅ PASS |
-| trivy  HIGH/CRITICAL CVEs | ✅ PASS |
-| gitleaks  secrets in repo | ✅ PASS |
-| detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline) | ⏭ SKIP |
+| [shellcheck  install.sh](#shellcheck-install-sh) | ✅ PASS |
+| [shellcheck  scraper/get_all_seasons.sh  scraper/get_one_season.sh](#shellcheck-scraper-get_all_seasons-sh-scraper-get_one_season-sh) | ✅ PASS |
+| [shellcheck  dashboard/server.sh](#shellcheck-dashboard-server-sh) | ✅ PASS |
+| [jsonlint  scraper/package.json](#jsonlint-scraper-package-json) | ✅ PASS |
+| [jsonlint  web/package.json](#jsonlint-web-package-json) | ✅ PASS |
+| [jsonlint  scraper/data/seasons.json](#jsonlint-scraper-data-seasons-json) | ✅ PASS |
+| [markdownlint-cli2  Markdown files](#markdownlint-cli2-markdown-files) | ✅ PASS |
+| [eslint  (no eslint.config.js found — create one to enable)](#eslint-no-eslint-config-js-found-create-one-to-enable) | ⏭ SKIP |
+| [yamllint  YAML files](#yamllint-yaml-files) | ✅ PASS |
+| [semgrep  dashboard/server.py + web JS sources](#semgrep-dashboard-server-py-web-js-sources) | ✅ PASS |
+| [trivy  HIGH/CRITICAL CVEs](#trivy-high-critical-cves) | ✅ PASS |
+| [gitleaks  secrets in repo](#gitleaks-secrets-in-repo) | ✅ PASS |
+| [detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline)](#detect-secrets-run-detect-secrets-scan-secrets-baseline-to-create-baseline) | ⏭ SKIP |
 | **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
 
