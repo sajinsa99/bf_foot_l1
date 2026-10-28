@@ -26,6 +26,8 @@ MD_BODY=""      # accumulated section bodies
 
 m() { MD_BODY+="${1-}"$'\n'; }
 
+strip_ansi() { sed 's/\x1b\[[0-9;]*[mGKHFJ]//g'; }
+
 section() {
   printf "\n%s══ %s %s\n" "$C_BLUE" "$1" "$C_RESET"
   m "## $1"
@@ -41,7 +43,7 @@ step() {
   tmpfile=$(mktemp)
   "$@" 2>&1 | tee "$tmpfile"
   exit_code=${PIPESTATUS[0]}
-  output=$(< "$tmpfile")
+  output=$(strip_ansi < "$tmpfile")
   rm -f "$tmpfile"
 
   m "### \`$label\`"
@@ -81,7 +83,7 @@ step_silent() {
   tmpfile=$(mktemp)
   "$@" 2>&1 | tee "$tmpfile"
   exit_code=${PIPESTATUS[0]}
-  output=$(< "$tmpfile")
+  output=$(strip_ansi < "$tmpfile")
   rm -f "$tmpfile"
 
   m "### \`$label\`"
