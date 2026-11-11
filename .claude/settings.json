@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('node:', d.get\\('engines',{}\\).get\\('node','?'\\)\\); print\\('npm:', d.get\\('engines',{}\\).get\\('npm','?'\\)\\); print\\('overrides:', list\\(d.get\\('overrides',{}\\).keys\\(\\)\\)\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('node:', d.get\\('engines',{}\\).get\\('node','?'\\)\\); print\\('npm:', d.get\\('engines',{}\\).get\\('npm','?'\\)\\)\")"
+    ]
+  }
+}

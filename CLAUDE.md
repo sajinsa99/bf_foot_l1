@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 `bf_foot_l1` scrapes French Ligue 1 standings, stores them as timestamped snapshots in a flat JSON file, and serves interactive dashboards. There is **no database and no build step** — the single source of truth is `scraper/data/seasons.json`.
 
-Three parts, each with its own `package.json`:
+Three parts (`scraper/` and `web/` each have their own `package.json`; `dashboard/` is static with none):
 
 - **`scraper/`** — Node CLI that fetches standings and writes snapshots.
 - **`web/`** — Express server (production) that serves the dashboards and a small API, including a browser UI to trigger scrapes.
@@ -66,6 +66,11 @@ Everything is mounted under `BASE_PATH` (default `/bf_foot_l1`) on an Express `R
 - `POST /api/delete` — removes a season or specific rounds.
 - `POST /api/scrape` — spawns `scrape.js` and streams stdout/stderr to the browser via **SSE**; only one scrape runs at a time (`activeScrape` guard). nginx must keep `proxy_buffering off` for this to stream.
 
+Two browser UIs are served from `web/public/`:
+
+- **`dashboard/`** — the main interactive standings dashboard (see "Two dashboards" below).
+- **`manage-data/`** — admin page for triggering scrapes and deleting snapshots; corresponds to the `/manage-data` URL shown on server start.
+
 ### Two dashboards (don't confuse them)
 
 - **`web/public/dashboard/`** is the **live** one, served by the Express server, fetching `/bf_foot_l1/api/seasons.json`. It has 5 tabs (standings / per-club evolution / points race / attack-defense / palmarès) built on Chart.js. **Edit this one** for dashboard changes.
@@ -73,11 +78,11 @@ Everything is mounted under `BASE_PATH` (default `/bf_foot_l1`) on an Express `R
 
 ### Deployment
 
-`install.sh` (run as root on the server) rsyncs the repo to `/opt/bf_foot_l1`, **never overwriting `scraper/data/`** (backs it up first, seeds only missing files), installs production deps, installs the `bf_foot_l1` systemd service (runs `node web/server.js` as `www-data`, reads `/opt/bf_foot_l1/.env`), and wires an nginx snippet that proxies `/bf_foot_l1/` → `127.0.0.1:5000`.
+`install.sh` (run as root on the server) rsyncs the repo to `/opt/bf_foot_l1`, **never overwriting `scraper/data/`** (backs it up first, seeds only missing files), installs production deps, installs the `bf_foot_l1` systemd service (runs `node web/server.js` as `www-data`, reads `/opt/bf_foot_l1/.env`), and wires an nginx snippet that proxies `/bf_foot_l1/` → `127.0.0.1:5000`. The versioned service unit and nginx config live in `web/deploy/` (`bf_foot_l1.service`, `nginx-bf_foot_l1.conf`).
 
 ## Critical constraints
 
-- **Node is pinned to 20.20.2 / npm 10.8.2** in every `package.json` `engines` and `.nvmrc`, matching the production box. Do **not** bump a dependency to a version that requires a newer Node. This already bit `undici`: `scraper/package.json` has an `overrides` block pinning it to `^7.30.1` (the 8.x line needs Node ≥ 22). Verify `engines.node` of any security bump against 20.20.2 before applying.
+- **Node is pinned to 20.20.2 / npm 10.8.2** in every `package.json` `engines` and `.nvmrc`, matching the production box. Do **not** bump a dependency to a version that requires a newer Node. This already bit `undici`: `scraper/package.json` has an `overrides` block pinning it to `^7.30.1` (the 8.x line needs Node ≥ 22) and `follow-redirects` to `^1.16.1`. Verify `engines.node` of any security bump against 20.20.2 before applying.
 - **`scraper/data/seasons.json` is live data.** `get_all_seasons.sh` (fetch mode) and manual edits can destroy history. `install.sh` protects it; ad-hoc scripts do not.
 - **`checks.sh` needs Docker** and pulls an internal SAP registry image (`xmk_linters`); it won't run in environments without that access. The generated `checks-report.md` is large (multi-MB) because it embeds full tool output — search it, don't read it whole.
 - The `scraper/*.js` helpers (`check_data.js`, `fix_dates.js`, `fix_rounds.js`, `create_synthetic_data.js`) are one-off data-maintenance tools, not part of the runtime.
