@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-10-28 10:31:37
+# Checks Report — bf_foot_l1 — 2026-11-12 15:45:25
 
 ## Summary
 
@@ -69,14 +69,14 @@ _no output_
     "npm": "10.8.2"
   },
   "dependencies": {
-    "axios": "^1.20.0",
-    "cheerio": "^1.0.0-rc.12",
-    "date-fns": "^2.30.0",
+    "axios": "^1.21.1",
+    "cheerio": "^1.2.0",
+    "date-fns": "^4.4.0",
     "minimist": "^1.2.8"
   },
   "overrides": {
-    "undici": "^7.30.1",
-    "follow-redirects": "^1.16.1"
+    "undici": "^7.30.2",
+    "follow-redirects": "^1.16.3"
   }
 }
 ```
@@ -100,7 +100,7 @@ _no output_
     "npm": "10.8.2"
   },
   "dependencies": {
-    "express": "^4.18.0"
+    "express": "^5.3.0"
   }
 }
 ```
@@ -182,6 +182,8 @@ _no output_
 Ran 442 rules on 4 files: 0 findings.
 (need more rules? `semgrep login` for additional free Semgrep Registry rules)
 
+
+A new version of Semgrep is available. See https://semgrep.dev/docs/upgrading
 If Semgrep missed a finding, please send us feedback to let us know!
 See https://semgrep.dev/docs/reporting-false-negatives/
 ```
@@ -195,14 +197,15 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 **Status:** ✅ PASS
 
 ```
-2026-10-28T09:31:27Z	INFO	[vulndb] Need to update DB
-2026-10-28T09:31:27Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-10-28T09:31:27Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-20.42 MiB / 130.06 MiB [--------->__________________________________________________] 15.70% ? p/s ?48.81 MiB / 130.06 MiB [---------------------->_____________________________________] 37.53% ? p/s ?80.52 MiB / 130.06 MiB [------------------------------------->______________________] 61.91% ? p/s ?118.87 MiB / 130.06 MiB [----------------------------------------->___] 91.40% 163.95 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 163.95 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 163.95 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 154.58 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 154.58 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 154.58 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 144.61 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 144.61 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 144.61 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 135.28 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 135.28 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 135.28 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 126.55 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 126.55 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 126.55 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 118.39 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 118.39 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 118.39 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 110.75 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 110.75 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 110.75 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 103.60 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [------------------------------------------->] 100.00% 103.60 MiB p/s ETA 0s130.06 MiB / 130.06 MiB [-----------------------------------------------] 100.00% 25.58 MiB p/s 5.3s2026-10-28T09:31:33Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-10-28T09:31:33Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-10-28T09:31:33Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
-2026-10-28T09:31:33Z	INFO	Number of language-specific files	num=1
-2026-10-28T09:31:33Z	INFO	[npm] Detecting vulnerabilities...
+2026-11-12T14:45:15Z	INFO	[vulndb] Need to update DB
+2026-11-12T14:45:15Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-11-12T14:45:15Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+22.81 MiB / 133.50 MiB [---------->_________________________________________________] 17.08% ? p/s ?59.80 MiB / 133.50 MiB [-------------------------->_________________________________] 44.79% ? p/s ?95.13 MiB / 133.50 MiB [------------------------------------------>_________________] 71.26% ? p/s ?128.47 MiB / 133.50 MiB [------------------------------------------->_] 96.23% 176.10 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 176.10 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 176.10 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 165.28 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 165.28 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 165.28 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 154.61 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 154.61 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 154.61 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 144.64 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 144.64 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 144.64 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 135.31 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 135.31 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 135.31 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 126.58 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 126.58 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 126.58 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 118.41 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 118.41 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 118.41 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 110.77 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 110.77 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [------------------------------------------->] 100.00% 110.77 MiB p/s ETA 0s133.50 MiB / 133.50 MiB [-----------------------------------------------] 100.00% 25.50 MiB p/s 5.4s2026-11-12T14:45:21Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-12T14:45:21Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-12T14:45:21Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
+2026-11-12T14:45:21Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="web/node_modules"
+2026-11-12T14:45:21Z	INFO	Number of language-specific files	num=2
+2026-11-12T14:45:21Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -210,6 +213,8 @@ Report Summary
 │          Target           │ Type │ Vulnerabilities │
 ├───────────────────────────┼──────┼─────────────────┤
 │ scraper/package-lock.json │ npm  │        0        │
+├───────────────────────────┼──────┼─────────────────┤
+│ web/package-lock.json     │ npm  │        0        │
 └───────────────────────────┴──────┴─────────────────┘
 Legend:
 - '-': Not scanned
@@ -232,9 +237,9 @@ Legend:
     ○ ░
     ░    gitleaks
 
-9:31AM INF 68 commits scanned.
-9:31AM INF scanned ~7912562 bytes (7.91 MB) in 1.81s
-9:31AM INF no leaks found
+2:45PM INF 73 commits scanned.
+2:45PM INF scanned ~7962228 bytes (7.96 MB) in 1.97s
+2:45PM INF no leaks found
 ```
 
 ---
