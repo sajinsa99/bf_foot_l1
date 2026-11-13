@@ -21,7 +21,7 @@ PKG_FILES=("$ROOT/scraper/package.json" "$ROOT/web/package.json")
 
 # Pinned Node version drives the engine filter below.
 PINNED_NODE="$(node -e 'let s="";process.stdin.on("data",d=>s+=d);process.stdin.on("end",()=>{try{console.log((JSON.parse(s).engines||{}).node||"")}catch(e){console.log("")}})' < "$ROOT/scraper/package.json")"
-[ -z "$PINNED_NODE" ] && PINNED_NODE="20.20.2"
+[ -z "$PINNED_NODE" ] && PINNED_NODE="22.22.1"
 PINNED_MAJOR="${PINNED_NODE%%.*}"
 
 # ── helpers ───────────────────────────────────────────────────────────────────

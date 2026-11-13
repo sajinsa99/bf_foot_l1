@@ -89,6 +89,14 @@ else
   echo "    include /etc/nginx/snippets/*_location.conf;" >&2
 fi
 
+# Ensure all limit_req_zone definitions are present in nginx http block
+RATE_LIMIT_CONF="/etc/nginx/conf.d/rate_limit.conf"
+cat > "$RATE_LIMIT_CONF" << 'NGINXEOF'
+limit_req_zone $binary_remote_addr zone=global:10m rate=30r/s;
+limit_req_zone $binary_remote_addr zone=auth:10m   rate=5r/m;
+NGINXEOF
+echo "    Updated $RATE_LIMIT_CONF (zones: global, auth)"
+
 nginx -t
 systemctl reload nginx
 
