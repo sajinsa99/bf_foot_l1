@@ -8,7 +8,7 @@ set -uo pipefail
 
 cd "$(dirname "${BASH_SOURCE[0]}")" || exit 1
 
-IMAGE="xmake-deploy-milestone.int.repositories.cloud.sap/com.sap.internal.prd.xmk.tools/xmk_linters:2.0.4"
+IMAGE="xmake-deploy-milestone.int.repositories.cloud.sap/com.sap.internal.prd.xmk.tools/xmk_linters:2.0.6"
 DOCKER_RUN=(docker run --rm --user root -v "$(pwd):/work" -w /work "$IMAGE")
 REPORT="checks-report.md"
 
@@ -208,6 +208,24 @@ else
   skip "eslint  (no eslint.config.js found — create one to enable)"
 fi
 
+section "HTML"
+mapfile -t html_files < <(find . -path './.git' -prune -o -path './web/node_modules' -prune -o -path './scraper/node_modules' -prune -o -name '*.html' -print)
+if [[ ${#html_files[@]} -gt 0 ]]; then
+  step "htmlhint  HTML files" \
+    "${DOCKER_RUN[@]}" htmlhint "${html_files[@]}"
+else
+  skip "htmlhint  (no *.html files found)"
+fi
+
+section "CSS"
+mapfile -t css_files < <(find . -path './.git' -prune -o -path './web/node_modules' -prune -o -path './scraper/node_modules' -prune -o -name '*.css' -print)
+if [[ ${#css_files[@]} -gt 0 ]]; then
+  step "stylelint  CSS files" \
+    "${DOCKER_RUN[@]}" stylelint "${css_files[@]}"
+else
+  skip "stylelint  (no *.css files found)"
+fi
+
 section "YAML"
 mapfile -t yaml_files < <(find . -path './.git' -prune -o \( -name '*.yaml' -o -name '*.yml' \) -print)
 if [[ ${#yaml_files[@]} -gt 0 ]]; then
@@ -216,6 +234,12 @@ if [[ ${#yaml_files[@]} -gt 0 ]]; then
 else
   skip "yamllint  (no *.yaml / *.yml files found)"
 fi
+
+section "Python"
+step "pylint  dashboard/server.py" \
+  "${DOCKER_RUN[@]}" pylint dashboard/server.py
+step "bandit  dashboard/server.py" \
+  "${DOCKER_RUN[@]}" bandit dashboard/server.py
 
 section "Static Analysis"
 step "semgrep  dashboard/server.py + web JS sources" \
