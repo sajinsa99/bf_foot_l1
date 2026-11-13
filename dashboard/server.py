@@ -9,10 +9,12 @@ import os
 import sys
 from pathlib import Path
 
-PORT = int(os.getenv('PORT', 8080))
+PORT = int(os.getenv('PORT', '8080'))
 ROOT_DIR = str(Path(__file__).parent.parent)  # Parent of bf_foot_dashboard
 
 class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+    """HTTP request handler that adds no-cache headers to every response."""
+
     def end_headers(self):
         # Add no-cache headers to all responses
         self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0')
@@ -27,6 +29,7 @@ class NoCacheHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         return os.path.join(ROOT_DIR, relpath)
 
 def run():
+    """Start the HTTP server and serve until interrupted."""
     os.chdir(ROOT_DIR)
     with socketserver.TCPServer(("", PORT), NoCacheHTTPRequestHandler) as httpd:
         print(f"Serving {ROOT_DIR} on port {PORT}")
