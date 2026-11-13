@@ -1,4 +1,4 @@
-# Checks Report — bf_foot_l1 — 2026-11-13 11:48:42
+# Checks Report — bf_foot_l1 — 2026-11-13 16:30:30
 
 ## Summary
 
@@ -12,12 +12,16 @@
 | [jsonlint  scraper/data/seasons.json](#jsonlint-scraper-data-seasons-json) | ✅ PASS |
 | [markdownlint-cli2  Markdown files](#markdownlint-cli2-markdown-files) | ✅ PASS |
 | [eslint  (no eslint.config.js found — create one to enable)](#eslint-no-eslint-config-js-found-create-one-to-enable) | ⏭ SKIP |
+| [htmlhint  HTML files](#htmlhint-html-files) | ✅ PASS |
+| [stylelint  CSS files](#stylelint-css-files) | ❌ FAIL |
 | [yamllint  YAML files](#yamllint-yaml-files) | ✅ PASS |
+| [pylint  dashboard/server.py](#pylint-dashboard-server-py) | ❌ FAIL |
+| [bandit  dashboard/server.py](#bandit-dashboard-server-py) | ✅ PASS |
 | [semgrep  dashboard/server.py + web JS sources](#semgrep-dashboard-server-py-web-js-sources) | ✅ PASS |
 | [trivy  HIGH/CRITICAL CVEs](#trivy-high-critical-cves) | ✅ PASS |
 | [gitleaks  secrets in repo](#gitleaks-secrets-in-repo) | ✅ PASS |
 | [detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline)](#detect-secrets-run-detect-secrets-scan-secrets-baseline-to-create-baseline) | ⏭ SKIP |
-| **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
+| **Total** | PASS: 13 · FAIL: 2 · SKIP: 2 |
 
 ---
 
@@ -138,6 +142,38 @@ Summary: 0 issues in 0 files
 
 ---
 
+## HTML
+
+### <a id="htmlhint-html-files"></a>`htmlhint  HTML files`
+
+**Status:** ✅ PASS
+
+```
+
+Scanned 3 files, no errors found (41 ms).
+```
+
+---
+
+## CSS
+
+### <a id="stylelint-css-files"></a>`stylelint  CSS files`
+
+**Status:** ❌ FAIL (exit 2)
+
+```
+
+dashboard/assets/css/style.css
+  20:1  ✖  Duplicate selector "#clubFilter", first used at line 8  no-duplicate-selectors
+
+web/public/dashboard/style.css
+  40:1  ✖  Duplicate selector "#clubFilter", first used at line 12  no-duplicate-selectors
+
+✖ 2 problems (2 errors, 0 warnings)
+```
+
+---
+
 ## YAML
 
 ### <a id="yamllint-yaml-files"></a>`yamllint  YAML files`
@@ -145,6 +181,63 @@ Summary: 0 issues in 0 files
 **Status:** ✅ PASS
 
 _no output_
+
+---
+
+## Python
+
+### <a id="pylint-dashboard-server-py"></a>`pylint  dashboard/server.py`
+
+**Status:** ❌ FAIL (exit 20)
+
+```
+************* Module server
+dashboard/server.py:12:11: W1508: os.getenv default type is builtins.int. Expected str or None. (invalid-envvar-default)
+dashboard/server.py:15:0: C0115: Missing class docstring (missing-class-docstring)
+dashboard/server.py:29:0: C0116: Missing function or method docstring (missing-function-docstring)
+
+-----------------------------------
+Your code has been rated at 8.97/10
+```
+
+---
+
+### <a id="bandit-dashboard-server-py"></a>`bandit  dashboard/server.py`
+
+**Status:** ✅ PASS
+
+```
+[main]	INFO	profile include tests: None
+[main]	INFO	profile exclude tests: None
+[main]	INFO	cli include tests: None
+[main]	INFO	cli exclude tests: None
+[main]	INFO	running on Python 3.14.4
+[manager]	ERROR	Exception occurred when executing tests against ./dashboard/server.py.
+[manager]	ERROR	Run "bandit --debug ./dashboard/server.py" to see the full traceback.
+Run started:2026-11-13 15:30:16.129582
+
+Test results:
+	No issues identified.
+
+Code scanned:
+	Total lines of code: 33
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 0
+		Medium: 0
+		High: 0
+Files skipped (1):
+	./dashboard/server.py (exception while scanning file)
+```
 
 ---
 
@@ -195,15 +288,15 @@ See https://semgrep.dev/docs/reporting-false-negatives/
 **Status:** ✅ PASS
 
 ```
-2026-11-13T10:48:32Z	INFO	[vulndb] Need to update DB
-2026-11-13T10:48:32Z	INFO	[vulndb] Downloading vulnerability DB...
-2026-11-13T10:48:32Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
-15.88 MiB / 133.47 MiB [------->____________________________________________________] 11.89% ? p/s ?41.35 MiB / 133.47 MiB [------------------>_________________________________________] 30.98% ? p/s ?66.78 MiB / 133.47 MiB [------------------------------>_____________________________] 50.04% ? p/s ?90.78 MiB / 133.47 MiB [------------------------------->______________] 68.02% 124.89 MiB p/s ETA 0s112.85 MiB / 133.47 MiB [-------------------------------------->______] 84.55% 124.89 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 124.89 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 121.42 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 121.42 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 121.42 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 113.59 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 113.59 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 113.59 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 106.26 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 106.26 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [------------------------------------------->] 100.00% 106.26 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 99.40 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 99.40 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 99.40 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 92.99 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 92.99 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 92.99 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 86.99 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 86.99 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 86.99 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 81.38 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 81.38 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 81.38 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-------------------------------------------->] 100.00% 76.13 MiB p/s ETA 0s133.47 MiB / 133.47 MiB [-----------------------------------------------] 100.00% 24.28 MiB p/s 5.7s2026-11-13T10:48:38Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
-2026-11-13T10:48:38Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-11-13T10:48:38Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
-2026-11-13T10:48:38Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="web/node_modules"
-2026-11-13T10:48:38Z	INFO	Number of language-specific files	num=2
-2026-11-13T10:48:38Z	INFO	[npm] Detecting vulnerabilities...
+2026-11-13T15:30:21Z	INFO	[vulndb] Need to update DB
+2026-11-13T15:30:21Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-11-13T15:30:21Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+29.89 MiB / 133.77 MiB [------------->______________________________________________] 22.35% ? p/s ?72.02 MiB / 133.77 MiB [-------------------------------->___________________________] 53.84% ? p/s ?114.32 MiB / 133.77 MiB [-------------------------------------------------->________] 85.46% ? p/s ?133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 172.97 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 172.97 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 172.97 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 161.81 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 161.81 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 161.81 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 151.37 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 151.37 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 151.37 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 141.61 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 141.61 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 141.61 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 132.47 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 132.47 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 132.47 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 123.92 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 123.92 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 123.92 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 115.93 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 115.93 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 115.93 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [------------------------------------------->] 100.00% 108.45 MiB p/s ETA 0s133.77 MiB / 133.77 MiB [-----------------------------------------------] 100.00% 26.86 MiB p/s 5.2s2026-11-13T15:30:26Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-13T15:30:26Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-13T15:30:26Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="scraper/node_modules"
+2026-11-13T15:30:26Z	INFO	[npm] Run "npm install" to collect the license information of packages	dir="web/node_modules"
+2026-11-13T15:30:26Z	INFO	Number of language-specific files	num=2
+2026-11-13T15:30:26Z	INFO	[npm] Detecting vulnerabilities...
 
 Report Summary
 
@@ -235,9 +328,9 @@ Legend:
     ○ ░
     ░    gitleaks
 
-10:48AM INF 80 commits scanned.
-10:48AM INF scanned ~7982722 bytes (7.98 MB) in 1.93s
-10:48AM INF no leaks found
+3:30PM INF 83 commits scanned.
+3:30PM INF scanned ~7988178 bytes (7.99 MB) in 1.74s
+3:30PM INF no leaks found
 ```
 
 ---
@@ -260,10 +353,14 @@ Legend:
 | [jsonlint  scraper/data/seasons.json](#jsonlint-scraper-data-seasons-json) | ✅ PASS |
 | [markdownlint-cli2  Markdown files](#markdownlint-cli2-markdown-files) | ✅ PASS |
 | [eslint  (no eslint.config.js found — create one to enable)](#eslint-no-eslint-config-js-found-create-one-to-enable) | ⏭ SKIP |
+| [htmlhint  HTML files](#htmlhint-html-files) | ✅ PASS |
+| [stylelint  CSS files](#stylelint-css-files) | ❌ FAIL |
 | [yamllint  YAML files](#yamllint-yaml-files) | ✅ PASS |
+| [pylint  dashboard/server.py](#pylint-dashboard-server-py) | ❌ FAIL |
+| [bandit  dashboard/server.py](#bandit-dashboard-server-py) | ✅ PASS |
 | [semgrep  dashboard/server.py + web JS sources](#semgrep-dashboard-server-py-web-js-sources) | ✅ PASS |
 | [trivy  HIGH/CRITICAL CVEs](#trivy-high-critical-cves) | ✅ PASS |
 | [gitleaks  secrets in repo](#gitleaks-secrets-in-repo) | ✅ PASS |
 | [detect-secrets  (run: detect-secrets scan > .secrets.baseline  to create baseline)](#detect-secrets-run-detect-secrets-scan-secrets-baseline-to-create-baseline) | ⏭ SKIP |
-| **Total** | PASS: 11 · FAIL: 0 · SKIP: 2 |
+| **Total** | PASS: 13 · FAIL: 2 · SKIP: 2 |
 
